@@ -1,30 +1,21 @@
-# Vite + Deno + React + TypeScript
+# Cube Clarity Front
 
-## Running
+## Requirements
+- [Deno](https://deno.com/)
+- [VSCode](https://code.visualstudio.com/)
+  - [Deno Extension](https://marketplace.visualstudio.com/items?itemName=denoland.vscode-deno)
 
-You need to have Deno v1.28.0 or later installed to run this repo.
+## 開発
+開発時はVSCodeで直接この`cube-clarity-front`をひらいて開発をしてください。
 
-Start a dev server:
-
-```
-$ deno task dev
-```
-
-## Deploy
-
-Build production assets:
-
-```
-$ deno task build
+### 開発モード起動
+```shell
+deno task dev
 ```
 
-## Notes
-
-- You need to use `.mjs` or `.mts` extension for the `vite.config.[ext]` file.
-
-## Papercuts
-
-Currently there's a "papercut" for Deno users:
-
-- peer dependencies need to be referenced in `vite.config.js` - in this example
-  it is `react` and `react-dom` packages that need to be referenced
+### コミット
+コミットしてプルリクを出す前に
+```shell
+deno fmt
+```
+コマンドを実行してfmtを行ってください。

@@ -6,6 +6,6 @@
     "serve": "deno run --allow-net --allow-read https://deno.land/std@0.157.0/http/file_server.ts dist/"
   },
   "imports": {
-    "@result/result": "jsr:@result/result"
+    "@std/assert": "jsr:@std/assert@1"
   }
 }
