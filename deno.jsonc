@@ -20,6 +20,6 @@
     ]
   },
   "fmt": {
-    "singleQuote": true
+    "singleQuote": false
   }
 }
