@@ -2,18 +2,19 @@ import cube from "../../assets/CUBE.svg";
 import clarity from "../../assets/CLARITY.svg";
 import Rectangle from "../../assets/Rectangle.svg";
 import styles from "./Home.module.css";
+import {Loading} from "../../components/Loading/Loading";
 
 export const Home = () => {
   return (
     <div className={styles.window}>
-      {startAnimation()}
-      {homepage()}
-      {loadingPage()}
+      {StartAnimation()}
+      {Homepage()}
+      {Loading()}
     </div>
   );
 };
 
-const startAnimation = () => {
+const StartAnimation = () => {
   return (
     <div id={styles.flex}>
       <p className={styles.alignRight}>
@@ -26,7 +27,7 @@ const startAnimation = () => {
   );
 };
 
-const homepage = () => {
+const Homepage = () => {
   return (
     <div className={styles.homeSpace}>
       <p>
@@ -46,18 +47,6 @@ const homepage = () => {
       </p>
       <div className={styles.circle}>
       </div>
-    </div>
-  );
-};
-
-const loadingPage = () => {
-  return (
-    <div className={styles.container}>
-      <div className={styles.content}></div>
-      <div className={styles.content}></div>
-      <div className={styles.content}></div>
-      <div className={styles.content}></div>
-      <div className={styles.content}></div>
     </div>
   );
 };
