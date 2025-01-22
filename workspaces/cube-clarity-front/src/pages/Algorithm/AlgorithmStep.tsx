@@ -1,4 +1,4 @@
-import { HorizontalRule } from '../../components/HorizontalRule/HorizontalRule';
+import { HorizontalRule } from "../../components/HorizontalRule/HorizontalRule";
 import { BottomDrawer } from "../../layouts/BottomDrawer/BottomDrawer";
 import { Screen } from "../../layouts/Screen/Screen";
 import styles from "./AlgorithmStep.module.css";
