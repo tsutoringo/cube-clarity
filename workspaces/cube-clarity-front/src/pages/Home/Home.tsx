@@ -1,6 +1,6 @@
 import cube from "../../assets/CUBE.svg";
 import clarity from "../../assets/CLARITY.svg";
-import Rectangle from "../../assets/Rectangle.svg";
+import rectangle from "../../assets/Rectangle.svg";
 import styles from "./Home.module.css";
 import {Loading} from "../../components/Loading/Loading";
 
@@ -37,7 +37,7 @@ const Homepage = () => {
         <img src={clarity} alt="" />
       </p>
       <p>
-        <img src={Rectangle} alt="" id={styles.square} />
+        <img src={rectangle} alt="" id={styles.square} />
       </p>
       <p>
         <span className={styles.spanHeader}>スキャンして、解こう！</span>
