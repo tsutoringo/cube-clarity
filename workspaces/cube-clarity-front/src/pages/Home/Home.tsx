@@ -37,7 +37,7 @@ const Homepage = () => {
         <img src={clarity} alt="" />
       </p>
       <p>
-        <img src={rectangle} alt="" id={styles.square} />
+        <img src={rectangle} alt="" className={styles.square} />
       </p>
       <p>
         <span className={styles.spanHeader}>スキャンして、解こう！</span>
