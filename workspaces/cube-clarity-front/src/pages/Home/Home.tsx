@@ -2,7 +2,7 @@ import cube from "../../assets/CUBE.svg";
 import clarity from "../../assets/CLARITY.svg";
 import rectangle from "../../assets/Rectangle.svg";
 import styles from "./Home.module.css";
-import {Loading} from "../../components/Loading/Loading";
+import { Loading } from "../../components/Loading/Loading";
 
 export const Home = () => {
   return (
