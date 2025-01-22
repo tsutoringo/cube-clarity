@@ -1,0 +1,15 @@
+.screen {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .screen-inner {
+    width: 100%;
+    max-width: 520px;
+    min-height: 100vh;
+
+    background-color: #0a0b11;
+  }
+}

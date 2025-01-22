@@ -1,0 +1,23 @@
+.horizontal-rule {
+  display: flex;
+  gap: 0.8em;
+
+  & > .stick-wrapper {
+    flex: 1;
+    position: relative;
+
+    & > .stick {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      height: 1px;
+      width: 100%;
+      background-color: #3a3b4e;
+    }
+  }
+
+  & > .container {
+
+  }
+}

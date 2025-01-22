@@ -1,0 +1,8 @@
+.bottom-drawer-title {
+  padding: 0.8em;
+  border-bottom: 1px solid #3a3b4e;
+
+  & > h2 {
+    margin: 0;
+  }
+}

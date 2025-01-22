@@ -1,10 +1,11 @@
-import "./App.css";
+import { AlgorithmStep } from "./pages/Algorithm/AlgorithmStep";
 import { Home } from "./pages/Home/Home";
 
 function App() {
   return (
     <>
-      <Home></Home>
+      {/* <Home></Home> */}
+      <AlgorithmStep />
     </>
   );
 }
