@@ -16,7 +16,7 @@ export const Home = () => {
 
 const StartAnimation = () => {
   return (
-    <div id={styles.flex}>
+    <div className={styles.flex}>
       <p className={styles.alignRight}>
         <img src={cube} alt="" className={styles.slideInBottom1} />
       </p>

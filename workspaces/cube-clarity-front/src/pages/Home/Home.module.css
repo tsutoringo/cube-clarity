@@ -10,7 +10,7 @@
   width: 46vh;
   position: relative;
 }
-#flex {
+.flex {
   display: flex;
   justify-content: center;
   align-items: center;
