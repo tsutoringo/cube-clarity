@@ -1,7 +1,8 @@
 import { ReactNode } from "react";
 import styles from "./HorizontalRule.module.css";
+import { HorizontalRuleContent } from './Content/HorizontalRuleContent';
 
-export const HorizontalRule = ({
+const _HorizontalRule = ({
   children,
 }: {
   children: ReactNode;
@@ -11,12 +12,14 @@ export const HorizontalRule = ({
       <div className={styles["stick-wrapper"]}>
         <div className={styles.stick}></div>
       </div>
-      <small className={styles.container}>
-        {children}
-      </small>
+      {children}
       <div className={styles["stick-wrapper"]}>
         <div className={styles.stick}></div>
       </div>
     </div>
   );
 };
+
+export const HorizontalRule = Object.assign(_HorizontalRule, {
+  Content: HorizontalRuleContent
+});

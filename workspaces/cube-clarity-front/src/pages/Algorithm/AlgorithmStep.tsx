@@ -28,7 +28,11 @@ export const AlgorithmStep = () => {
                 その面を回転させて、エッジの部分を上に持ってきます。
               </p>
             </div>
-            <HorizontalRule>アルゴリズムを見る</HorizontalRule>
+            <HorizontalRule>
+              <HorizontalRule.Content>
+                <small>アルゴリズムを見る</small>
+              </HorizontalRule.Content>
+            </HorizontalRule>
           </BottomDrawer.Drawer>
         }
       />
