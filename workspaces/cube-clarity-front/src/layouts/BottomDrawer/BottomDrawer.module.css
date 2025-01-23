@@ -1,5 +1,8 @@
 .bottom-drawer {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6em;
   background-color: #1d1e22;
   border-radius: 0.8em 0.8em 0 0;
 
