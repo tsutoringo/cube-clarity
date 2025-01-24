@@ -4,8 +4,8 @@ import { Home } from "./pages/Home/Home";
 function App() {
   return (
     <>
-      {/* <Home></Home> */}
-      <AlgorithmStep />
+      <Home></Home>
+      {/* <AlgorithmStep /> */}
     </>
   );
 }
