@@ -4,7 +4,7 @@
   --default-hight: 100%;
 }
 /*  */
-.flex{
+.flex {
   position: absolute;
   z-index: 10000;
   width: 100%;
@@ -16,19 +16,19 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  p{
+  p {
     width: 100%;
     text-align: center;
     height: 4%;
-    
-    img{
+
+    img {
       scale: 1.3;
     }
   }
-  .alignRight{
+  .alignRight {
     text-align: center;
   }
-  .alignLeft{
+  .alignLeft {
     text-align: start;
   }
 }
@@ -100,7 +100,7 @@
   .cube-clarity {
     width: 40%;
   }
-  .title-logo{
+  .title-logo {
     height: 10vh;
   }
 }
@@ -108,7 +108,7 @@
   height: 30vh;
   margin: 5vh 0;
 }
-.text{
+.text {
   margin: 0;
   padding: 0;
   height: 10vh;

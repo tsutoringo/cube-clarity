@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import styles from "./HorizontalRule.module.css";
-import { HorizontalRuleContent } from './Content/HorizontalRuleContent';
+import { HorizontalRuleContent } from "./Content/HorizontalRuleContent";
 
 const _HorizontalRule = ({
   children,
@@ -21,5 +21,5 @@ const _HorizontalRule = ({
 };
 
 export const HorizontalRule = Object.assign(_HorizontalRule, {
-  Content: HorizontalRuleContent
+  Content: HorizontalRuleContent,
 });
