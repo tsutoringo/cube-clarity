@@ -10,7 +10,7 @@ export const BottomDrawerLayout = ({
   drawer: ReactNode;
 }) => {
   return (
-    <div className={styles["bottom-drawer-layout"]}>
+    <div className={styles.bottomDrawerLayout}>
       {viewBox}
       {drawer}
     </div>
