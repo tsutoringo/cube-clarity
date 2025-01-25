@@ -31,12 +31,12 @@ const StartAnimation = () => {
 const Homepage = () => {
   return (
     <div className={styles.homeSpace}>
-      <div className={styles["title-logo"]}>
+      <div className={styles.titleLogo}>
         <p>
-          <img src={cube} alt="" className={styles["cube-clarity"]} />
+          <img src={cube} alt="" className={styles.cubeClarity} />
         </p>
         <p>
-          <img src={clarity} alt="" className={styles["cube-clarity"]} />
+          <img src={clarity} alt="" className={styles.cubeClarity} />
         </p>
       </div>
       <p>
