@@ -7,7 +7,7 @@ export const BottomDrawerViewBox = ({
   children: ReactNode;
 }) => {
   return (
-    <div className={styles["bottom-drawer-view-box"]}>
+    <div className={styles.bottomDrawerViewBox}>
       {children}
     </div>
   );

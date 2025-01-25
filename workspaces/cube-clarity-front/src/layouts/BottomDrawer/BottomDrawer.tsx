@@ -10,7 +10,7 @@ const _BottomDrawer = ({
   children: ReactNode;
 }) => {
   return (
-    <div className={styles["bottom-drawer"]}>
+    <div className={styles.bottomDrawer}>
       {children}
     </div>
   );

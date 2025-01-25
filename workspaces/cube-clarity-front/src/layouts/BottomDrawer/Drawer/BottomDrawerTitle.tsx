@@ -7,7 +7,7 @@ export const BottomDrawerTitle = ({
   children: ReactNode;
 }) => {
   return (
-    <div className={styles["bottom-drawer-title"]}>
+    <div className={styles.bottomDrawerTitle}>
       <h2>{children}</h2>
     </div>
   );

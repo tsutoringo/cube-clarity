@@ -8,12 +8,12 @@ const _HorizontalRule = ({
   children: ReactNode;
 }) => {
   return (
-    <div className={styles["horizontal-rule"]}>
-      <div className={styles["stick-wrapper"]}>
+    <div className={styles.horizontalRule}>
+      <div className={styles.stickWrapper}>
         <div className={styles.stick}></div>
       </div>
       {children}
-      <div className={styles["stick-wrapper"]}>
+      <div className={styles.stickWrapper}>
         <div className={styles.stick}></div>
       </div>
     </div>

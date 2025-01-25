@@ -8,7 +8,7 @@ export const Screen = ({
 }) => {
   return (
     <div className={styles.screen}>
-      <div className={styles["screen-inner"]}>
+      <div className={styles.screenInner}>
         {children}
       </div>
     </div>
