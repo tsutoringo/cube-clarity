@@ -3,14 +3,15 @@ import clarity from "../../assets/CLARITY.svg";
 import rectangle from "../../assets/Rectangle.svg";
 import styles from "./Home.module.css";
 import { Loading } from "../../components/Loading/Loading";
+import { Screen } from "../../layouts/Screen/Screen";
 
 export const Home = () => {
   return (
-    <div className={styles.window}>
+    <Screen>
       {StartAnimation()}
       {Homepage()}
-      {Loading()}
-    </div>
+      {/* {Loading()} */}
+    </Screen>
   );
 };
 
@@ -30,23 +31,24 @@ const StartAnimation = () => {
 const Homepage = () => {
   return (
     <div className={styles.homeSpace}>
-      <p>
-        <img src={cube} alt="" />
-      </p>
-      <p>
-        <img src={clarity} alt="" />
-      </p>
+      <div className={styles["title-logo"]}>
+        <p>
+          <img src={cube} alt="" className={styles["cube-clarity"]} />
+        </p>
+        <p>
+          <img src={clarity} alt="" className={styles["cube-clarity"]} />
+        </p>
+      </div>
       <p>
         <img src={rectangle} alt="" className={styles.square} />
       </p>
-      <p>
+      <p className={styles.text}>
         <span className={styles.spanHeader}>スキャンして、解こう！</span>
         <br />
         ルービックキューブを読み取って、<br />
         最速で解く方法を見つけよう
       </p>
-      <div className={styles.circle}>
-      </div>
+      <div className={styles.circle}></div>
     </div>
   );
 };

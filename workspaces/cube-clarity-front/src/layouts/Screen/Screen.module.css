@@ -6,6 +6,7 @@
   align-items: center;
 
   .screen-inner {
+    position: relative;
     width: 100%;
     max-width: 520px;
     min-height: 100vh;
