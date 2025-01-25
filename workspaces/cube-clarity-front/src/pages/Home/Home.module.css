@@ -1,37 +1,35 @@
 :root {
   --circle-line: 7vh;
   --default-font-size: 2vh;
+  --default-hight: 100%;
 }
-
-.window {
-  background-color: black;
-  height: 100vh;
-  width: 46vh;
-  position: relative;
-}
+/*  */
 .flex {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  width: 100%;
-  background-color: black;
   position: absolute;
   z-index: 10000;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  width: 100%;
+  height: var(--default-height);
+  /* background-color: red; */
   animation: fadeOut 3s ease-out forwards;
-  img {
-    width: 85%;
-    padding: 0;
-    margin: 0;
+  background-color: black;
+  height: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  p {
+    width: 100%;
+    text-align: center;
+    height: 4%;
+
+    img {
+      scale: 1.3;
+    }
   }
   .alignRight {
-    text-align: right;
+    text-align: center;
   }
   .alignLeft {
-    text-align: left;
+    text-align: start;
   }
 }
 @keyframes fadeOut {
@@ -96,17 +94,24 @@
 
 /* ここからhome pageのcss */
 .homeSpace {
-  padding-top: 10%;
-  padding-bottom: 10%;
-  img {
+  padding-top: 10vh;
+  padding-bottom: 10vh;
+  text-align: center;
+  .cube-clarity {
     width: 40%;
+  }
+  .title-logo {
+    height: 10vh;
   }
 }
 .square {
-  width: 60%;
-  margin: 20% 0;
+  height: 30vh;
+  margin: 5vh 0;
 }
-p {
+.text {
+  margin: 0;
+  padding: 0;
+  height: 10vh;
   color: white;
   font-size: var(--default-font-size);
   .spanHeader {
@@ -115,11 +120,16 @@ p {
     padding-bottom: var(--default-font-size);
   }
 }
+/* p {
+} */
 
 .circle {
+  padding: 0;
+  margin: 6vh auto;
   border: solid 2px white;
-  width: var(--circle-line);
-  height: var(--circle-line);
+  height: 8vh;
+  width: 8vh;
+  /* width: var(--circle-line);
+  height: var(--circle-line); */
   border-radius: 50%;
-  margin: 10% auto;
 }
