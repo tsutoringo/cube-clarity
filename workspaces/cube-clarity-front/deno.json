@@ -2,8 +2,8 @@
   "name": "@cube-clarity/front",
   "exports": {},
   "tasks": {
-    "dev": "deno task tcm-watch & deno run -A --node-modules-dir npm:vite",
-    "tcm-watch": "deno run -A bin/tcm.ts",
+    "dev": "deno task hcm-watch & deno run -A --node-modules-dir npm:vite",
+    "hcm-watch": "deno run --node-modules-dir -A bin/hcm.ts",
     "build": "deno run -A --node-modules-dir npm:vite build",
     "preview": "deno run -A --node-modules-dir npm:vite preview",
     "serve": "deno run --allow-net --allow-read https://deno.land/std@0.157.0/http/file_server.ts dist/",
