@@ -5,5 +5,5 @@ await run({
   outDir: "generated/hcm",
   watch: true,
   declarationMap: true,
-  localsConvention: 'camelCaseOnly'
+  localsConvention: "camelCaseOnly",
 });
