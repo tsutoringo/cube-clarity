@@ -71,18 +71,7 @@
     }
   }
 }
-@keyframes fadeOut {
-  0% {
-    opacity: 1;
-  }
-  80% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-    visibility: hidden;
-  }
-}
+
 
 /* .slide-in-bottom1 {
   animation: slideInBottom 2s ease-in-out forwards;
