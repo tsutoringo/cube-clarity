@@ -25,18 +25,18 @@ const App = () => {
     <>
       <Screen>
         <Home.StartAnimationPage
-          displaying={screenStatus == "start"}
+          displaying={screenStatus === "start"}
           onStartEnd={() => setScreenStatus("scan")}
         />
         <Home.ScanPage
-          displaying={screenStatus == "scan"}
+          displaying={screenStatus === "scan"}
           onScanComplete={(data) => handleScanCRubikCubeComplete(data)}
         />
         <AlgorithmStep
-          displaying={screenStatus == "algorithm"}
+          displaying={screenStatus === "algorithm"}
         />
         <Home.LoadingPage
-          displaying={screenStatus == "load"}
+          displaying={screenStatus === "load"}
         />
       </Screen>
     </>
