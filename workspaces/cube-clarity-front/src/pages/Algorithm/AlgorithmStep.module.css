@@ -1,1 +1,19 @@
+.algorithm-step {
+  &.enter {
+    opacity: 0;
+  }
 
+  &.enter-active {
+    opacity: 1;
+    transition: all ease-out 1s;
+  }
+
+  &.exit {
+    opacity: 1;
+  }
+
+  &.exit-active {
+    transition: all ease-in 1s;
+    opacity: 0;
+  }
+}
