@@ -1,24 +1,24 @@
-import { CSSTransition } from 'react-transition-group';
+import { CSSTransition } from "react-transition-group";
 import { HorizontalRule } from "../../components/HorizontalRule/HorizontalRule";
 import { BottomDrawer } from "../../layouts/BottomDrawer/BottomDrawer";
-import { useRef } from 'react';
+import { useRef } from "react";
 import styles from "./AlgorithmStep.module.css";
 
 export const AlgorithmStep = ({
-  displaying
+  displaying,
 }: {
-  displaying: boolean
+  displaying: boolean;
 }) => {
   const algorithmStepRef = useRef<HTMLDivElement>(null);
 
   return (
     <CSSTransition
-     in={displaying}
-     mountOnEnter
-     unmountOnExit
-     timeout={1000}
-     classNames={styles}
-     nodeRef={algorithmStepRef}
+      in={displaying}
+      mountOnEnter
+      unmountOnExit
+      timeout={1000}
+      classNames={styles}
+      nodeRef={algorithmStepRef}
     >
       <BottomDrawer.Layout
         nodeRef={algorithmStepRef}
