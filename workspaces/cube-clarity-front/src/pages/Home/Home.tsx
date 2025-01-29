@@ -2,7 +2,7 @@ import cube from "../../assets/CUBE.svg";
 import clarity from "../../assets/CLARITY.svg";
 import rectangle from "../../assets/Rectangle.svg";
 import styles from "./Home.module.css";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { CSSTransition } from "react-transition-group";
 import { Loading } from "../../components/Loading/Loading";
 import { RubikCubeData } from "../../App";
@@ -17,7 +17,7 @@ const StartAnimationPage = ({
   const startAnimationRef = useRef<HTMLDivElement>(null);
   return (
     <CSSTransition
-      timeout={1000}
+      timeout={1100}
       mountOnEnter
       unmountOnExit
       in={displaying}
@@ -48,7 +48,7 @@ const ScanPage = ({
 
   return (
     <CSSTransition
-      timeout={1000}
+      timeout={1100}
       mountOnEnter
       unmountOnExit
       in={displaying}
@@ -89,7 +89,7 @@ export const LoadingPage = ({
   return (
     <CSSTransition
       nodeRef={loadingPageRef}
-      timeout={1000}
+      timeout={1100}
       mountOnEnter
       unmountOnExit
       in={displaying}
