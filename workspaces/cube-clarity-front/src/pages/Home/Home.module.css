@@ -3,14 +3,13 @@
   --default-font-size: 2vh;
   --default-hight: 100%;
 }
-/*  */
+
 .start-animation {
   position: absolute;
   z-index: 10000;
   width: 100%;
   height: var(--default-height);
-  /* background-color: red; */
-  /* background-color: black; */
+
   height: 100%;
   display: flex;
   justify-content: space-around;
@@ -72,39 +71,6 @@
   }
 }
 
-
-/* .slide-in-bottom1 {
-  animation: slideInBottom 2s ease-in-out forwards;
-  .enter-active {
-    opacity: 1;
-    transition: opacity 10s;
-  }
-} */
-
-@keyframes slideInBottom {
-  0% {
-    transform: translateY(100px);
-    opacity: 0;
-  }
-  40% {
-    transform: translateY(0);
-    opacity: 1;
-  }
-  60% {
-    transform: translateY(0);
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(-100px);
-    opacity: 0;
-    visibility: hidden;
-  }
-}
-
-/* .slide-in-bottom2 {
-  animation: slideInBottom 2s ease-in-out 0.1s forwards;
-} */
-
 /* ここからhome pageのcss */
 .home-space {
   min-height: 100vh;
@@ -156,8 +122,6 @@
     padding-bottom: var(--default-font-size);
   }
 }
-/* p {
-} */
 
 .circle {
   padding: 0;
