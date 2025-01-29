@@ -53,11 +53,11 @@
   &.exit-active {
     & > p {
       transform: translateY(-150px);
-      transition: all ease-in 0.8s;
+      transition: all ease-in 0.9s;
       opacity: 0;
 
       &.align-right {
-        transition-delay: 0.2s;
+        transition-delay: 0.1s;
       }
     }
   }
