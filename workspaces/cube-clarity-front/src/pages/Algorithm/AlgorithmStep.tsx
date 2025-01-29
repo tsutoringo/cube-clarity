@@ -1,12 +1,28 @@
+import { CSSTransition } from "react-transition-group";
 import { HorizontalRule } from "../../components/HorizontalRule/HorizontalRule";
 import { BottomDrawer } from "../../layouts/BottomDrawer/BottomDrawer";
-import { Screen } from "../../layouts/Screen/Screen";
+import { useRef } from "react";
 import styles from "./AlgorithmStep.module.css";
 
-export const AlgorithmStep = () => {
+export const AlgorithmStep = ({
+  displaying,
+}: {
+  displaying: boolean;
+}) => {
+  const algorithmStepRef = useRef<HTMLDivElement>(null);
+
   return (
-    <Screen>
+    <CSSTransition
+      in={displaying}
+      mountOnEnter
+      unmountOnExit
+      timeout={1000}
+      classNames={styles}
+      nodeRef={algorithmStepRef}
+    >
       <BottomDrawer.Layout
+        nodeRef={algorithmStepRef}
+        className={styles.algorithmStep}
         viewBox={
           <BottomDrawer.ViewBox>
             aiue
@@ -36,6 +52,6 @@ export const AlgorithmStep = () => {
           </BottomDrawer.Drawer>
         }
       />
-    </Screen>
+    </CSSTransition>
   );
 };
