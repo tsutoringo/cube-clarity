@@ -1,3 +1,4 @@
+import { RubikCubeMoveNotate as RubikCubeMoveNotation } from './MoveNotation';
 
 export type RubikCubeFaceName = "U" | "D" | "F" | "B" | "L" | "R";
 
@@ -7,20 +8,26 @@ export const FACE_COLOR = {
   Green: "G",
   Blue: "B",
   Orange: "O",
-  Red: "R"
+  Red: "R",
 } as const;
 export type RubikCubeFaceColor = typeof FACE_COLOR[keyof typeof FACE_COLOR];
 
 export const rubikCubeFaceColorToHex = (faceColor: RubikCubeFaceColor) => {
   switch (faceColor) {
-    case 'W': return 0xFFFFFF;
-    case 'Y': return 0xFFD500;
-    case 'G': return 0x009B48;
-    case 'B': return 0x0045AD;
-    case 'O': return 0xFF5900;
-    case 'R': return 0xB90000;
+    case "W":
+      return 0xFFFFFF;
+    case "Y":
+      return 0xFFD500;
+    case "G":
+      return 0x009B48;
+    case "B":
+      return 0x0045AD;
+    case "O":
+      return 0xFF5900;
+    case "R":
+      return 0xB90000;
   }
-}
+};
 
 /**
  * ```plane
@@ -126,6 +133,23 @@ export class RubikCube {
     } as CubeState;
 
     return new RubikCube(cubeSatate);
+  }
+
+  /**
+   * すべて揃えられた状態から、`moves`で指定された回転記号に従って回した状態のルービックキューブを返します。
+   * @param moves
+   * 
+   * @example
+   * ```
+   * const cube = RubikCube.withMoveNotation(
+   *   parseMoveNotation(
+   *     "U R2 F B R B2 R U2 L B2 R U' D' R2 F R' L B2 U2 F2",
+   *   ).unwrap(),
+   * );
+   * ```
+   */
+  static withMoveNotation(moves: RubikCubeMoveNotation[]) {
+    return RubikCube.default().rotateCube(moves);
   }
 
   constructor(
@@ -380,20 +404,31 @@ export class RubikCube {
   }
 
   /**
-   * 指定された場所のカラーを返します。
-   * 指定座標については{@linkcode RubikCubeFace} {@linkcode CubeState}参照のこと
+   * 複数の回転記号、複数回の回転
+   * @returns 引数movesで指定された回転記号に基づき回転されたDeepCloneされた{@linkcode RubikCube}
+   *
+   * @example
+   * ```typescript
+   * RubikCube.default().rotateCube(
+   *   parseMoveNotation("D' L U' B2 D' F2 U' R2 D B2 U' L2 D2 F D2 B' L D L R2").unwrap()
+   * )
+   * ```
    */
-  at(faceName: RubikCubeFaceName, y: RubikCubeFaceYIndex, x: RubikCubeFaceXIndex): RubikCubeFaceColor {
-    return this.cubeState[faceName][y][x]
+  rotateCube(rawMoves: RubikCubeMove[]) {
+    return rawMoves.reduce((prev, move) => {
+      return prev.rotateCubeOnce(move);
+    }, this as RubikCube);
   }
 
   /**
-   * 複数の回転記号、複数回の回転
-   * @returns 引数movesで指定された回転記号に基づき回転されたDeepCloneされた{@linkcode RubikCube}
+   * 指定された場所のカラーを返します。
+   * 指定座標については{@linkcode RubikCubeFace} {@linkcode CubeState}参照のこと
    */
-  rotateCube(moves: RubikCubeMove[]) {
-    return moves.reduce((prev, move) => {
-      return prev.rotateCubeOnce(move);
-    }, this as RubikCube);
+  at(
+    faceName: RubikCubeFaceName,
+    y: RubikCubeFaceYIndex,
+    x: RubikCubeFaceXIndex,
+  ): RubikCubeFaceColor {
+    return this.cubeState[faceName][y][x];
   }
 }

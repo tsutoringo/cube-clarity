@@ -1,7 +1,14 @@
-import { AxesHelper, GridHelper, Group, PerspectiveCamera, Scene, WebGLRenderer } from "three";
+import {
+  AxesHelper,
+  GridHelper,
+  Group,
+  PerspectiveCamera,
+  Scene,
+  WebGLRenderer,
+} from "three";
 import { calcAspectRatio } from "./helper";
-import { RubikCube } from "./RubikCube";
-import { generateRubikCubeCubeModel } from './RubikCubeModel';
+import { RubikCube } from "./RubikCube/RubikCube";
+import { generateRubikCubeCubeModel } from "./RubikCubeModel";
 
 export class RubikCubeRenderer {
   renderer: WebGLRenderer;
@@ -9,7 +16,6 @@ export class RubikCubeRenderer {
   camera: PerspectiveCamera;
   resizeObserver: ResizeObserver;
   unmounted: boolean = false;
-  rubikCube: RubikCube;
   rubikCubeGroup: Group;
 
   constructor(
@@ -38,15 +44,13 @@ export class RubikCubeRenderer {
     this.resizeObserver = new ResizeObserver(() => this.resize());
     this.resizeObserver.observe(parentElement);
 
-    this.rubikCube = RubikCube.default();
 
-    this.rubikCubeGroup = generateRubikCubeCubeModel(this.rubikCube);
+    this.rubikCubeGroup = new Group();
   }
 
   rerenderRubikCube(rubikCube: RubikCube) {
     this.scene.remove(this.rubikCubeGroup);
-    this.rubikCube = rubikCube;
-    this.rubikCubeGroup = generateRubikCubeCubeModel(this.rubikCube);
+    this.rubikCubeGroup = generateRubikCubeCubeModel(rubikCube);
     this.scene.add(this.rubikCubeGroup);
   }
 

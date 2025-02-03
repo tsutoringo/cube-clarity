@@ -1,13 +1,23 @@
 import { BoxGeometry, Group, Mesh, MeshBasicMaterial } from "three";
-import { RubikCube, rubikCubeFaceColorToHex, RubikCubeFaceName, RubikCubeFaceXIndex, RubikCubeFaceYIndex } from './RubikCube';
+import {
+  RubikCube,
+  rubikCubeFaceColorToHex,
+  RubikCubeFaceName,
+  RubikCubeFaceXIndex,
+  RubikCubeFaceYIndex,
+} from "./RubikCube/RubikCube";
 
 export type CUBE_INFO = {
-  position: [x: number, y: number, z: number],
+  position: [x: number, y: number, z: number];
   mapping: {
-    flat: [face: RubikCubeFaceName, y: RubikCubeFaceYIndex, x: RubikCubeFaceXIndex]
-    cubeFace: RubikCubeCubeFaceIndex
-  }[],
-}
+    flat: [
+      face: RubikCubeFaceName,
+      y: RubikCubeFaceYIndex,
+      x: RubikCubeFaceXIndex,
+    ];
+    cubeFace: RubikCubeCubeFaceIndex;
+  }[];
+};
 
 const CUBE_FACE_INDEX_MAP = {
   "RIGHT": 0,
@@ -17,8 +27,8 @@ const CUBE_FACE_INDEX_MAP = {
   "FRONT": 4,
   "BACK": 5,
 } as const;
-export type RubikCubeCubeFaceIndex = (typeof CUBE_FACE_INDEX_MAP)[keyof typeof CUBE_FACE_INDEX_MAP]
-
+export type RubikCubeCubeFaceIndex =
+  (typeof CUBE_FACE_INDEX_MAP)[keyof typeof CUBE_FACE_INDEX_MAP];
 
 // deno-fmt-ignore
 export const RUBIK_CUBE_CENTER_CUBE = [
@@ -429,34 +439,40 @@ export type RubikCubeCubeFace = typeof RUBIK_CUBE_CUBE_FACE_NAME[number];
 export const RUBIK_CUBE_CUBE = [
   ...RUBIK_CUBE_CENTER_CUBE,
   ...RUBIK_CUBE_CORNER_CUBE,
-  ...RUBIK_CUBE_EDGE_CUBE
-]
+  ...RUBIK_CUBE_EDGE_CUBE,
+];
 
 export const generateRubikCubeCubeModel = (rubikCubik: RubikCube) => {
   const group = new Group();
 
   for (const [_name, cubeInfo] of RUBIK_CUBE_CUBE) {
     const materials = [
-      new MeshBasicMaterial({color: 0x999999}),
-      new MeshBasicMaterial({color: 0x999999}),
-      new MeshBasicMaterial({color: 0x999999}),
-      new MeshBasicMaterial({color: 0x999999}),
-      new MeshBasicMaterial({color: 0x999999}),
-      new MeshBasicMaterial({color: 0x999999}),
+      new MeshBasicMaterial({ color: 0x999999 }),
+      new MeshBasicMaterial({ color: 0x999999 }),
+      new MeshBasicMaterial({ color: 0x999999 }),
+      new MeshBasicMaterial({ color: 0x999999 }),
+      new MeshBasicMaterial({ color: 0x999999 }),
+      new MeshBasicMaterial({ color: 0x999999 }),
     ];
-    
-    for (const {flat, cubeFace} of cubeInfo.mapping) {
+
+    for (const { flat, cubeFace } of cubeInfo.mapping) {
       materials[cubeFace].color.setHex(
-        rubikCubeFaceColorToHex(rubikCubik.cubeState[flat[0]][flat[1]][flat[2]])
-      )
+        rubikCubeFaceColorToHex(
+          rubikCubik.cubeState[flat[0]][flat[1]][flat[2]],
+        ),
+      );
     }
 
     const cube = new Mesh(
       new BoxGeometry(1, 1, 1),
-      materials
+      materials,
     );
 
-    cube.position.set(cubeInfo.position[0], cubeInfo.position[1], cubeInfo.position[2]);
+    cube.position.set(
+      cubeInfo.position[0],
+      cubeInfo.position[1],
+      cubeInfo.position[2],
+    );
     group.add(cube);
   }
 
