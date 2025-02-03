@@ -3,6 +3,7 @@ import { HorizontalRule } from "../../components/HorizontalRule/HorizontalRule";
 import { BottomDrawer } from "../../layouts/BottomDrawer/BottomDrawer";
 import { useRef } from "react";
 import styles from "./AlgorithmStep.module.css";
+import { RubikCube } from "../../components/RubikCube/RubikCube";
 
 export const AlgorithmStep = ({
   displaying,
@@ -25,7 +26,7 @@ export const AlgorithmStep = ({
         className={styles.algorithmStep}
         viewBox={
           <BottomDrawer.ViewBox>
-            aiue
+            <RubikCube />
           </BottomDrawer.ViewBox>
         }
         drawer={
