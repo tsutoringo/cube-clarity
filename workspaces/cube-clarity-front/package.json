@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@result/result": "npm:@jsr/result__result@^1.1.0",
     "classnames": "^2.5.1",
     "happy-css-modules": "^3.2.0",
     "react": "^19.0.0",

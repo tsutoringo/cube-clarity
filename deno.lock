@@ -5,6 +5,7 @@
     "jsr:@std/internal@^1.0.5": "1.0.5",
     "npm:@deno/vite-plugin@1": "1.0.2_vite@5.4.11",
     "npm:@eslint/js@^9.13.0": "9.15.0",
+    "npm:@jsr/result__result@^1.1.0": "1.1.0",
     "npm:@types/react-dom@^18.3.1": "18.3.5_@types+react@18.3.17",
     "npm:@types/react-transition-group@^4.4.12": "4.4.12_@types+react@18.3.17",
     "npm:@types/react@^18.3.12": "18.3.17",
@@ -447,6 +448,9 @@
         "@jridgewell/resolve-uri",
         "@jridgewell/sourcemap-codec"
       ]
+    },
+    "@jsr/result__result@1.1.0": {
+      "integrity": "sha512-ST429aDRWP42Rv/5kSGRQi6Uq84S2wLIVqzeO5lxV7wj/xkgAD3vN2Uo8QrnwiRgLUBEnDbLbnaMjUnfnDQO/g=="
     },
     "@nodelib/fs.scandir@2.1.5": {
       "integrity": "sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==",
@@ -1865,11 +1869,13 @@
     "members": {
       "workspaces/cube-clarity-front": {
         "dependencies": [
+          "jsr:@result/result@^1.1.0",
           "jsr:@std/assert@1"
         ],
         "packageJson": {
           "dependencies": [
             "npm:@eslint/js@^9.13.0",
+            "npm:@jsr/result__result@^1.1.0",
             "npm:@types/react-dom@^18.3.1",
             "npm:@types/react-transition-group@^4.4.12",
             "npm:@types/react@^18.3.12",
