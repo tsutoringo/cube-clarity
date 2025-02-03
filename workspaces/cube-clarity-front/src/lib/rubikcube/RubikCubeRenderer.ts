@@ -44,7 +44,6 @@ export class RubikCubeRenderer {
     this.resizeObserver = new ResizeObserver(() => this.resize());
     this.resizeObserver.observe(parentElement);
 
-
     this.rubikCubeGroup = new Group();
   }
 

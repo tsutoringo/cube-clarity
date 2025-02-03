@@ -1,4 +1,4 @@
-import { RubikCubeMoveNotate as RubikCubeMoveNotation } from './MoveNotation';
+import { RubikCubeMoveNotate as RubikCubeMoveNotation } from "./MoveNotation";
 
 export type RubikCubeFaceName = "U" | "D" | "F" | "B" | "L" | "R";
 
@@ -138,7 +138,7 @@ export class RubikCube {
   /**
    * すべて揃えられた状態から、`moves`で指定された回転記号に従って回した状態のルービックキューブを返します。
    * @param moves
-   * 
+   *
    * @example
    * ```
    * const cube = RubikCube.withMoveNotation(
