@@ -442,7 +442,7 @@ export const RUBIK_CUBE_CUBE = [
   ...RUBIK_CUBE_EDGE_CUBE,
 ];
 
-export const generateRubikCubeCubeModel = (rubikCubik: RubikCube) => {
+export const generateRubikCubeCubeModel = (rubikCube: RubikCube) => {
   const group = new Group();
 
   for (const [_name, cubeInfo] of RUBIK_CUBE_CUBE) {
@@ -458,7 +458,7 @@ export const generateRubikCubeCubeModel = (rubikCubik: RubikCube) => {
     for (const { flat, cubeFace } of cubeInfo.mapping) {
       materials[cubeFace].color.setHex(
         rubikCubeFaceColorToHex(
-          rubikCubik.cubeState[flat[0]][flat[1]][flat[2]],
+          rubikCube.cubeState[flat[0]][flat[1]][flat[2]],
         ),
       );
     }
