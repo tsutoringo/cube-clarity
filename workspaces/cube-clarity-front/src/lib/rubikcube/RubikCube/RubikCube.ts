@@ -602,4 +602,11 @@ export class RubikCube implements Iterable<RubikCubeFace> {
       ),
     ];
   }
+
+  /**
+   * 引数`other`と同じ柄かを返します。
+   */
+  equal(other: RubikCube): boolean {
+    return this.encodeBase64() === other.encodeBase64();
+  }
 }
