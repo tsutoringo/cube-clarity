@@ -485,7 +485,7 @@ export class RubikCube {
    * )
    * ```
    */
-  rotateCube(rawMoves: RubikCubeMove[]) {
+  rotateCube(rawMoves: RubikCubeMoveNotation[]) {
     return rawMoves.reduce((prev, move) => {
       return prev.rotateCubeOnce(move);
     }, this as RubikCube);
