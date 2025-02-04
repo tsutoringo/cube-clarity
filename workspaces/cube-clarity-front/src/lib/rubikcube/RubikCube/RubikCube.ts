@@ -62,28 +62,6 @@ export type RubikCubeFaceXIndex = 0 | 1 | 2;
  */
 export type CubeState = Record<RubikCubeFaceName, RubikCubeFace>;
 
-export const RUBIK_CUBE_MOVES = [
-  "R",
-  "R'",
-  "R2",
-  "L",
-  "L'",
-  "L2",
-  "U",
-  "U'",
-  "U2",
-  "D",
-  "D'",
-  "D2",
-  "F",
-  "F'",
-  "F2",
-  "B",
-  "B'",
-  "B2",
-] as const;
-export type RubikCubeMove = typeof RUBIK_CUBE_MOVES[number];
-
 /**
  * RubikCube class.
  *
@@ -321,7 +299,7 @@ export class RubikCube {
    * @param move ルービックキューブの回転記号
    * @returns 引数moveで指定された回転記号に基づき回転されたDeepCloneされた{@linkcode RubikCube}
    */
-  rotateCubeOnce(move: RubikCubeMove) {
+  rotateCubeOnce(move: RubikCubeMoveNotation) {
     const clonedCube = this.clone();
 
     // deno-fmt-ignore
