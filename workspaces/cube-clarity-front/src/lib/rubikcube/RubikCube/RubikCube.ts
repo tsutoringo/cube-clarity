@@ -99,7 +99,7 @@ export class RubikCube {
    * @returns すべて揃えられた状態のルービックキューブ
    */
   static default() {
-    const cubeSatate = {
+    const cubeState = {
       U: Array(3).fill(null).map(() =>
         ["W", "W", "W"] satisfies RubikCubeFace[number]
       ),
