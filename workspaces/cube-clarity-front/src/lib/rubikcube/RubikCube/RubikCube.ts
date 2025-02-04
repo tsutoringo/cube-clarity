@@ -120,7 +120,7 @@ export class RubikCube {
       ),
     } as CubeState;
 
-    return new RubikCube(cubeSatate);
+    return new RubikCube(cubeState);
   }
 
   /**
