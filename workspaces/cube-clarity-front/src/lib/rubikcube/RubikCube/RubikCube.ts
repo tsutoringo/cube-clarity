@@ -1,6 +1,7 @@
 import { RubikCubeMoveNotation } from "./MoveNotation";
 import { decodeBase64, encodeBase64 } from "@std/encoding";
-import { chunked, flatMap, flatten, map } from "@core/iterutil/pipe";
+import { chain, chunked, flatMap, flatten, map } from "@core/iterutil/pipe";
+import { zip } from "@core/iterutil";
 import { pipe } from "@core/pipe";
 import {
   decodeRubikCubeFaceColor,
@@ -533,18 +534,21 @@ export class RubikCube implements Iterable<RubikCubeFace> {
 
   /**
    * Console上で有効なスタイル付きの展開図を返します。
-   * @deprecated 色が正しく表示されません。
-   * @todo いつか治す
+   * @example
+   * ```
+   * console.log(
+   *   ...RubikCube.decodeBase64("AwQFAgEhQVExICQlISMDU0MTQENCQUUFJTUV")
+   *     .unwrap()
+   *     .netWithColor()
+   * );
+   * ```
    */
   netWithColor() {
     const converted = pipe(
       this[Symbol.iterator](),
       flatten<RubikCubeFaceColor[]>,
       flatten<RubikCubeFaceColor>,
-      map<RubikCubeFaceColor, {
-        faceValue: string;
-        style: string;
-      }>((color) => ({
+      map((color) => ({
         faceValue: `%c${color.padStart(2)}%c`,
         style: `background-color: #${
           rubikCubeFaceColorToHex(color).toString(16).padStart(6, "0")
@@ -556,16 +560,45 @@ export class RubikCube implements Iterable<RubikCubeFace> {
       }>,
     );
 
+    // え？可読性？なんですかそれ美味しいんですか？
+    // それは可読性を捨てロマンを追い続ける、男の話。
     return [
+      // 展開図本体
       rubikCubeNet(
         pipe(
           converted,
           map((entry) => entry.faceValue),
         ),
       ),
+      // スタイル
       ...pipe(
         converted,
-        flatMap((entry) => [entry.style, ""]),
+        chunked(3),
+        chunked(3),
+        Array.from<{
+          faceValue: string;
+          style: string;
+        }[][]>,
+        (faces) =>
+          pipe(
+            // UPは最初
+            faces[0],
+            chain(
+              pipe(
+                zip(
+                  faces[4],
+                  faces[2],
+                  faces[5],
+                  faces[3],
+                ),
+                flatten,
+              ),
+            ),
+            // DOWNは最後
+            chain(faces[1]),
+            flatten,
+            flatMap(({ style }) => [style, ""]),
+          ),
       ),
     ];
   }
