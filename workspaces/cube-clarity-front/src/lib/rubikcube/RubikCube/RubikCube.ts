@@ -87,7 +87,7 @@ export type RubikCubeMove = typeof RUBIK_CUBE_MOVES[number];
 /**
  * RubikCube class.
  *
- * @exmaple
+ * @example
  * ```
  * const rubikCube = RubikCube.default();
  * ```
