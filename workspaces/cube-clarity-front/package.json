@@ -10,17 +10,23 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@result/result": "npm:@jsr/result__result@^1.1.0",
+    "@std/encoding": "npm:@jsr/std__encoding@^1.0.7",
+    "@core/iterutil": "npm:@jsr/core__iterutil@^0.9.0",
+    "@core/pipe": "npm:@jsr/core__pipe@^0.4.0",
     "classnames": "^2.5.1",
     "happy-css-modules": "^3.2.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-transition-group": "^4.4.5"
+    "react-transition-group": "^4.4.5",
+    "three": "^0.172.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.13.0",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "@types/react-transition-group": "^4.4.12",
+    "@types/three": "^0.172.0",
     "@vitejs/plugin-react": "^4.3.3",
     "eslint": "^9.13.0",
     "eslint-plugin-react-hooks": "^5.0.0",

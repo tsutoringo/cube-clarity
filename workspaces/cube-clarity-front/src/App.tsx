@@ -10,7 +10,7 @@ const App = () => {
   const [screenStatus, setScreenStatus] = useState<ScreenStatus>("none");
 
   useEffect(() => {
-    setScreenStatus("start");
+    setScreenStatus("algorithm");
   }, []);
 
   const handleScanCRubikCubeComplete = (_rubikCube: RubikCubeData) => {
