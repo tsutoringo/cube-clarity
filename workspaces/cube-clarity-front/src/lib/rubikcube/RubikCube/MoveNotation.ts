@@ -22,10 +22,10 @@ export const RUBIK_CUBE_MOVE_NOTATION = [
   "B2",
 ] as const;
 
-export type RubikCubeMoveNotate = typeof RUBIK_CUBE_MOVE_NOTATION[number];
+export type RubikCubeMoveNotation = typeof RUBIK_CUBE_MOVE_NOTATION[number];
 
 /**
- * スペース区切りで指定された、回転記号を{@linkcode RubikCubeMoveNotate}の配列にして返します。
+ * スペース区切りで指定された、回転記号を{@linkcode RubikCubeMoveNotation}の配列にして返します。
  * なお不正な回転記号が指定された場合エラーになるためResult型を返します。
  *
  * Result型についてはここのドキュメントを参照のこと{@see https://jsr.io/@result/result}
@@ -52,7 +52,7 @@ export type RubikCubeMoveNotate = typeof RUBIK_CUBE_MOVE_NOTATION[number];
  */
 export const parseMoveNotation = (
   rawMoveNotations: string,
-): RubikCubeResult<RubikCubeMoveNotate[]> => {
+): RubikCubeResult<RubikCubeMoveNotation[]> => {
   const splitedRawMoveNotations = rawMoveNotations.split(" ");
   const moveNotations = [];
 
@@ -67,7 +67,7 @@ export const parseMoveNotation = (
     moveNotations.push(upperdMoveNotation);
   }
 
-  return Result.ok(moveNotations as RubikCubeMoveNotate[]);
+  return Result.ok(moveNotations as RubikCubeMoveNotation[]);
 };
 
 export class RubikCubeBadMoveNotationError extends RubikCubeError {

@@ -4,7 +4,6 @@ import styles from "./RubikCube.module.css";
 import { RubikCubeRenderer } from "../../lib/rubikcube/RubikCubeRenderer";
 import { RubikCube } from "../../lib/rubikcube/RubikCube/RubikCube";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
-import { parseMoveNotation } from "../../lib/rubikcube/RubikCube/MoveNotation";
 
 export const RubikCubeDisplay = () => {
   const rubikCubeParentRef = useRef<HTMLDivElement>(null);

@@ -1,6 +1,5 @@
 import {
   AxesHelper,
-  GridHelper,
   Group,
   PerspectiveCamera,
   Scene,
