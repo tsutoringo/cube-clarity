@@ -53,18 +53,18 @@ export type RubikCubeMoveNotation = typeof RUBIK_CUBE_MOVE_NOTATION[number];
 export const parseMoveNotation = (
   rawMoveNotations: string,
 ): RubikCubeResult<RubikCubeMoveNotation[]> => {
-  const splitedRawMoveNotations = rawMoveNotations.split(" ");
+  const splitRawMoveNotations = rawMoveNotations.split(" ");
   const moveNotations = [];
 
-  for (const moveNotation of splitedRawMoveNotations) {
-    const upperdMoveNotation = moveNotation.toUpperCase();
-    if (!RUBIK_CUBE_MOVE_NOTATION.includes(upperdMoveNotation as never)) {
+  for (const moveNotation of splitRawMoveNotations) {
+    const upperMoveNotation = moveNotation.toUpperCase();
+    if (!RUBIK_CUBE_MOVE_NOTATION.includes(upperMoveNotation as never)) {
       return Result.err(
         new RubikCubeBadMoveNotationError(moveNotation),
       );
     }
 
-    moveNotations.push(upperdMoveNotation);
+    moveNotations.push(upperMoveNotation);
   }
 
   return Result.ok(moveNotations as RubikCubeMoveNotation[]);
