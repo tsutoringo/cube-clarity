@@ -6,10 +6,11 @@ import {
   decodeRubikCubeFaceColor,
   encodeRubikCubeFaceColor,
   RubikCubeFaceColor,
+  rubikCubeFaceColorToHex,
 } from "./RubikCubeFaceColor";
 import { RubikCubeDecodeError, RubikCubeResult } from "./Error";
 import { Result } from "@result/result";
-import { collectResult } from "./helper";
+import { collectResult, rubikCubeNet } from "./helper";
 
 export * from "./MoveNotation";
 export * from "./RubikCubeFaceColor";
@@ -70,7 +71,7 @@ export type CubeState = Record<RubikCubeFaceName, RubikCubeFace>;
  * const rubikCube = RubikCube.default();
  * ```
  */
-export class RubikCube {
+export class RubikCube implements Iterable<RubikCubeFace> {
   static readonly RUBIK_CUBE_ENCODED_DATA_LENGTH = 27;
   /**
    * すべて揃えられた状態のRubikCubeを返します。
@@ -132,18 +133,13 @@ export class RubikCube {
    */
   static encode(rubikCube: RubikCube): Uint8Array {
     const encoded = pipe(
-      [
-        ...rubikCube.cubeState.U,
-        ...rubikCube.cubeState.D,
-        ...rubikCube.cubeState.F,
-        ...rubikCube.cubeState.B,
-        ...rubikCube.cubeState.L,
-        ...rubikCube.cubeState.R,
-      ],
+      rubikCube[Symbol.iterator](),
+      flatten,
       flatten<RubikCubeFaceColor>,
       chunked(2),
       map(([left, right]) => {
-        return encodeRubikCubeFaceColor(left) << 4 | encodeRubikCubeFaceColor(right);
+        return encodeRubikCubeFaceColor(left) << 4 |
+          encodeRubikCubeFaceColor(right);
       }),
     );
 
@@ -509,5 +505,68 @@ export class RubikCube {
    */
   encodeBase64(): string {
     return RubikCube.encodeBase64(this);
+  }
+
+  [Symbol.iterator]() {
+    return [
+      this.cubeState.U,
+      this.cubeState.D,
+      this.cubeState.F,
+      this.cubeState.B,
+      this.cubeState.L,
+      this.cubeState.R,
+    ][Symbol.iterator]();
+  }
+
+  /**
+   * 展開図を返します。
+   */
+  net() {
+    return rubikCubeNet(
+      pipe(
+        this[Symbol.iterator](),
+        flatten<RubikCubeFaceColor[]>,
+        flatten<RubikCubeFaceColor>,
+      ),
+    );
+  }
+
+  /**
+   * Console上で有効なスタイル付きの展開図を返します。
+   * @deprecated 色が正しく表示されません。
+   * @todo いつか治す
+   */
+  netWithColor() {
+    const converted = pipe(
+      this[Symbol.iterator](),
+      flatten<RubikCubeFaceColor[]>,
+      flatten<RubikCubeFaceColor>,
+      map<RubikCubeFaceColor, {
+        faceValue: string;
+        style: string;
+      }>((color) => ({
+        faceValue: `%c${color.padStart(2)}%c`,
+        style: `background-color: #${
+          rubikCubeFaceColorToHex(color).toString(16).padStart(6, "0")
+        };`,
+      })),
+      Array.from<{
+        faceValue: string;
+        style: string;
+      }>,
+    );
+
+    return [
+      rubikCubeNet(
+        pipe(
+          converted,
+          map((entry) => entry.faceValue),
+        ),
+      ),
+      ...pipe(
+        converted,
+        flatMap((entry) => [entry.style, ""]),
+      ),
+    ];
   }
 }
