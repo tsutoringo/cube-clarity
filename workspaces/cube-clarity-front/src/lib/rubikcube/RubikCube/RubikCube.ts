@@ -153,7 +153,7 @@ export class RubikCube {
    * の順でデコードされます。
    */
   static encode(rubikCube: RubikCube): Uint8Array {
-    const cubeState = pipe(
+    const encoded = pipe(
       [
         ...rubikCube.cubeState.U,
         ...rubikCube.cubeState.D,
@@ -164,14 +164,10 @@ export class RubikCube {
       ],
       flatten<RubikCubeFaceColor>,
       chunked(2),
-    ) as Iterable<[RubikCubeFaceColor, RubikCubeFaceColor]>;
-
-    const encoded: number[] = [];
-    for (const [left, right] of cubeState) {
-      encoded.push(
-        encodeRubikCubeFaceColor(left) << 4 | encodeRubikCubeFaceColor(right),
-      );
-    }
+      map(([left, right]) => {
+        return encodeRubikCubeFaceColor(left) << 4 | encodeRubikCubeFaceColor(right);
+      }),
+    );
 
     return Uint8Array.from(encoded);
   }
