@@ -1,11 +1,15 @@
 {
   "version": "4",
   "specifiers": {
+    "jsr:@result/result@^1.1.0": "1.1.0",
     "jsr:@std/assert@1": "1.0.11",
     "jsr:@std/internal@^1.0.5": "1.0.5",
     "npm:@deno/vite-plugin@1": "1.0.2_vite@5.4.11",
     "npm:@eslint/js@^9.13.0": "9.15.0",
+    "npm:@jsr/core__iterutil@0.9": "0.9.0",
+    "npm:@jsr/core__pipe@0.4": "0.4.0",
     "npm:@jsr/result__result@^1.1.0": "1.1.0",
+    "npm:@jsr/std__encoding@^1.0.7": "1.0.7",
     "npm:@types/react-dom@^18.3.1": "18.3.5_@types+react@18.3.17",
     "npm:@types/react-transition-group@^4.4.12": "4.4.12_@types+react@18.3.17",
     "npm:@types/react@^18.3.12": "18.3.17",
@@ -32,6 +36,9 @@
     "npm:vite@^6.0.1": "6.0.4"
   },
   "jsr": {
+    "@result/result@1.1.0": {
+      "integrity": "7a61851d3f6e9adc4aeb110d3c925af88ce9d39c19f8f06441f8655138653b15"
+    },
     "@std/assert@1.0.11": {
       "integrity": "2461ef3c368fe88bc60e186e7744a93112f16fd110022e113a0849e94d1c83c1",
       "dependencies": [
@@ -449,8 +456,17 @@
         "@jridgewell/sourcemap-codec"
       ]
     },
+    "@jsr/core__iterutil@0.9.0": {
+      "integrity": "sha512-4m89zR5WOKLz3YGyB+OaSgXuv0ddC9U0RpRTC21i/BXjr1RcRdePenUNpML+XrE3IAy/w2uOX3bg1JIVMjIZRw=="
+    },
+    "@jsr/core__pipe@0.4.0": {
+      "integrity": "sha512-vTJlSsPOUM0sD8uRV5SGvDIdNzciKkq9IFt9NG+SAnQzl5/rdFES+DKnf/MxROcYZN0kFeKPouMn7OcRmNxQDw=="
+    },
     "@jsr/result__result@1.1.0": {
       "integrity": "sha512-ST429aDRWP42Rv/5kSGRQi6Uq84S2wLIVqzeO5lxV7wj/xkgAD3vN2Uo8QrnwiRgLUBEnDbLbnaMjUnfnDQO/g=="
+    },
+    "@jsr/std__encoding@1.0.7": {
+      "integrity": "sha512-eySTZkCAHjiKGgOMvhUyTL4aT22svaCO0eO6CAbz48kRECMtRGEfe3KWXkVy4fhlZ/4OTw/RQLrTYyEqpGQp/Q=="
     },
     "@nodelib/fs.scandir@2.1.5": {
       "integrity": "sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==",
@@ -1875,7 +1891,10 @@
         "packageJson": {
           "dependencies": [
             "npm:@eslint/js@^9.13.0",
+            "npm:@jsr/core__iterutil@0.9",
+            "npm:@jsr/core__pipe@0.4",
             "npm:@jsr/result__result@^1.1.0",
+            "npm:@jsr/std__encoding@^1.0.7",
             "npm:@types/react-dom@^18.3.1",
             "npm:@types/react-transition-group@^4.4.12",
             "npm:@types/react@^18.3.12",

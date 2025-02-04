@@ -16,11 +16,7 @@ export const RubikCubeDisplay = () => {
       );
 
       rubikCubeRenderer.rerenderRubikCube(
-        RubikCube.withMoveNotation(
-          parseMoveNotation(
-            "U R2 F B R B2 R U2 L B2 R U' D' R2 F R' L B2 U2 F2",
-          ).unwrap(),
-        ),
+        RubikCube.decodeBase64("AwQFAgEhQVExICQlISMDU0MTQENCQUUFJTUV").unwrap(),
       );
 
       rubikCubeRenderer.camera.position.x = 3.5;

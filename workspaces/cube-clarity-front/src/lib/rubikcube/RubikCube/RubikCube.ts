@@ -1,33 +1,23 @@
-import { RubikCubeMoveNotate as RubikCubeMoveNotation } from "./MoveNotation";
+import {
+  parseMoveNotation,
+  RubikCubeMoveNotate as RubikCubeMoveNotation,
+} from "./MoveNotation";
+import { decodeBase64, encodeBase64 } from "@std/encoding";
+import { chunked, flatMap, flatten, map } from "@core/iterutil/pipe";
+import { pipe } from "@core/pipe";
+import {
+  decodeRubikCubeFaceColor,
+  encodeRubikCubeFaceColor,
+  RubikCubeFaceColor,
+} from "./RubikCubeFaceColor";
+import { RubikCubeDecodeError, RubikCubeResult } from "./Error";
+import { Result } from "@result/result";
+import { collectResult } from './helper';
+
+export * from "./MoveNotation";
+export * from "./RubikCubeFaceColor";
 
 export type RubikCubeFaceName = "U" | "D" | "F" | "B" | "L" | "R";
-
-export const FACE_COLOR = {
-  White: "W",
-  Yellow: "Y",
-  Green: "G",
-  Blue: "B",
-  Orange: "O",
-  Red: "R",
-} as const;
-export type RubikCubeFaceColor = typeof FACE_COLOR[keyof typeof FACE_COLOR];
-
-export const rubikCubeFaceColorToHex = (faceColor: RubikCubeFaceColor) => {
-  switch (faceColor) {
-    case "W":
-      return 0xFFFFFF;
-    case "Y":
-      return 0xFFD500;
-    case "G":
-      return 0x009B48;
-    case "B":
-      return 0x0045AD;
-    case "O":
-      return 0xFF5900;
-    case "R":
-      return 0xB90000;
-  }
-};
 
 /**
  * ```plane
@@ -106,6 +96,7 @@ export type RubikCubeMove = typeof RUBIK_CUBE_MOVES[number];
  * ```
  */
 export class RubikCube {
+  static readonly RUBIK_CUBE_ENCODED_DATA_LENGTH = 27;
   /**
    * すべて揃えられた状態のRubikCubeを返します。
    * @returns すべて揃えられた状態のルービックキューブ
@@ -150,6 +141,104 @@ export class RubikCube {
    */
   static withMoveNotation(moves: RubikCubeMoveNotation[]) {
     return RubikCube.default().rotateCube(moves);
+  }
+
+  /**
+   * 4bitずつ、1byteに2面分に色を区切り U, D, F, B, L, R で並べたuint8Arrayを返します。
+   * それぞれの面は
+   * ```plane
+   * [
+   *   [0, 1, 2],
+   *   [3, 4, 5],
+   *   [6, 7, 8],
+   * ]
+   * ```
+   * の順でデコードされます。
+   */
+  static encode(rubikCube: RubikCube): Uint8Array {
+    const cubeState = pipe(
+      [
+        ...rubikCube.cubeState.U,
+        ...rubikCube.cubeState.D,
+        ...rubikCube.cubeState.F,
+        ...rubikCube.cubeState.B,
+        ...rubikCube.cubeState.L,
+        ...rubikCube.cubeState.R,
+      ],
+      flatten<RubikCubeFaceColor>,
+      chunked(2),
+    ) as Iterable<[RubikCubeFaceColor, RubikCubeFaceColor]>;
+
+    const encoded: number[] = [];
+    for (const [left, right] of cubeState) {
+      encoded.push(
+        encodeRubikCubeFaceColor(left) << 4 | encodeRubikCubeFaceColor(right),
+      );
+    }
+
+    return Uint8Array.from(encoded);
+  }
+
+  /**
+   * ルービックキューブをbase64にデコードします。
+   * 詳しい処理は{@linkcode RubikCube.encode}
+   */
+  static encodeBase64(rubikCube: RubikCube): string {
+    return encodeBase64(RubikCube.encode(rubikCube));
+  }
+
+  /**
+   * {@linkcode RubikCube.encode}でエンコードされたルービックキューブをdecodeして{@linkcode RubikCube}にして返します。
+   * @param buffer 
+   * @returns 
+   */
+  static decode(buffer: Uint8Array): RubikCubeResult<RubikCube> {
+    if (buffer.length !== RubikCube.RUBIK_CUBE_ENCODED_DATA_LENGTH) {
+      return Result.err(new RubikCubeDecodeError(buffer.length));
+    }
+
+    const decodedColors = pipe(
+      buffer,
+      flatMap((value) => [
+        value >> 4,
+        value & 0b1111,
+      ]),
+      map((value) => {
+        return decodeRubikCubeFaceColor(value)
+      }),
+      collectResult
+    ).branch();
+
+    if (decodedColors.isBreak) return decodedColors.value;
+
+    const decodedRubikCubeState = Array.from(pipe(
+      decodedColors.value,
+      chunked(9),
+      map((value) => Array.from(pipe(
+        value,
+        chunked(3)
+      )))
+    )) as [ RubikCubeFace, RubikCubeFace, RubikCubeFace, RubikCubeFace, RubikCubeFace, RubikCubeFace ];
+
+    return Result.ok(new RubikCube(
+      {
+        U: decodedRubikCubeState[0],
+        D: decodedRubikCubeState[1],
+        F: decodedRubikCubeState[2],
+        B: decodedRubikCubeState[3],
+        L: decodedRubikCubeState[4],
+        R: decodedRubikCubeState[5],
+      },
+    ))
+  }
+
+  /**
+   * {@linkcode RubikCube.encodeBase64}でエンコードされたルービックキューブをdecodeして{@linkcode RubikCube}にして返します。
+   * @param base64 
+   * @returns 
+   */
+  static decodeBase64(base64: string) {
+    return RubikCube.decode(decodeBase64(base64));
   }
 
   constructor(
@@ -430,5 +519,13 @@ export class RubikCube {
     x: RubikCubeFaceXIndex,
   ): RubikCubeFaceColor {
     return this.cubeState[faceName][y][x];
+  }
+
+  /**
+   * ルービックキューブをbase64にエンコードします。
+   * 詳細は{@linkcode RubikCube.encodeBase64}
+   */
+  encodeBase64(): string {
+    return RubikCube.encodeBase64(this);
   }
 }
