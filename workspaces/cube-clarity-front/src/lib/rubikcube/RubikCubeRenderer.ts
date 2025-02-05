@@ -20,7 +20,7 @@ export class RubikCubeRenderer {
   constructor(
     public parentElement: HTMLElement,
   ) {
-    this.renderer = new WebGLRenderer();
+    this.renderer = new WebGLRenderer({ alpha: true });
 
     parentElement.appendChild(this.renderer.domElement);
 
