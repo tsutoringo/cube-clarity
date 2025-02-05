@@ -4,8 +4,8 @@ import { BottomDrawer } from "../../layouts/BottomDrawer/BottomDrawer";
 import { useMemo, useRef, useState } from "react";
 import styles from "./AlgorithmStep.module.css";
 import { RubikCubeDisplay } from "../../components/RubikCube/RubikCube";
-import { parseMoveNotation } from '../../lib/rubikcube/RubikCube/MoveNotation';
-import { RubikCube } from '../../lib/rubikcube/RubikCube/RubikCube';
+import { parseMoveNotation } from "../../lib/rubikcube/RubikCube/MoveNotation";
+import { RubikCube } from "../../lib/rubikcube/RubikCube/RubikCube";
 
 export const AlgorithmStep = ({
   displaying,
@@ -13,12 +13,17 @@ export const AlgorithmStep = ({
   displaying: boolean;
 }) => {
   const algorithmStepRef = useRef<HTMLDivElement>(null);
-  const [moves, _setMoves] = useState(parseMoveNotation("U R2 F B R B2 R U2 L B2 R U' D' R2 F R' L B2 U2 F2").unwrap());
-  const [viewingRubikCube, setViewingRubikCube] = useState(RubikCube.decodeBase64('AwQFAgEhQVExICQlISMDU0MTQENCQUUFJTUV').unwrap());
+  const [moves, _setMoves] = useState(
+    parseMoveNotation("U R2 F B R B2 R U2 L B2 R U' D' R2 F R' L B2 U2 F2")
+      .unwrap(),
+  );
+  const [viewingRubikCube, setViewingRubikCube] = useState(
+    RubikCube.decodeBase64("AwQFAgEhQVExICQlISMDU0MTQENCQUUFJTUV").unwrap(),
+  );
   const steps = useMemo(
     () => {
       let first = RubikCube.default();
-      const acc: RubikCube[] = [ first ];
+      const acc: RubikCube[] = [first];
 
       for (const move of moves) {
         first = first.rotateCubeOnce(move);
@@ -27,8 +32,8 @@ export const AlgorithmStep = ({
 
       return acc;
     },
-    [moves]
-  )
+    [moves],
+  );
 
   return (
     <CSSTransition
@@ -69,12 +74,17 @@ export const AlgorithmStep = ({
               </HorizontalRule.Content>
             </HorizontalRule>
             <div className={styles.stepCubes}>
-              {
-                steps.map((rubikCube, index) => {
-                  return <RubikCubeDisplay noUpdate key={index} onClick={() => setViewingRubikCube(rubikCube)}
-                  className={styles.stepCube} rubikCube={rubikCube} />
-                })
-              }
+              {steps.map((rubikCube, index) => {
+                return (
+                  <RubikCubeDisplay
+                    noUpdate
+                    key={index}
+                    onClick={() => setViewingRubikCube(rubikCube)}
+                    className={styles.stepCube}
+                    rubikCube={rubikCube}
+                  />
+                );
+              })}
             </div>
           </BottomDrawer.Drawer>
         }

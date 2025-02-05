@@ -2,12 +2,15 @@ import { ComponentProps, useEffect, useRef, useState } from "react";
 import { Vector3 } from "three";
 import styles from "./RubikCube.module.css";
 import { RubikCubeRenderer } from "../../lib/rubikcube/RubikCubeRenderer";
-import { parseMoveNotation, RubikCube } from "../../lib/rubikcube/RubikCube/RubikCube";
+import {
+  parseMoveNotation,
+  RubikCube,
+} from "../../lib/rubikcube/RubikCube/RubikCube";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
-import classNames from 'classnames';
+import classNames from "classnames";
 
 interface RubikCubeDisplayProps extends ComponentProps<"div"> {
-  noUpdate?: boolean
+  noUpdate?: boolean;
 }
 
 interface RubikCubeDisplayPropsWithMoveNotation extends RubikCubeDisplayProps {
@@ -29,13 +32,22 @@ interface RubikCubeDisplayPropsWithRubikCube extends RubikCubeDisplayProps {
 }
 
 export const RubikCubeDisplay = (
-  { className, moves, base64, rubikCube: gotRubikCube, noUpdate = false, ...otherProps }:
+  {
+    className,
+    moves,
+    base64,
+    rubikCube: gotRubikCube,
+    noUpdate = false,
+    ...otherProps
+  }:
     | RubikCubeDisplayPropsWithBase64
     | RubikCubeDisplayPropsWithMoveNotation
     | RubikCubeDisplayPropsWithRubikCube,
 ) => {
   const rubikCubeParentRef = useRef<HTMLDivElement>(null);
-  const [rubikCubeRenderer, setRubikCubeRenderer] = useState<null | RubikCubeRenderer>(null);
+  const [rubikCubeRenderer, setRubikCubeRenderer] = useState<
+    null | RubikCubeRenderer
+  >(null);
 
   useEffect(() => {
     if (rubikCubeParentRef.current) {
@@ -65,7 +77,6 @@ export const RubikCubeDisplay = (
         frame();
       }
 
-
       return () => {
         rubikCubeRenderer.unmount();
       };
@@ -75,21 +86,25 @@ export const RubikCubeDisplay = (
   useEffect(() => {
     if (rubikCubeRenderer) {
       const rubikCube = base64
-      ? RubikCube.decodeBase64(base64).unwrap()
-      : moves
-      ? RubikCube.withMoveNotation(parseMoveNotation(moves).unwrap())
-      : gotRubikCube
-      ? gotRubikCube
-      : null!;
+        ? RubikCube.decodeBase64(base64).unwrap()
+        : moves
+        ? RubikCube.withMoveNotation(parseMoveNotation(moves).unwrap())
+        : gotRubikCube
+        ? gotRubikCube
+        : null!;
       rubikCubeRenderer.rerenderRubikCube(
-        rubikCube
+        rubikCube,
       );
       rubikCubeRenderer.render();
     }
   }, [rubikCubeRenderer, moves, base64, gotRubikCube]);
 
   return (
-    <div {...otherProps} className={classNames(styles.rubikCube, className)} ref={rubikCubeParentRef}>
+    <div
+      {...otherProps}
+      className={classNames(styles.rubikCube, className)}
+      ref={rubikCubeParentRef}
+    >
     </div>
   );
 };
