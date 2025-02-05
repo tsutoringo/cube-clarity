@@ -10,7 +10,7 @@ import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import classNames from "classnames";
 
 interface RubikCubeDisplayProps extends ComponentProps<"div"> {
-  noUpdate?: boolean;
+  onceRender?: boolean;
 }
 
 interface RubikCubeDisplayPropsWithMoveNotation extends RubikCubeDisplayProps {
@@ -37,7 +37,7 @@ export const RubikCubeDisplay = (
     moves,
     base64,
     rubikCube: gotRubikCube,
-    noUpdate = false,
+    onceRender = false,
     ...otherProps
   }:
     | RubikCubeDisplayPropsWithBase64
@@ -49,6 +49,16 @@ export const RubikCubeDisplay = (
     null | RubikCubeRenderer
   >(null);
 
+  const getRubikCube = () => {
+    return base64
+        ? RubikCube.decodeBase64(base64).unwrap()
+        : moves
+        ? RubikCube.withMoveNotation(parseMoveNotation(moves).unwrap())
+        : gotRubikCube
+        ? gotRubikCube
+        : null!;
+  }
+
   useEffect(() => {
     if (rubikCubeParentRef.current) {
       const rubikCubeRenderer = new RubikCubeRenderer(
@@ -59,10 +69,11 @@ export const RubikCubeDisplay = (
       rubikCubeRenderer.camera.position.y = 3.5;
       rubikCubeRenderer.camera.position.z = 3.5;
       rubikCubeRenderer.camera.lookAt(new Vector3(0, 0, 0));
+      rubikCubeRenderer.rerenderRubikCube(getRubikCube())
 
       setRubikCubeRenderer(rubikCubeRenderer);
 
-      if (!noUpdate) {
+      if (!onceRender) {
         new OrbitControls(
           rubikCubeRenderer.camera,
           rubikCubeParentRef.current,
@@ -84,17 +95,10 @@ export const RubikCubeDisplay = (
 
   useEffect(() => {
     if (rubikCubeRenderer) {
-      const rubikCube = base64
-        ? RubikCube.decodeBase64(base64).unwrap()
-        : moves
-        ? RubikCube.withMoveNotation(parseMoveNotation(moves).unwrap())
-        : gotRubikCube
-        ? gotRubikCube
-        : null!;
+      const rubikCube = getRubikCube();
       rubikCubeRenderer.rerenderRubikCube(
         rubikCube,
       );
-      rubikCubeRenderer.render();
     }
   }, [rubikCubeRenderer, moves, base64, gotRubikCube]);
 

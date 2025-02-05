@@ -1,4 +1,4 @@
-import { ComponentProps, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { HorizontalRule } from "../../components/HorizontalRule/HorizontalRule";
 import { RubikCubeDisplay } from "../../components/RubikCube/RubikCube";
 import { BottomDrawer } from "../../layouts/BottomDrawer/BottomDrawer";
@@ -15,26 +15,28 @@ export const Playground = () => {
     RubikCube.default(),
   );
 
+  const [ rawStartCube, setRawStartCube ] = useState<string>(RubikCube.default().encodeBase64());
+  const [ startCube, setStartCube ] = useState(RubikCube.default());
+
   const [moves, setMoves] = useState(
     parseMoveNotation("U R2 F B R B2 R U2 L B2 R U' D' R2 F R' L B2 U2 F2")
       .unwrap(),
   );
-
-  const [rawMoves, setRawMoves ] = useState<string>("");
+  const [rawMoves, setRawMoves ] = useState<string>("U R2 F B R B2 R U2 L B2 R U' D' R2 F R' L B2 U2 F2");
 
   const steps = useMemo(
     () => {
-      let first = RubikCube.default();
-      const acc: RubikCube[] = [first];
+      let currentCube = startCube;
+      const acc: RubikCube[] = [currentCube];
 
       for (const move of moves) {
-        first = first.rotateCubeOnce(move);
-        acc.push(first);
+        currentCube = currentCube.rotateCubeOnce(move);
+        acc.push(currentCube);
       }
 
       return acc;
     },
-    [moves],
+    [moves, startCube],
   );
 
   const handleSetMoves = () => {
@@ -62,13 +64,22 @@ export const Playground = () => {
             <BottomDrawer.Drawer.Title>
               Playground
             </BottomDrawer.Drawer.Title>
+
+            <h2 className={styles.title}>StartCube</h2>
+            <div>
+              <textarea
+                value={rawStartCube}
+                onChange={(e) => setRawStartCube(e.target.value)}
+              />
+              <button onClick={() => setStartCube(RubikCube.decodeBase64(rawStartCube).orThrow())}>読み込む</button>
+            </div>
             <h2 className={styles.title}>moves</h2>
             <div>
               <textarea
                 value={rawMoves}
                 onChange={(e) => setRawMoves(e.target.value)}
               />
-              <button onClick={() => handleSetMoves()}>設定</button>
+              <button onClick={() => handleSetMoves()}>読み込む</button>
             </div>
             <h2 className={styles.title}>Current Cube</h2>
             <div>
@@ -76,6 +87,7 @@ export const Playground = () => {
                 value={viewingRubikCube.encodeBase64()}
                 onChange={(e) => handleSetRubikCube(e.target.value)}
               />
+              <button onClick={() => setStartCube(viewingRubikCube)}>Start Cubeとして読み込む</button>
             </div>
             <HorizontalRule>
               <HorizontalRule.Content>
@@ -85,7 +97,7 @@ export const Playground = () => {
             <div className={styles.stepCubes}>
               <div className={styles.stepCube}>
                 <RubikCubeDisplay
-                  noUpdate
+                  onceRender
                   onClick={() => setViewingRubikCube(steps[0])}
                   rubikCube={steps[0]}
                 />
@@ -96,7 +108,7 @@ export const Playground = () => {
                     <div key={index} className={styles.stepCube}>
                       <span>{move}</span>
                       <RubikCubeDisplay
-                        noUpdate
+                        onceRender
                         onClick={() => setViewingRubikCube(rubikCube)}
                         rubikCube={rubikCube}
                       />
