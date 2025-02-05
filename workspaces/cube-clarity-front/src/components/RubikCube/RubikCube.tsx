@@ -61,7 +61,6 @@ export const RubikCubeDisplay = (
       rubikCubeRenderer.camera.lookAt(new Vector3(0, 0, 0));
 
       setRubikCubeRenderer(rubikCubeRenderer);
-      rubikCubeRenderer.render();
 
       if (!noUpdate) {
         new OrbitControls(
