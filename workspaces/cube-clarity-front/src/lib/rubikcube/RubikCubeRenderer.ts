@@ -20,7 +20,7 @@ export class RubikCubeRenderer {
   constructor(
     public parentElement: HTMLElement,
   ) {
-    this.renderer = new WebGLRenderer();
+    this.renderer = new WebGLRenderer({ alpha: true });
 
     parentElement.appendChild(this.renderer.domElement);
 
@@ -50,6 +50,8 @@ export class RubikCubeRenderer {
     this.scene.remove(this.rubikCubeGroup);
     this.rubikCubeGroup = generateRubikCubeCubeModel(rubikCube);
     this.scene.add(this.rubikCubeGroup);
+
+    this.render();
   }
 
   /**
@@ -68,6 +70,10 @@ export class RubikCubeRenderer {
     this.camera.updateProjectionMatrix();
 
     this.renderer.render(this.scene, this.camera);
+  }
+
+  dispose() {
+    this.renderer.dispose();
   }
 
   unmount() {
