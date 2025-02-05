@@ -6,6 +6,7 @@ import styles from "./AlgorithmStep.module.css";
 import { RubikCubeDisplay } from "../../components/RubikCube/RubikCube";
 import { parseMoveNotation } from "../../lib/rubikcube/RubikCube/MoveNotation";
 import { RubikCube } from "../../lib/rubikcube/RubikCube/RubikCube";
+import { drop, zip } from '@core/iterutil';
 
 export const AlgorithmStep = ({
   displaying,
@@ -74,15 +75,24 @@ export const AlgorithmStep = ({
               </HorizontalRule.Content>
             </HorizontalRule>
             <div className={styles.stepCubes}>
-              {steps.map((rubikCube, index) => {
+              <div className={styles.stepCube}>
+                <RubikCubeDisplay
+                  noUpdate
+                  onClick={() => setViewingRubikCube(steps[0])}
+                  rubikCube={steps[0]}
+                />
+              </div>
+              {Array.from(zip(drop(steps, 1), moves)).map(([rubikCube, move], index) => {
                 return (
-                  <RubikCubeDisplay
-                    noUpdate
-                    key={index}
-                    onClick={() => setViewingRubikCube(rubikCube)}
-                    className={styles.stepCube}
-                    rubikCube={rubikCube}
-                  />
+                  <div className={styles.stepCube}>
+                    <span>{ move }</span>
+                    <RubikCubeDisplay
+                      noUpdate
+                      key={index}
+                      onClick={() => setViewingRubikCube(rubikCube)}
+                      rubikCube={rubikCube}
+                    />
+                  </div>
                 );
               })}
             </div>

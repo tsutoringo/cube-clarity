@@ -21,6 +21,7 @@
     display: flex;
     flex-wrap: wrap;
     .step-cube {
+      display: flex;
       width: 80px;
       height: 80px;
     }
