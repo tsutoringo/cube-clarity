@@ -16,4 +16,13 @@
     transition: all ease-in 1s;
     opacity: 0;
   }
+
+  .step-cubes {
+    display: flex;
+    flex-wrap: wrap;
+    .step-cube {
+      width: 80px;
+      height: 80px;
+    }
+  }
 }
