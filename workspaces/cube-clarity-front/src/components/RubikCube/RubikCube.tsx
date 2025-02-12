@@ -51,13 +51,13 @@ export const RubikCubeDisplay = (
 
   const getRubikCube = () => {
     return base64
-        ? RubikCube.decodeBase64(base64).unwrap()
-        : moves
-        ? RubikCube.withMoveNotation(parseMoveNotation(moves).unwrap())
-        : gotRubikCube
-        ? gotRubikCube
-        : null!;
-  }
+      ? RubikCube.decodeBase64(base64).unwrap()
+      : moves
+      ? RubikCube.withMoveNotation(parseMoveNotation(moves).unwrap())
+      : gotRubikCube
+      ? gotRubikCube
+      : null!;
+  };
 
   useEffect(() => {
     if (rubikCubeParentRef.current) {
@@ -69,7 +69,7 @@ export const RubikCubeDisplay = (
       rubikCubeRenderer.camera.position.y = 3.5;
       rubikCubeRenderer.camera.position.z = 3.5;
       rubikCubeRenderer.camera.lookAt(new Vector3(0, 0, 0));
-      rubikCubeRenderer.rerenderRubikCube(getRubikCube())
+      rubikCubeRenderer.rerenderRubikCube(getRubikCube());
 
       setRubikCubeRenderer(rubikCubeRenderer);
 
