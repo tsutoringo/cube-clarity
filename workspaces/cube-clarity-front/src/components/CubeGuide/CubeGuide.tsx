@@ -1,7 +1,8 @@
 import { RubikCube } from "../../lib/rubikcube/RubikCube/RubikCube";
 import { RubikCubeMoveNotation } from "../../lib/rubikcube/RubikCube/MoveNotation";
-import { BoxGeometry, OrthographicCamera, Scene, WebGLRenderer } from "three";
+import { BoxGeometry, OrthographicCamera, Scene, Vector3, WebGLRenderer } from "three";
 import { generateRubikCubeCubeModel } from "../../lib/rubikcube/RubikCubeModel";
+import { CubeGuideRenderer } from "./CubeGuideRenderer"
 import { useEffect, useRef } from "react";
 
 const CubeGuide = (
@@ -15,28 +16,19 @@ const CubeGuide = (
   useEffect(() => {
     const refCurrent = cubeRef.current;
     if (!refCurrent) return;
+    const CubeRenderer = new CubeGuideRenderer(
+      refCurrent,
+    );
+    CubeRenderer.camera.position.set(0,0,10); // x:0,y:0,z:10の位置にカメラを指定する
+    CubeRenderer.camera.lookAt(new Vector3(0,0,0)) // 0,0,0の方向を向かせ続ける
 
-    const width = refCurrent?.clientWidth;
-    const height = refCurrent?.clientHeight;
-    const aspect = width / height;
+    CubeRenderer.render() // レンダーとセットする
 
-    const frustumSize = height;
-    const left = (frustumSize * aspect) / -2;
-    const right = (frustumSize * aspect) / 2;
-    const top = frustumSize / 2;
-    const bottom = frustumSize / -2;
+    
 
-    // シーンの作成
-    const scene = new Scene();
-
-    // レンダラーの設定
-    const renderer = new WebGLRenderer();
-    renderer.setSize(width, height);
-    refCurrent.appendChild(renderer.domElement);
-
-    // cameraの設定
-    const camera = new OrthographicCamera(left, right, top, bottom, 0.1, 1000);
-    camera.position.z = 20;
+    return () => {
+      CubeRenderer.unmount();
+    };
   }, []);
 
   return (

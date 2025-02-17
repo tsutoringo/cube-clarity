@@ -1,23 +1,26 @@
 import { Group, OrthographicCamera, Scene, WebGLRenderer } from "three";
-import { sizeSet } from "./SizeCreate";
+import { sizeSet } from "./cubeSizeCreate";
+
+
 export class CubeGuideRenderer {
   renderer: WebGLRenderer;
   scene: Scene;
   camera: OrthographicCamera;
   resizeObserver: ResizeObserver;
   rubikCubeGroup: Group;
+  unmounted: boolean = false;
 
   constructor(
-    public currentRefElement: HTMLElement,
+    public currentRefElement: HTMLDivElement,
   ) {
     const sizeList = sizeSet(currentRefElement);
 
     // シーンの設定
     this.scene = new Scene();
-    // this.scene.add(new AxesHelper(10));
+    // this.scene.add(new AxesHelper(10)); // キューブにそれぞれの軸の線を追加（不要）
 
     // WebGLRendererの設定
-    this.renderer = new WebGLRenderer({ alpha: true });
+    this.renderer = new WebGLRenderer({ alpha: true }); // 透明度の設定
 
     // 指定要素にcanvasを格納
     currentRefElement.appendChild(this.renderer.domElement);
@@ -60,7 +63,12 @@ export class CubeGuideRenderer {
     this.camera.bottom = newSize[3];
 
     this.camera.updateProjectionMatrix();
+    this.renderer.render(this.scene, this.camera);
+  }
+  unmount() {
+    this.currentRefElement.removeChild(this.renderer.domElement);
+    this.resizeObserver.disconnect();
 
-    this.render();
+    this.unmounted = true;
   }
 }
