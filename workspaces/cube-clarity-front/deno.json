@@ -7,7 +7,8 @@
     "build": "deno run -A --node-modules-dir npm:vite build",
     "preview": "deno run -A --node-modules-dir npm:vite preview",
     "serve": "deno run --allow-net --allow-read https://deno.land/std@0.157.0/http/file_server.ts dist/",
-    "fmt:check": "deno fmt --check"
+    "fmt:check": "deno fmt --check",
+    "test": "deno run -A --node-modules-dir npm:vitest"
   },
   "imports": {
     "@result/result": "jsr:@result/result@^1.1.0",
