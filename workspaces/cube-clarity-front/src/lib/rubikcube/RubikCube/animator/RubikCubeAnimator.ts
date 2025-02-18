@@ -7,7 +7,6 @@ import {
 } from "../../RubikCubeModel";
 import { RubikCubeMoveNotation } from "../MoveNotation";
 import { MoveNotationTween } from "./MoveNotationTween";
-import { rotatedCubePieceState } from "./rotateCubeState";
 
 export type RubikCubePieceState = Record<
   RubikCubePiece,
@@ -29,7 +28,7 @@ export const generateDefaultRubikCubeStates = (
         degree: {
           x: 0,
           y: 0,
-          z: 0
+          z: 0,
         },
         x: RUBIK_CUBE_PIECES[cubePiece].position[0],
         y: RUBIK_CUBE_PIECES[cubePiece].position[1],
@@ -59,7 +58,7 @@ export const cloneCubePieceState = (
             x: coord.x,
             y: coord.y,
             z: coord.z,
-            degree: { ...coord.degree }
+            degree: { ...coord.degree },
           },
         },
       ];
@@ -105,15 +104,25 @@ export class RubikCubeAnimator {
   }
 
   patchProgress(progress: number) {
-    const tweenPos = Math.floor(progress * this.tweens.length);
-    const tweenProgress = (progress - tweenPos / this.tweens.length) * this.tweens.length;
-    for (const [ _piece, { coord, mesh } ] of Object.entries(this.tweens[tweenPos].progress(tweenProgress))) {
+    const tweenPos = progress === 1
+     ? this.tweens.length - 1
+     : Math.floor(progress * this.tweens.length);
+
+    const tweenProgress = progress === 1
+     ? 1
+     : (progress - tweenPos / this.tweens.length) * this.tweens.length;
+
+    for (
+      const [_piece, { coord, mesh }] of Object.entries(
+        this.tweens[tweenPos].progress(tweenProgress),
+      )
+    ) {
       mesh.position.set(coord.x, coord.y, coord.z);
       mesh.rotation.set(
         MathUtils.degToRad(coord.degree.x),
         MathUtils.degToRad(coord.degree.y),
         MathUtils.degToRad(coord.degree.z),
-      )
+      );
     }
   }
 }

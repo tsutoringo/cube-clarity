@@ -1,5 +1,5 @@
 import { ComponentProps, useEffect, useRef, useState } from "react";
-import { MathUtils, Vector3 } from "three";
+import { MathUtils, Quaternion, Vector3 } from "three";
 import styles from "./RubikCube.module.css";
 import { RubikCubeRenderer } from "../../lib/rubikcube/RubikCubeRenderer";
 import {
@@ -8,8 +8,8 @@ import {
 } from "../../lib/rubikcube/RubikCube/RubikCube";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import classNames from "classnames";
-import { cornerCubeTween } from "../../lib/rubikcube/RubikCube/animator/2d/corner";
 import { RubikCubeAnimator } from "../../lib/rubikcube/RubikCube/animator/RubikCubeAnimator";
+import { rotateByWorldAxis } from "../../lib/rubikcube/RubikCube/animator/3d/helper";
 
 interface RubikCubeDisplayProps extends ComponentProps<"div"> {
   onceRender?: boolean;
@@ -104,12 +104,32 @@ export const RubikCubeDisplay = (
 
       const animator = RubikCubeAnimator.generate(
         rubikCubeGroup,
-        parseMoveNotation("R F R F").unwrap(),
+        parseMoveNotation("U R2 F B R B2 R U2 L B2 R U' D' R2 F R' L B2 U2 F2")
+          .unwrap(),
       );
+
+      animator.patchProgress(0.8);
+
+      // rubikCubeGroup.cubePieces.U.quaternion.
+
+      // rubikCubeGroup.cubePieces.U.position.y = 2;
+      // rubikCubeGroup.cubePieces.U.rotation.x = MathUtils.degToRad(90);
+
+      // const rotated = rotateByWorldAxis(
+      //   rubikCubeGroup.cubePieces.U.rotation,
+      //   "y",
+      //   90,
+      // );
+
+      // rubikCubeGroup.cubePieces.U.rotation.set(rotated.x, rotated.y, rotated.z);
+
+      // rubikCubeGroup.cubePieces.U.quaternion.premultiply(yRotation);
+      // rubikCubeGroup.cubePieces.U.rotation.y = MathUtils.degToRad(45);
+      // rubikCubeGroup.cubePieces.U.rotation.z = MathUtils.degToRad(90);
 
       let acc = 0;
       setInterval(() => {
-        animator.patchProgress(acc / 100)
+        animator.patchProgress(acc / 1000);
         // const ufr = cornerCubeTween("UR", "UL", acc / 100, "counterclockwise");
 
         // rubikCubeGroup.cubePieces.UFR.position.y = ufr.y;
@@ -138,8 +158,8 @@ export const RubikCubeDisplay = (
 
         // rubikCubeGroup.cubePieces.DFL.rotation.z = MathUtils.degToRad(dfl.degree);
 
-        acc = (acc + 1) % 100;
-      }, 50);
+        acc = (acc + 1) % 1000;
+      }, 10);
 
       // const ufr = cornerCubeTween("UR", "UL", 2.5, "counterclockwise");
 

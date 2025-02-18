@@ -1,15 +1,20 @@
+/**
+ * @module
+ * 実際のアニメーションを生成する前にそれぞれの回転記号を適用段階の状態を生成する。
+ * 要は複数ある回転記号回したあとのセーブポイントを生成するような物。
+ */
+
 import { pipe } from "@core/pipe";
 import {
   getRotateNotationDetail,
   RotateTo,
   RubikCubeMoveNotation,
-} from "../MoveNotation";
-import { RubikCubeFaceName } from "../RubikCube";
-import { RUBIKC_CUBE_FACE_CUBE_PIECE_MAP } from "./3d/faces";
-import { cloneCubePieceState, RubikCubePieceState } from "./RubikCubeAnimator";
-import { enumerate, flatMap, map, zip } from "@core/iterutil/pipe";
-import { MathUtils } from "three";
-import { RUBIK_CUBE_PIECES } from "../../RubikCubeModel";
+} from "../../MoveNotation";
+import { RUBIKC_CUBE_FACE_CUBE_PIECE_MAP } from "./faces";
+import { cloneCubePieceState, RubikCubePieceState } from "../RubikCubeAnimator";
+import { enumerate, flatMap, map } from "@core/iterutil/pipe";
+import { RUBIK_CUBE_PIECES } from "../../../RubikCubeModel";
+import { rotateByWorldAxis } from "./helper";
 
 export const ROTATION_INFOMATIONS = {
   clockwise: {
@@ -32,7 +37,7 @@ export const ROTATION_INFOMATIONS = {
     degree: 180,
     mappingTo: [
       [[2, 2], [2, 1], [2, 0]],
-      [[1, 0], [1, 1], [1, 2]],
+      [[1, 2], [1, 1], [1, 0]],
       [[0, 2], [0, 1], [0, 0]],
     ],
   },
@@ -78,9 +83,10 @@ export const rotatedCubePieceState = (
     const to = mapping[toI][toJ];
     after[to] = clonedBefore[mapping[fromI][fromJ]];
 
-    after[to].coord.degree[rotateAxis.bindTo] = MathUtils.euclideanModulo(
-      (rotateAxis.invert ? -degree : degree) + after[to].coord.degree[rotateAxis.bindTo],
-      360,
+    after[to].coord.degree = rotateByWorldAxis(
+      clonedBefore[mapping[fromI][fromJ]].coord.degree,
+      rotateAxis.bindTo,
+      rotateAxis.invert ? -degree : degree,
     );
 
     after[to].coord.x = RUBIK_CUBE_PIECES[to].position[0];

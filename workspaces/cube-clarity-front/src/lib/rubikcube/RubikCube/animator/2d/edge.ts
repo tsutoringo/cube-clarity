@@ -1,5 +1,4 @@
-import type { Coordnate2d } from "./helper.ts";
-import { calculateCoord2d, rubikCubeTween } from "./helper.ts";
+import { rubikCubeTween } from "./helper.ts";
 import { CubeCoordinate2d, RotateDirection } from "./mod.ts";
 
 /**

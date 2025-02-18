@@ -8,9 +8,9 @@ import { RubikCubeFaceName } from "../../RubikCube";
 // deno-fmt-ignore
 export const RUBIKC_CUBE_FACE_CUBE_PIECE_MAP = {
   U: {
-    x: { bindTo: "x", invert: true },
-    y: { bindTo: "x", invert: true },
-    rotateAxis: { bindTo: "x", invert: true },
+    x: { bindTo: "x", invert: false },
+    y: { bindTo: "z", invert: true },
+    rotateAxis: { bindTo: "y", invert: false },
     mapping: [
       ["UBL", "UB", "UBR"],
       ["UL",  "U",  "UR" ],
@@ -18,9 +18,9 @@ export const RUBIKC_CUBE_FACE_CUBE_PIECE_MAP = {
     ]
   },
   D: {
-    x: { bindTo: "x", invert: true },
-    y: { bindTo: "x", invert: true },
-    rotateAxis: { bindTo: "x", invert: true },
+    x: { bindTo: "x", invert: false },
+    y: { bindTo: "z", invert: false },
+    rotateAxis: { bindTo: "y", invert: true },
     mapping: [
       ["DFL", "DF", "DFR"],
       ["DL",  "D",  "DR" ],
@@ -39,8 +39,8 @@ export const RUBIKC_CUBE_FACE_CUBE_PIECE_MAP = {
   },
   B: {
     x: { bindTo: "x", invert: true },
-    y: { bindTo: "x", invert: true },
-    rotateAxis: { bindTo: "x", invert: true },
+    y: { bindTo: "y", invert: false },
+    rotateAxis: { bindTo: "z", invert: true },
     mapping: [
       ["UBR", "UB", "UBL"],
       ["BR",  "B",  "BL" ],
@@ -48,8 +48,8 @@ export const RUBIKC_CUBE_FACE_CUBE_PIECE_MAP = {
     ]
   },
   L: {
-    x: { bindTo: "x", invert: true },
-    y: { bindTo: "x", invert: true },
+    x: { bindTo: "z", invert: false },
+    y: { bindTo: "y", invert: false },
     rotateAxis: { bindTo: "x", invert: true },
     mapping: [
       ["UBL", "UL", "UFL"],
