@@ -1,10 +1,22 @@
 import { parseMoveNotation, RubikCubeMoveNotation } from "./RubikCube.ts";
 import { FACE_COLOR } from "./RubikCube.ts";
-import { RubikCube, RubikCubeFaceName, RubikCubeFaceXIndex, RubikCubeFaceYIndex, RubikCubeFaceColor } from "./RubikCube.ts";
+import {
+  RubikCube,
+  RubikCubeFaceColor,
+  RubikCubeFaceName,
+  RubikCubeFaceXIndex,
+  RubikCubeFaceYIndex,
+} from "./RubikCube.ts";
 
 // Scramble 2
-const scrambledCube = RubikCube.default().rotateCube("L2 D2 F' D2 F R2 B U2 B R2 B F2 D' F2 L B U R' B D' L'".split(" ") as RubikCubeMoveNotation[]);
-export const scramble = parseMoveNotation("L2 D2 F' D2 F R2 B U2 B R2 B F2 D' F2 L B U R' B D' L'").unwrap();
+const scrambledCube = RubikCube.default().rotateCube(
+  "L2 D2 F' D2 F R2 B U2 B R2 B F2 D' F2 L B U R' B D' L'".split(
+    " ",
+  ) as RubikCubeMoveNotation[],
+);
+export const scramble = parseMoveNotation(
+  "L2 D2 F' D2 F R2 B U2 B R2 B F2 D' F2 L B U R' B D' L'",
+).unwrap();
 
 type SolvingIndex = {
   face: RubikCubeFaceName;
@@ -49,7 +61,9 @@ export function solveWhiteCross(gotCube: RubikCube): RubikCubeMoveNotation[] {
     throw new Error(`Invalid key: ${key}`);
   }
 
-  function getUAdjustmentForFandB(cube: RubikCube): RubikCubeMoveNotation | null{
+  function getUAdjustmentForFandB(
+    cube: RubikCube,
+  ): RubikCubeMoveNotation | null {
     if (
       cube.at("F", 2, 1) === FACE_COLOR.White ||
       cube.at("B", 2, 1) === FACE_COLOR.White ||
@@ -60,22 +74,24 @@ export function solveWhiteCross(gotCube: RubikCube): RubikCubeMoveNotation[] {
         cube.at("U", 1, 2) === FACE_COLOR.White &&
         cube.at("U", 0, 1) !== FACE_COLOR.White
       ) {
-        return "U"
-      } if (
+        return "U";
+      }
+      if (
         cube.at("U", 1, 2) === FACE_COLOR.White &&
         cube.at("U", 0, 1) === FACE_COLOR.White &&
         cube.at("U", 2, 1) !== FACE_COLOR.White
       ) {
-        return "U'"
-      } if (
+        return "U'";
+      }
+      if (
         cube.at("U", 1, 2) === FACE_COLOR.White &&
         cube.at("U", 0, 1) === FACE_COLOR.White &&
         cube.at("U", 2, 1) === FACE_COLOR.White
       ) {
-        return "U2"
+        return "U2";
       }
     }
-    
+
     if (
       cube.at("F", 1, 0) === FACE_COLOR.White ||
       cube.at("B", 1, 2) === FACE_COLOR.White
@@ -84,26 +100,30 @@ export function solveWhiteCross(gotCube: RubikCube): RubikCubeMoveNotation[] {
         cube.at("U", 1, 0) === FACE_COLOR.White &&
         cube.at("U", 2, 1) !== FACE_COLOR.White
       ) {
-        return "U"
-      } if (
+        return "U";
+      }
+      if (
         cube.at("U", 1, 0) === FACE_COLOR.White &&
         cube.at("U", 2, 1) === FACE_COLOR.White &&
         cube.at("U", 0, 1) !== FACE_COLOR.White
       ) {
-        return "U'"
-      } if (
+        return "U'";
+      }
+      if (
         cube.at("U", 1, 0) === FACE_COLOR.White &&
         cube.at("U", 2, 1) === FACE_COLOR.White &&
         cube.at("U", 0, 1) === FACE_COLOR.White
       ) {
-        return "U2"
+        return "U2";
       }
     }
 
-    return null
+    return null;
   }
 
-  function getDAdjustmentForFandB(cube: RubikCube): RubikCubeMoveNotation | null{
+  function getDAdjustmentForFandB(
+    cube: RubikCube,
+  ): RubikCubeMoveNotation | null {
     if (
       cube.at("F", 0, 1) === FACE_COLOR.White ||
       cube.at("B", 0, 1) === FACE_COLOR.White ||
@@ -114,19 +134,21 @@ export function solveWhiteCross(gotCube: RubikCube): RubikCubeMoveNotation[] {
         cube.at("D", 1, 2) === FACE_COLOR.White &&
         cube.at("D", 0, 1) !== FACE_COLOR.White
       ) {
-        return "D"
-      } if (
+        return "D";
+      }
+      if (
         cube.at("D", 1, 2) === FACE_COLOR.White &&
         cube.at("D", 0, 1) === FACE_COLOR.White &&
         cube.at("D", 2, 1) !== FACE_COLOR.White
       ) {
-        return "D'"
-      } if (
+        return "D'";
+      }
+      if (
         cube.at("D", 1, 2) === FACE_COLOR.White &&
         cube.at("D", 0, 1) === FACE_COLOR.White &&
         cube.at("D", 2, 1) === FACE_COLOR.White
       ) {
-        return "D2"
+        return "D2";
       }
     }
 
@@ -138,26 +160,30 @@ export function solveWhiteCross(gotCube: RubikCube): RubikCubeMoveNotation[] {
         cube.at("D", 1, 0) === FACE_COLOR.White &&
         cube.at("D", 2, 1) !== FACE_COLOR.White
       ) {
-        return "D"
-      } if (
+        return "D";
+      }
+      if (
         cube.at("D", 1, 0) === FACE_COLOR.White &&
         cube.at("D", 2, 1) === FACE_COLOR.White &&
         cube.at("D", 0, 1) !== FACE_COLOR.White
       ) {
-        return "D'"
-      } if (
+        return "D'";
+      }
+      if (
         cube.at("D", 1, 0) === FACE_COLOR.White &&
         cube.at("D", 2, 1) === FACE_COLOR.White &&
         cube.at("D", 0, 1) === FACE_COLOR.White
       ) {
-        return "D2"
+        return "D2";
       }
     }
 
-    return null
+    return null;
   }
-  
-  function getUAdjustmentForRandL(cube: RubikCube): RubikCubeMoveNotation | null {
+
+  function getUAdjustmentForRandL(
+    cube: RubikCube,
+  ): RubikCubeMoveNotation | null {
     if (
       cube.at("R", 2, 1) === FACE_COLOR.White ||
       cube.at("L", 2, 1) === FACE_COLOR.White ||
@@ -168,19 +194,21 @@ export function solveWhiteCross(gotCube: RubikCube): RubikCubeMoveNotation[] {
         cube.at("U", 2, 1) === FACE_COLOR.White &&
         cube.at("U", 1, 2) !== FACE_COLOR.White
       ) {
-        return "U"
-      } if (
+        return "U";
+      }
+      if (
         cube.at("U", 2, 1) === FACE_COLOR.White &&
         cube.at("U", 1, 2) === FACE_COLOR.White &&
         cube.at("U", 1, 0) !== FACE_COLOR.White
       ) {
-        return "U'"
-      } if (
+        return "U'";
+      }
+      if (
         cube.at("U", 2, 1) === FACE_COLOR.White &&
         cube.at("U", 1, 2) === FACE_COLOR.White &&
         cube.at("U", 1, 0) === FACE_COLOR.White
       ) {
-        return "U2"
+        return "U2";
       }
     }
 
@@ -192,26 +220,30 @@ export function solveWhiteCross(gotCube: RubikCube): RubikCubeMoveNotation[] {
         cube.at("U", 0, 1) === FACE_COLOR.White &&
         cube.at("U", 1, 0) !== FACE_COLOR.White
       ) {
-        return "U"
-      } if (
+        return "U";
+      }
+      if (
         cube.at("U", 0, 1) === FACE_COLOR.White &&
         cube.at("U", 1, 0) === FACE_COLOR.White &&
         cube.at("U", 1, 2) !== FACE_COLOR.White
       ) {
-        return "U'"
-      } if (
+        return "U'";
+      }
+      if (
         cube.at("U", 0, 1) === FACE_COLOR.White &&
         cube.at("U", 1, 0) === FACE_COLOR.White &&
         cube.at("U", 1, 2) === FACE_COLOR.White
       ) {
-        return "U2"
+        return "U2";
       }
     }
 
     return null;
   }
 
-  function getDAdjustmentForRandL(cube: RubikCube): RubikCubeMoveNotation | null {
+  function getDAdjustmentForRandL(
+    cube: RubikCube,
+  ): RubikCubeMoveNotation | null {
     if (
       cube.at("R", 0, 1) === FACE_COLOR.White ||
       cube.at("L", 0, 1) === FACE_COLOR.White ||
@@ -222,19 +254,21 @@ export function solveWhiteCross(gotCube: RubikCube): RubikCubeMoveNotation[] {
         cube.at("D", 0, 1) === FACE_COLOR.White &&
         cube.at("D", 1, 0) !== FACE_COLOR.White
       ) {
-        return "D"
-      } if (
+        return "D";
+      }
+      if (
         cube.at("D", 0, 1) === FACE_COLOR.White &&
         cube.at("D", 1, 0) === FACE_COLOR.White &&
         cube.at("D", 1, 2) !== FACE_COLOR.White
       ) {
-        return "D'"
-      } if (
+        return "D'";
+      }
+      if (
         cube.at("D", 0, 1) === FACE_COLOR.White &&
         cube.at("D", 1, 0) === FACE_COLOR.White &&
         cube.at("D", 1, 2) === FACE_COLOR.White
       ) {
-        return "D2"
+        return "D2";
       }
     }
 
@@ -246,19 +280,21 @@ export function solveWhiteCross(gotCube: RubikCube): RubikCubeMoveNotation[] {
         cube.at("D", 2, 1) === FACE_COLOR.White &&
         cube.at("D", 1, 2) !== FACE_COLOR.White
       ) {
-        return "D"
-      } if (
+        return "D";
+      }
+      if (
         cube.at("D", 2, 1) === FACE_COLOR.White &&
         cube.at("D", 1, 2) === FACE_COLOR.White &&
         cube.at("D", 1, 0) !== FACE_COLOR.White
       ) {
-        return "D'"
-      } if (
+        return "D'";
+      }
+      if (
         cube.at("D", 2, 1) === FACE_COLOR.White &&
         cube.at("D", 1, 2) === FACE_COLOR.White &&
         cube.at("D", 1, 0) === FACE_COLOR.White
       ) {
-        return "D2"
+        return "D2";
       }
     }
 
@@ -276,7 +312,6 @@ export function solveWhiteCross(gotCube: RubikCube): RubikCubeMoveNotation[] {
 
     for (const { face, x, y, moves } of whiteEdgesF) {
       while (cube.at(face, x, y) === FACE_COLOR.White) {
-
         const uAdjustment = getUAdjustmentForFandB(cube);
         const dAdjustment = getDAdjustmentForFandB(cube);
 
@@ -324,7 +359,7 @@ export function solveWhiteCross(gotCube: RubikCube): RubikCubeMoveNotation[] {
 
     // ➂ B талд байгаа цагаан ирмэгүүдийг шилжүүлэх
     const whiteEdgesB: SolvingIndex = [
-      { face: "B", x: 0, y: 1, moves: ["B'","R", "B"] },
+      { face: "B", x: 0, y: 1, moves: ["B'", "R", "B"] },
       { face: "B", x: 1, y: 2, moves: ["L'"] },
       { face: "B", x: 2, y: 1, moves: ["B", "R", "B'"] },
       { face: "B", x: 1, y: 0, moves: ["R"] },
@@ -359,7 +394,6 @@ export function solveWhiteCross(gotCube: RubikCube): RubikCubeMoveNotation[] {
 
     for (const { face, x, y, moves } of whiteEdgesL) {
       while (cube.at(face, x, y) === FACE_COLOR.White) {
-
         const uAdjustment = getUAdjustmentForRandL(cube);
         const dAdjustment = getDAdjustmentForRandL(cube);
 
@@ -407,7 +441,11 @@ export function solveWhiteCross(gotCube: RubikCube): RubikCubeMoveNotation[] {
 
   for (let repeat = 0; repeat < 2; repeat++) {
     for (const key in edgeMoves) {
-      const [face, x, y] = key.split(",") as [RubikCubeFaceName, RubikCubeFaceXIndex, RubikCubeFaceYIndex];
+      const [face, x, y] = key.split(",") as [
+        RubikCubeFaceName,
+        RubikCubeFaceXIndex,
+        RubikCubeFaceYIndex,
+      ];
 
       while (cube.at(face, x, y) === FACE_COLOR.White) {
         const adjacentFace = getAdjacentFace(key);
@@ -430,17 +468,66 @@ export function solveWhiteCross(gotCube: RubikCube): RubikCubeMoveNotation[] {
 }
 
 // コーナー解法
-function findWhiteCorners(cube: RubikCube): { position: string; colors: string[] }[] {
+function findWhiteCorners(
+  cube: RubikCube,
+): { position: string; colors: string[] }[] {
   const whiteCorners: { position: string; colors: string[] }[] = [];
 
   const cornerPositions: CornerIndex = [
-    { position: "DRF", face1: "D", x1: 0, y1: 2, face2: "R", x2: 2, y2: 0, face3: "F", x3: 2, y3: 2 },
-    { position: "DLF", face1: "D", x1: 0, y1: 0, face2: "L", x2: 2, y2: 2, face3: "F", x3: 2, y3: 0 },
-    { position: "DRB", face1: "D", x1: 2, y1: 2, face2: "R", x2: 2, y2: 2, face3: "B", x3: 2, y3: 0 },
-    { position: "DLB", face1: "D", x1: 2, y1: 0, face2: "L", x2: 2, y2: 0, face3: "B", x3: 2, y3: 2 }
+    {
+      position: "DRF",
+      face1: "D",
+      x1: 0,
+      y1: 2,
+      face2: "R",
+      x2: 2,
+      y2: 0,
+      face3: "F",
+      x3: 2,
+      y3: 2,
+    },
+    {
+      position: "DLF",
+      face1: "D",
+      x1: 0,
+      y1: 0,
+      face2: "L",
+      x2: 2,
+      y2: 2,
+      face3: "F",
+      x3: 2,
+      y3: 0,
+    },
+    {
+      position: "DRB",
+      face1: "D",
+      x1: 2,
+      y1: 2,
+      face2: "R",
+      x2: 2,
+      y2: 2,
+      face3: "B",
+      x3: 2,
+      y3: 0,
+    },
+    {
+      position: "DLB",
+      face1: "D",
+      x1: 2,
+      y1: 0,
+      face2: "L",
+      x2: 2,
+      y2: 0,
+      face3: "B",
+      x3: 2,
+      y3: 2,
+    },
   ];
 
-  for (const { position, face1, x1, y1, face2, x2, y2, face3, x3, y3 } of cornerPositions) {
+  for (
+    const { position, face1, x1, y1, face2, x2, y2, face3, x3, y3 }
+      of cornerPositions
+  ) {
     const colors = [
       cube.at(face1, x1, y1),
       cube.at(face2, x2, y2),
@@ -458,14 +545,37 @@ function findWhiteCorners(cube: RubikCube): { position: string; colors: string[]
 function fixUpperLayer(cube: RubikCube): RubikCubeMoveNotation[] {
   const moves: RubikCubeMoveNotation[] = [];
 
-  const upperLayerCorners: Record<string, { condition: boolean; condition2: boolean; move: RubikCubeMoveNotation[] }> = {
-    "URF": { condition: cube.at("U", 2, 2) !== FACE_COLOR.White, condition2: cube.at("F", 0, 2) !== FACE_COLOR.Green, move: ["R'", "D'", "R"] },
-    "ULF": { condition: cube.at("U", 2, 0) !== FACE_COLOR.White, condition2: cube.at("L", 0, 2) !== FACE_COLOR.Orange, move: ["L", "D", "L'"] },
-    "URB": { condition: cube.at("U", 0, 2) !== FACE_COLOR.White, condition2: cube.at("R", 0, 2) !== FACE_COLOR.Red, move: ["R", "D", "R'"] },
-    "ULB": { condition: cube.at("U", 0, 0) !== FACE_COLOR.White, condition2: cube.at("B", 0, 2) !== FACE_COLOR.Blue, move: ["L'", "D'", "L"] }
+  const upperLayerCorners: Record<
+    string,
+    { condition: boolean; condition2: boolean; move: RubikCubeMoveNotation[] }
+  > = {
+    "URF": {
+      condition: cube.at("U", 2, 2) !== FACE_COLOR.White,
+      condition2: cube.at("F", 0, 2) !== FACE_COLOR.Green,
+      move: ["R'", "D'", "R"],
+    },
+    "ULF": {
+      condition: cube.at("U", 2, 0) !== FACE_COLOR.White,
+      condition2: cube.at("L", 0, 2) !== FACE_COLOR.Orange,
+      move: ["L", "D", "L'"],
+    },
+    "URB": {
+      condition: cube.at("U", 0, 2) !== FACE_COLOR.White,
+      condition2: cube.at("R", 0, 2) !== FACE_COLOR.Red,
+      move: ["R", "D", "R'"],
+    },
+    "ULB": {
+      condition: cube.at("U", 0, 0) !== FACE_COLOR.White,
+      condition2: cube.at("B", 0, 2) !== FACE_COLOR.Blue,
+      move: ["L'", "D'", "L"],
+    },
   };
 
-  for (const [_, { condition, condition2, move }] of Object.entries(upperLayerCorners)) {
+  for (
+    const [_, { condition, condition2, move }] of Object.entries(
+      upperLayerCorners,
+    )
+  ) {
     if (condition || condition2) {
       moves.push(...move);
       cube = cube.rotateCube(move);
@@ -483,19 +593,43 @@ function solveWhiteLayer(cube: RubikCube): RubikCubeMoveNotation[] {
     "DRF": { "WBR": "D", "WBO": "D2", "WGO": "D'", "WGR": "" },
     "DLF": { "WBR": "D2", "WBO": "D'", "WGO": "", "WGR": "D" },
     "DLB": { "WBR": "D'", "WBO": "", "WGO": "D", "WGR": "D2" },
-    "DRB": { "WBR": "", "WBO": "D", "WGO": "D2", "WGR": "D'" }
+    "DRB": { "WBR": "", "WBO": "D", "WGO": "D2", "WGR": "D'" },
   };
 
-  const insertCorner: Record<string, Record<string, RubikCubeMoveNotation[]>> = {
-    "L,2,2": { W: ["D'", "F'", "D", "F"], O: ["D", "L", "D'", "L'"], G: ["D", "L", "D2", "L'", "D", "L", "D'", "L'"] },
-    "F,2,2": { W: ["D'", "R'", "D", "R"], R: ["D'", "R'", "D2", "R", "D'", "R'", "D", "R"], G: ["D", "F", "D'", "F'"] },
-    "R,2,2": { W: ["D'", "B'", "D", "B"], B: ["D'", "B'", "D2", "B", "D'", "B'", "D", "B"], R: ["D", "R", "D'", "R'"] },
-    "B,2,2": { W: ["D'", "L'", "D", "L"], O: ["D'", "L'", "D2", "L", "D'", "L'", "D", "L"], B: ["D", "B", "D'", "B'"] }
-  };
+  const insertCorner: Record<string, Record<string, RubikCubeMoveNotation[]>> =
+    {
+      "L,2,2": {
+        W: ["D'", "F'", "D", "F"],
+        O: ["D", "L", "D'", "L'"],
+        G: ["D", "L", "D2", "L'", "D", "L", "D'", "L'"],
+      },
+      "F,2,2": {
+        W: ["D'", "R'", "D", "R"],
+        R: ["D'", "R'", "D2", "R", "D'", "R'", "D", "R"],
+        G: ["D", "F", "D'", "F'"],
+      },
+      "R,2,2": {
+        W: ["D'", "B'", "D", "B"],
+        B: ["D'", "B'", "D2", "B", "D'", "B'", "D", "B"],
+        R: ["D", "R", "D'", "R'"],
+      },
+      "B,2,2": {
+        W: ["D'", "L'", "D", "L"],
+        O: ["D'", "L'", "D2", "L", "D'", "L'", "D", "L"],
+        B: ["D", "B", "D'", "B'"],
+      },
+    };
 
   function normalizeCornerColors(colors: string[]): string {
-    const colorOrder: Record<string, number> = { "W": 1, "B": 2, "G": 3, "R": 4, "O": 5 };
-    return colors.sort((a, b) => (colorOrder[a] ?? 10) - (colorOrder[b] ?? 10)).join("");
+    const colorOrder: Record<string, number> = {
+      "W": 1,
+      "B": 2,
+      "G": 3,
+      "R": 4,
+      "O": 5,
+    };
+    return colors.sort((a, b) => (colorOrder[a] ?? 10) - (colorOrder[b] ?? 10))
+      .join("");
   }
 
   while (true) {
@@ -515,8 +649,12 @@ function solveWhiteLayer(cube: RubikCube): RubikCubeMoveNotation[] {
       const colorKey = normalizeCornerColors(colors);
       let moveSequence: RubikCubeMoveNotation[] = [];
 
-      if (position in correctCornerPositions && colorKey in correctCornerPositions[position]) {
-        const move = correctCornerPositions[position][colorKey] as RubikCubeMoveNotation;
+      if (
+        position in correctCornerPositions &&
+        colorKey in correctCornerPositions[position]
+      ) {
+        const move =
+          correctCornerPositions[position][colorKey] as RubikCubeMoveNotation;
         if (move) {
           moveSequence.push(move);
           cube = cube.rotateCubeOnce(move);
@@ -528,12 +666,16 @@ function solveWhiteLayer(cube: RubikCube): RubikCubeMoveNotation[] {
         "WBR": "R,2,2",
         "WBO": "B,2,2",
         "WGO": "L,2,2",
-        "WGR": "F,2,2"
+        "WGR": "F,2,2",
       };
 
       if (colorKey in insertMapping) {
         const insertKey = insertMapping[colorKey];
-        const [face, x, y] = insertKey.split(",") as [RubikCubeFaceName, RubikCubeFaceXIndex, RubikCubeFaceYIndex];
+        const [face, x, y] = insertKey.split(",") as [
+          RubikCubeFaceName,
+          RubikCubeFaceXIndex,
+          RubikCubeFaceYIndex,
+        ];
 
         if (cube.at(face, x, y) in insertCorner[insertKey]) {
           const color = cube.at(face, x, y);
@@ -570,7 +712,7 @@ function findEdges(cube: RubikCube): { position: string; colors: string }[] {
     { position: "DF", face1: "D", x1: 0, y1: 1, face2: "F", x2: 2, y2: 1 },
     { position: "DR", face1: "D", x1: 1, y1: 2, face2: "R", x2: 2, y2: 1 },
     { position: "DL", face1: "D", x1: 1, y1: 0, face2: "L", x2: 2, y2: 1 },
-    { position: "DB", face1: "D", x1: 2, y1: 1, face2: "B", x2: 2, y2: 1 }
+    { position: "DB", face1: "D", x1: 2, y1: 1, face2: "B", x2: 2, y2: 1 },
   ];
 
   for (const { position, face1, x1, y1, face2, x2, y2 } of edgePositions) {
@@ -587,14 +729,35 @@ function findEdges(cube: RubikCube): { position: string; colors: string }[] {
 function fixFlippedEdge(cube: RubikCube): RubikCubeMoveNotation[] {
   const moves: RubikCubeMoveNotation[] = [];
 
-  const unOrientedEdge: Record<string, { condition: boolean; condition2: boolean; move: RubikCubeMoveNotation[] }> = {
-    "FR": { condition: cube.at("F", 1, 2) !== FACE_COLOR.Green, condition2: cube.at("R", 1, 0) !== FACE_COLOR.Red, move: ["R'", "D", "R", "D", "F", "D'", "F'"] },
-    "FL": { condition: cube.at("F", 1, 0) !== FACE_COLOR.Green, condition2: cube.at("L", 1, 2) !== FACE_COLOR.Orange, move: ["L", "D'", "L'", "D'", "F'", "D", "F"] },
-    "BR": { condition: cube.at("B", 1, 0) !== FACE_COLOR.Blue, condition2: cube.at("R", 1, 2) !== FACE_COLOR.Red, move: ["R", "D'", "R'", "D'", "B'", "D", "B"] },
-    "BL": { condition: cube.at("B", 1, 2) !== FACE_COLOR.Blue, condition2: cube.at("L", 1, 0) !== FACE_COLOR.Orange, move: ["L'", "D", "L", "D", "B", "D'", "B'"] }
+  const unOrientedEdge: Record<
+    string,
+    { condition: boolean; condition2: boolean; move: RubikCubeMoveNotation[] }
+  > = {
+    "FR": {
+      condition: cube.at("F", 1, 2) !== FACE_COLOR.Green,
+      condition2: cube.at("R", 1, 0) !== FACE_COLOR.Red,
+      move: ["R'", "D", "R", "D", "F", "D'", "F'"],
+    },
+    "FL": {
+      condition: cube.at("F", 1, 0) !== FACE_COLOR.Green,
+      condition2: cube.at("L", 1, 2) !== FACE_COLOR.Orange,
+      move: ["L", "D'", "L'", "D'", "F'", "D", "F"],
+    },
+    "BR": {
+      condition: cube.at("B", 1, 0) !== FACE_COLOR.Blue,
+      condition2: cube.at("R", 1, 2) !== FACE_COLOR.Red,
+      move: ["R", "D'", "R'", "D'", "B'", "D", "B"],
+    },
+    "BL": {
+      condition: cube.at("B", 1, 2) !== FACE_COLOR.Blue,
+      condition2: cube.at("L", 1, 0) !== FACE_COLOR.Orange,
+      move: ["L'", "D", "L", "D", "B", "D'", "B'"],
+    },
   };
 
-  for (const [_, { condition, condition2, move }] of Object.entries(unOrientedEdge)) {
+  for (
+    const [_, { condition, condition2, move }] of Object.entries(unOrientedEdge)
+  ) {
     if (condition || condition2) {
       moves.push(...move);
       cube = cube.rotateCube(move);
@@ -609,17 +772,65 @@ function solveSecondLayer(cube: RubikCube): RubikCubeMoveNotation[] {
   const movesResult: RubikCubeMoveNotation[] = [];
 
   const correctEdgePositions: Record<string, Record<string, string>> = {
-    "DF": { "OG": "", "GO": "D'", "BR": "D", "RB": "D2", "RG": "", "GR": "D", "BO": "D'", "OB": "D2" },
-    "DR": { "OG": "D'", "GO": "D2", "BR": "", "RB": "D", "RG": "D'", "GR": "", "BO": "D2", "OB": "D" },
-    "DL": { "OG": "D", "GO": "", "BR": "D2", "RB": "D'", "RG": "D", "GR": "D2", "BO": "", "OB": "D'" },
-    "DB": { "OG": "D2", "GO": "D", "BR": "D'", "RB": "", "RG": "D2", "GR": "D'", "BO": "D", "OB": "" }
+    "DF": {
+      "OG": "",
+      "GO": "D'",
+      "BR": "D",
+      "RB": "D2",
+      "RG": "",
+      "GR": "D",
+      "BO": "D'",
+      "OB": "D2",
+    },
+    "DR": {
+      "OG": "D'",
+      "GO": "D2",
+      "BR": "",
+      "RB": "D",
+      "RG": "D'",
+      "GR": "",
+      "BO": "D2",
+      "OB": "D",
+    },
+    "DL": {
+      "OG": "D",
+      "GO": "",
+      "BR": "D2",
+      "RB": "D'",
+      "RG": "D",
+      "GR": "D2",
+      "BO": "",
+      "OB": "D'",
+    },
+    "DB": {
+      "OG": "D2",
+      "GO": "D",
+      "BR": "D'",
+      "RB": "",
+      "RG": "D2",
+      "GR": "D'",
+      "BO": "D",
+      "OB": "",
+    },
   };
 
   const insertEdge: Record<string, Record<string, RubikCubeMoveNotation[]>> = {
-    "D,0,1": { O: ["D", "L", "D'", "L'", "D'", "F'", "D", "F"], R: ["D'", "R'", "D", "R", "D", "F", "D'", "F'"] },
-    "D,1,2": { G: ["D", "F", "D'", "F'", "D'", "R'", "D", "R"], B: ["D'", "B'", "D", "B", "D", "R", "D'", "R'"] },
-    "D,1,0": { B: ["D", "B", "D'", "B'", "D'", "L'", "D", "L"], G: ["D'", "F'", "D", "F", "D", "L", "D'", "L'"] },
-    "D,2,1": { R: ["D", "R", "D'", "R'", "D'", "B'", "D", "B"], O: ["D'", "L'", "D", "L", "D", "B", "D'", "B'"] }
+    "D,0,1": {
+      O: ["D", "L", "D'", "L'", "D'", "F'", "D", "F"],
+      R: ["D'", "R'", "D", "R", "D", "F", "D'", "F'"],
+    },
+    "D,1,2": {
+      G: ["D", "F", "D'", "F'", "D'", "R'", "D", "R"],
+      B: ["D'", "B'", "D", "B", "D", "R", "D'", "R'"],
+    },
+    "D,1,0": {
+      B: ["D", "B", "D'", "B'", "D'", "L'", "D", "L"],
+      G: ["D'", "F'", "D", "F", "D", "L", "D'", "L'"],
+    },
+    "D,2,1": {
+      R: ["D", "R", "D'", "R'", "D'", "B'", "D", "B"],
+      O: ["D'", "L'", "D", "L", "D", "B", "D'", "B'"],
+    },
   };
 
   while (true) {
@@ -638,8 +849,12 @@ function solveSecondLayer(cube: RubikCube): RubikCubeMoveNotation[] {
     for (const { position, colors } of noneYellowEdges) {
       let moveSequence: RubikCubeMoveNotation[] = [];
 
-      if (position in correctEdgePositions && colors in correctEdgePositions[position]) {
-        const move = correctEdgePositions[position][colors] as RubikCubeMoveNotation;
+      if (
+        position in correctEdgePositions &&
+        colors in correctEdgePositions[position]
+      ) {
+        const move =
+          correctEdgePositions[position][colors] as RubikCubeMoveNotation;
         if (move) {
           moveSequence.push(move);
           cube = cube.rotateCubeOnce(move);
@@ -660,7 +875,11 @@ function solveSecondLayer(cube: RubikCube): RubikCubeMoveNotation[] {
 
       if (colors in insertMapping) {
         const insertKey = insertMapping[colors];
-        const [face, x, y] = insertKey.split(",") as [RubikCubeFaceName, RubikCubeFaceXIndex, RubikCubeFaceYIndex];
+        const [face, x, y] = insertKey.split(",") as [
+          RubikCubeFaceName,
+          RubikCubeFaceXIndex,
+          RubikCubeFaceYIndex,
+        ];
 
         if (cube.at(face, x, y) in insertEdge[insertKey]) {
           const color = cube.at(face, x, y);
@@ -693,16 +912,21 @@ function solveSecondLayer(cube: RubikCube): RubikCubeMoveNotation[] {
 function solveYellowCross(cube: RubikCube): RubikCubeMoveNotation[] {
   const moveResult: RubikCubeMoveNotation[] = [];
 
-  const yellowEdgePositions: Record<string, { face: RubikCubeFaceName; x: RubikCubeFaceXIndex; y: RubikCubeFaceYIndex }> = {
-    "DF": {face: "F", x: 2, y: 1},
-    "DR": {face: "R", x: 2, y: 1},
-    "DL": {face: "L", x: 2, y: 1},
-    "DB": {face: "B", x: 2, y: 1},
+  const yellowEdgePositions: Record<
+    string,
+    { face: RubikCubeFaceName; x: RubikCubeFaceXIndex; y: RubikCubeFaceYIndex }
+  > = {
+    "DF": { face: "F", x: 2, y: 1 },
+    "DR": { face: "R", x: 2, y: 1 },
+    "DL": { face: "L", x: 2, y: 1 },
+    "DB": { face: "B", x: 2, y: 1 },
   };
 
   let yellowEgdes: string[] = [];
 
-  for (const [position, { face, x, y }] of Object.entries(yellowEdgePositions)) {
+  for (
+    const [position, { face, x, y }] of Object.entries(yellowEdgePositions)
+  ) {
     if (cube.at(face, x, y) !== FACE_COLOR.Yellow) {
       yellowEgdes.push(position);
     }
@@ -718,7 +942,7 @@ function solveYellowCross(cube: RubikCube): RubikCubeMoveNotation[] {
     "DB DL": ["F'", "R'", "D'", "R", "D", "R'", "D'", "R", "D", "F"],
     "DB DF": ["D'", "F'", "R'", "D'", "R", "D", "F"],
     "DL DR": ["F'", "R'", "D'", "R", "D", "F"],
-  }
+  };
 
   if (yellowEdgeSolutions[yellowEdgeKey]) {
     const moveSequence = yellowEdgeSolutions[yellowEdgeKey];
@@ -734,16 +958,30 @@ function solveYellowCross(cube: RubikCube): RubikCubeMoveNotation[] {
 }
 
 // Match Cross Color
-function findGreenEdgeAndSides(cube: RubikCube): { position: string; leftColor: string; rightColor: string } | null {
-
-  const edgePositions: Record<string, { face: RubikCubeFaceName; x: RubikCubeFaceXIndex; y: RubikCubeFaceYIndex; left: RubikCubeFaceName; right: RubikCubeFaceName }> = {
+function findGreenEdgeAndSides(
+  cube: RubikCube,
+): { position: string; leftColor: string; rightColor: string } | null {
+  const edgePositions: Record<
+    string,
+    {
+      face: RubikCubeFaceName;
+      x: RubikCubeFaceXIndex;
+      y: RubikCubeFaceYIndex;
+      left: RubikCubeFaceName;
+      right: RubikCubeFaceName;
+    }
+  > = {
     "DF": { face: "F", x: 2, y: 1, left: "L", right: "R" },
     "DR": { face: "R", x: 2, y: 1, left: "F", right: "B" },
     "DL": { face: "L", x: 2, y: 1, left: "B", right: "F" },
     "DB": { face: "B", x: 2, y: 1, left: "R", right: "L" },
   };
 
-  for (const [position, { face, x, y, left, right }] of Object.entries(edgePositions)) {
+  for (
+    const [position, { face, x, y, left, right }] of Object.entries(
+      edgePositions,
+    )
+  ) {
     if (cube.at(face, x, y) === FACE_COLOR.Green) {
       return {
         position,
@@ -758,7 +996,7 @@ function findGreenEdgeAndSides(cube: RubikCube): { position: string; leftColor: 
 
 function solveCrossColor(cube: RubikCube): RubikCubeMoveNotation[] {
   const moveResult: RubikCubeMoveNotation[] = [];
-  
+
   const greenEdgeData = findGreenEdgeAndSides(cube);
 
   if (!greenEdgeData) {
@@ -769,39 +1007,109 @@ function solveCrossColor(cube: RubikCube): RubikCubeMoveNotation[] {
   const { position, leftColor, rightColor } = greenEdgeData;
   const edgeColors = `${leftColor},${rightColor}`;
 
-  const adjustmentMoves: Record<string, Record<string, RubikCubeMoveNotation[]>> = {
+  const adjustmentMoves: Record<
+    string,
+    Record<string, RubikCubeMoveNotation[]>
+  > = {
     "DF": {
       "O,R": [],
       "O,B": ["D2", "R'", "D'", "R", "D'", "R'", "D2", "R", "D"],
-      "R,O": ["R'", "D'", "R", "D'", "R'", "D2", "R", "D", "R'", "D'", "R", "D'", "R'", "D2", "R", "D2"],
+      "R,O": [
+        "R'",
+        "D'",
+        "R",
+        "D'",
+        "R'",
+        "D2",
+        "R",
+        "D",
+        "R'",
+        "D'",
+        "R",
+        "D'",
+        "R'",
+        "D2",
+        "R",
+        "D2",
+      ],
       "R,B": ["R'", "D'", "R", "D'", "R'", "D2", "R"],
       "B,R": ["D", "R'", "D'", "R", "D'", "R'", "D2", "R", "D2"],
-      "B,O": ["D'", "R'", "D'", "R", "D'", "R'", "D2", "R", "D'"]
+      "B,O": ["D'", "R'", "D'", "R", "D'", "R'", "D2", "R", "D'"],
     },
     "DR": {
       "O,R": ["D'"],
       "O,B": ["D", "R'", "D'", "R", "D'", "R'", "D2", "R", "D"],
-      "R,O": ["R'", "D'", "R", "D'", "R'", "D2", "R", "D", "R'", "D'", "R", "D'", "R'", "D2", "R", "D'"],
+      "R,O": [
+        "R'",
+        "D'",
+        "R",
+        "D'",
+        "R'",
+        "D2",
+        "R",
+        "D",
+        "R'",
+        "D'",
+        "R",
+        "D'",
+        "R'",
+        "D2",
+        "R",
+        "D'",
+      ],
       "R,B": ["D'", "R'", "D'", "R", "D'", "R'", "D2", "R"],
       "B,R": ["R'", "D'", "R", "D'", "R'", "D2", "R", "D2"],
-      "B,O": ["D2", "R'", "D'", "R", "D'", "R'", "D2", "R", "D'"]
+      "B,O": ["D2", "R'", "D'", "R", "D'", "R'", "D2", "R", "D'"],
     },
     "DL": {
       "O,R": ["D"],
       "O,B": ["D'", "R'", "D'", "R", "D'", "R'", "D2", "R", "D"],
-      "R,O": ["R'", "D'", "R", "D'", "R'", "D2", "R", "D", "R'", "D'", "R", "D'", "R'", "D2", "R", "D"],
+      "R,O": [
+        "R'",
+        "D'",
+        "R",
+        "D'",
+        "R'",
+        "D2",
+        "R",
+        "D",
+        "R'",
+        "D'",
+        "R",
+        "D'",
+        "R'",
+        "D2",
+        "R",
+        "D",
+      ],
       "R,B": ["D", "R'", "D'", "R", "D'", "R'", "D2", "R"],
       "B,R": ["D2", "R'", "D'", "R", "D'", "R'", "D2", "R", "D2"],
-      "B,O": ["R'", "D'", "R", "D'", "R'", "D2", "R", "D'"]
+      "B,O": ["R'", "D'", "R", "D'", "R'", "D2", "R", "D'"],
     },
     "DB": {
       "O,R": ["D2"],
       "O,B": ["R'", "D'", "R", "D'", "R'", "D2", "R", "D"],
-      "R,O": ["R'", "D'", "R", "D'", "R'", "D2", "R", "D", "R'", "D'", "R", "D'", "R'", "D2", "R"],
+      "R,O": [
+        "R'",
+        "D'",
+        "R",
+        "D'",
+        "R'",
+        "D2",
+        "R",
+        "D",
+        "R'",
+        "D'",
+        "R",
+        "D'",
+        "R'",
+        "D2",
+        "R",
+      ],
       "R,B": ["D2", "R'", "D'", "R", "D'", "R'", "D2", "R"],
       "B,R": ["D'", "R'", "D'", "R", "D'", "R'", "D2", "R", "D2"],
-      "B,O": ["D", "R'", "D'", "R", "D'", "R'", "D2", "R", "D'"]
-    }
+      "B,O": ["D", "R'", "D'", "R", "D'", "R'", "D2", "R", "D'"],
+    },
   };
 
   if (adjustmentMoves[position] && adjustmentMoves[position][edgeColors]) {
@@ -823,24 +1131,75 @@ function findCorrectYellowCornerPosition(cube: RubikCube): string {
     "DRF": ["G", "R", "Y"],
     "DLF": ["G", "O", "Y"],
     "DRB": ["B", "R", "Y"],
-    "DLB": ["B", "O", "Y"]
+    "DLB": ["B", "O", "Y"],
   };
 
   const cornerPositions: CornerIndex = [
-    { position: "DRF", face1: "D", x1: 0, y1: 2, face2: "R", x2: 2, y2: 0, face3: "F", x3: 2, y3: 2 },
-    { position: "DLF", face1: "D", x1: 0, y1: 0, face2: "L", x2: 2, y2: 2, face3: "F", x3: 2, y3: 0 },
-    { position: "DRB", face1: "D", x1: 2, y1: 2, face2: "R", x2: 2, y2: 2, face3: "B", x3: 2, y3: 0 },
-    { position: "DLB", face1: "D", x1: 2, y1: 0, face2: "L", x2: 2, y2: 0, face3: "B", x3: 2, y3: 2 }
+    {
+      position: "DRF",
+      face1: "D",
+      x1: 0,
+      y1: 2,
+      face2: "R",
+      x2: 2,
+      y2: 0,
+      face3: "F",
+      x3: 2,
+      y3: 2,
+    },
+    {
+      position: "DLF",
+      face1: "D",
+      x1: 0,
+      y1: 0,
+      face2: "L",
+      x2: 2,
+      y2: 2,
+      face3: "F",
+      x3: 2,
+      y3: 0,
+    },
+    {
+      position: "DRB",
+      face1: "D",
+      x1: 2,
+      y1: 2,
+      face2: "R",
+      x2: 2,
+      y2: 2,
+      face3: "B",
+      x3: 2,
+      y3: 0,
+    },
+    {
+      position: "DLB",
+      face1: "D",
+      x1: 2,
+      y1: 0,
+      face2: "L",
+      x2: 2,
+      y2: 0,
+      face3: "B",
+      x3: 2,
+      y3: 2,
+    },
   ];
 
-  for (const { position, face1, x1, y1, face2, x2, y2, face3, x3, y3 } of cornerPositions) {
+  for (
+    const { position, face1, x1, y1, face2, x2, y2, face3, x3, y3 }
+      of cornerPositions
+  ) {
     const colors = [
       cube.at(face1, x1, y1),
       cube.at(face2, x2, y2),
-      cube.at(face3, x3, y3)
+      cube.at(face3, x3, y3),
     ];
 
-    if (correctCorners[position].every((color: RubikCubeFaceColor) => colors.includes(color))) {
+    if (
+      correctCorners[position].every((color: RubikCubeFaceColor) =>
+        colors.includes(color)
+      )
+    ) {
       return position;
     }
   }
@@ -855,47 +1214,58 @@ function solveYellowCorners(cube: RubikCube): RubikCubeMoveNotation[] {
     "DRF": ["G", "R", "Y"],
     "DLF": ["G", "O", "Y"],
     "DRB": ["B", "R", "Y"],
-    "DLB": ["B", "O", "Y"]
+    "DLB": ["B", "O", "Y"],
   };
 
   const positionAdjustments: Record<string, RubikCubeMoveNotation> = {
     "DRF": "D'",
     "DRB": "D2",
-    "DLB": "D"
+    "DLB": "D",
   };
 
-  const mainAlgorithm: RubikCubeMoveNotation[] = ["R'", "D", "L", "D'", "R", "D", "L'", "D'"];
+  const mainAlgorithm: RubikCubeMoveNotation[] = [
+    "R'",
+    "D",
+    "L",
+    "D'",
+    "R",
+    "D",
+    "L'",
+    "D'",
+  ];
 
   const correctDRFColors: Record<string, RubikCubeFaceColor[]> = {
     "DRF": ["B", "R", "Y"],
     "DLF": ["G", "R", "Y"],
     "DRB": ["B", "O", "Y"],
-    "DLB": ["G", "O", "Y"]
+    "DLB": ["G", "O", "Y"],
   };
 
   const finalAdjustments: Record<string, RubikCubeMoveNotation> = {
     "DRF": "D",
     "DRB": "D2",
-    "DLB": "D'"
+    "DLB": "D'",
   };
 
   const newDRFColors = [
     cube.at("F", 2, 2),
     cube.at("R", 2, 0),
-    cube.at("D", 0, 2)
+    cube.at("D", 0, 2),
   ];
 
   let correctCornerPosition = findCorrectYellowCornerPosition(cube);
-  console.log(correctCornerPosition)
+  console.log(correctCornerPosition);
 
-  if (correctColors[correctCornerPosition].every((color: RubikCubeFaceColor) => newDRFColors.includes(color))) {
-
+  if (
+    correctColors[correctCornerPosition].every((color: RubikCubeFaceColor) =>
+      newDRFColors.includes(color)
+    )
+  ) {
     console.log("Solving Yellow Corners...");
     console.log("Solved!!!");
 
     solveLastLayer(cube);
     return moveResult;
-
   } else {
     if (correctCornerPosition) {
       const adjustmentMove = positionAdjustments[correctCornerPosition];
@@ -906,7 +1276,11 @@ function solveYellowCorners(cube: RubikCube): RubikCubeMoveNotation[] {
     moveResult.push(...mainAlgorithm);
     cube = cube.rotateCube(mainAlgorithm);
 
-    if (!correctDRFColors[correctCornerPosition].every((color: RubikCubeFaceColor) => newDRFColors.includes(color))) {
+    if (
+      !correctDRFColors[correctCornerPosition].every((
+        color: RubikCubeFaceColor,
+      ) => newDRFColors.includes(color))
+    ) {
       console.log(correctDRFColors[correctCornerPosition]);
       moveResult.push(...mainAlgorithm);
       cube = cube.rotateCube(mainAlgorithm);
@@ -938,7 +1312,16 @@ function solvedLastLayer(cube: RubikCube): boolean {
 
 function solveLastLayer(cube: RubikCube): RubikCubeMoveNotation[] {
   const moveResult: RubikCubeMoveNotation[] = [];
-  const lastAlgorithm: RubikCubeMoveNotation[] = ["R", "U", "R'", "U'", "R", "U", "R'", "U'"];
+  const lastAlgorithm: RubikCubeMoveNotation[] = [
+    "R",
+    "U",
+    "R'",
+    "U'",
+    "R",
+    "U",
+    "R'",
+    "U'",
+  ];
   const moveNextCorner: RubikCubeMoveNotation = "D'";
 
   const lastAdjustment: Record<string, RubikCubeMoveNotation> = {
