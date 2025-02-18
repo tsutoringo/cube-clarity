@@ -7,7 +7,7 @@ import {
 import { RubikCubeFaceName } from "../RubikCube";
 import { faceRotation2d } from "./2d/faceRotation";
 import { RUBIKC_CUBE_FACE_CUBE_PIECE_MAP } from "./3d/faces";
-import { rotatedCubePieceState } from "./3d/rotateCubeState";
+import { rotatedCubePieceState } from "./3d/rotatedCubeState";
 import { cloneCubePieceState, RubikCubePieceState } from "./RubikCubeAnimator";
 import { flatMap, zip } from "@core/iterutil/pipe";
 import { RubikCubePiece } from "../../RubikCubeModel";
