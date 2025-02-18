@@ -1,4 +1,4 @@
-import { MathUtils, Mesh } from "three";
+import { MathUtils, Mesh, Quaternion, Vector3 } from "three";
 import {
   RUBIK_CUBE_PIECE_NAMES,
   RUBIK_CUBE_PIECES,
@@ -12,7 +12,7 @@ export type RubikCubePieceState = Record<
   RubikCubePiece,
   {
     mesh: Mesh;
-    coord: CubePieceCoordState;
+    savePoint: CubePieceCoordState;
   }
 >;
 
@@ -24,15 +24,13 @@ export const generateDefaultRubikCubeStates = (
   for (const cubePiece of RUBIK_CUBE_PIECE_NAMES) {
     state[cubePiece] = {
       mesh: rubikcubePieceMeshes.cubePieces[cubePiece],
-      coord: {
-        degree: {
-          x: 0,
-          y: 0,
-          z: 0,
-        },
-        x: RUBIK_CUBE_PIECES[cubePiece].position[0],
-        y: RUBIK_CUBE_PIECES[cubePiece].position[1],
-        z: RUBIK_CUBE_PIECES[cubePiece].position[2],
+      savePoint: {
+        quaternion: new Quaternion(),
+        position: new Vector3(
+          RUBIK_CUBE_PIECES[cubePiece].position[0],
+          RUBIK_CUBE_PIECES[cubePiece].position[1],
+          RUBIK_CUBE_PIECES[cubePiece].position[2],
+        ),
       },
     };
   }
@@ -49,17 +47,15 @@ export const cloneCubePieceState = (
   pieceState: RubikCubePieceState,
 ): RubikCubePieceState => {
   return Object.fromEntries(
-    Object.entries(pieceState).map(([key, { mesh, coord }]) => {
+    Object.entries(pieceState).map(([key, { mesh, savePoint }]) => {
       return [
         key,
         {
           mesh,
-          coord: {
-            x: coord.x,
-            y: coord.y,
-            z: coord.z,
-            degree: { ...coord.degree },
-          },
+          savePoint: {
+            quaternion: savePoint.quaternion.clone(),
+            position: savePoint.position.clone(),
+          }
         },
       ];
     }),
@@ -67,14 +63,8 @@ export const cloneCubePieceState = (
 };
 
 export type CubePieceCoordState = {
-  degree: {
-    x: number;
-    y: number;
-    z: number;
-  };
-  x: number;
-  y: number;
-  z: number;
+  quaternion: Quaternion;
+  position: Vector3;
 };
 
 export class RubikCubeAnimator {
@@ -113,16 +103,12 @@ export class RubikCubeAnimator {
       : (progress - tweenPos / this.tweens.length) * this.tweens.length;
 
     for (
-      const [_piece, { coord, mesh }] of Object.entries(
+      const [_piece, { savePoint, mesh }] of Object.entries(
         this.tweens[tweenPos].progress(tweenProgress),
       )
     ) {
-      mesh.position.set(coord.x, coord.y, coord.z);
-      mesh.rotation.set(
-        MathUtils.degToRad(coord.degree.x),
-        MathUtils.degToRad(coord.degree.y),
-        MathUtils.degToRad(coord.degree.z),
-      );
+      mesh.position.copy(savePoint.position);
+      mesh.quaternion.copy(savePoint.quaternion);
     }
   }
 }

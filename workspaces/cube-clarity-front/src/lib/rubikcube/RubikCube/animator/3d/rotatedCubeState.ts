@@ -83,15 +83,17 @@ export const rotatedCubePieceState = (
     const to = mapping[toI][toJ];
     after[to] = clonedBefore[mapping[fromI][fromJ]];
 
-    after[to].coord.degree = rotateByWorldAxis(
-      clonedBefore[mapping[fromI][fromJ]].coord.degree,
+    after[to].savePoint.quaternion = rotateByWorldAxis(
+      clonedBefore[mapping[fromI][fromJ]].savePoint.quaternion,
       rotateAxis.bindTo,
       rotateAxis.invert ? -degree : degree,
     );
 
-    after[to].coord.x = RUBIK_CUBE_PIECES[to].position[0];
-    after[to].coord.y = RUBIK_CUBE_PIECES[to].position[1];
-    after[to].coord.z = RUBIK_CUBE_PIECES[to].position[2];
+    after[to].savePoint.position.set(
+      RUBIK_CUBE_PIECES[to].position[0],
+      RUBIK_CUBE_PIECES[to].position[1],
+      RUBIK_CUBE_PIECES[to].position[2],
+    );
   }
 
   return after;

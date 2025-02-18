@@ -53,15 +53,15 @@ export class MoveNotationTween {
         ),
       )
     ) {
-      clonedCubePieceState[piece].coord[faceMap.x.bindTo] = faceMap.x.invert
+      clonedCubePieceState[piece].savePoint.position[faceMap.x.bindTo] = faceMap.x.invert
         ? -coord.x
         : coord.x;
-      clonedCubePieceState[piece].coord[faceMap.y.bindTo] = faceMap.y.invert
+      clonedCubePieceState[piece].savePoint.position[faceMap.y.bindTo] = faceMap.y.invert
         ? -coord.y
         : coord.y;
 
-      clonedCubePieceState[piece].coord.degree = rotateByWorldAxis(
-        this.satrt[piece].coord.degree,
+      clonedCubePieceState[piece].savePoint.quaternion = rotateByWorldAxis(
+        this.satrt[piece].savePoint.quaternion,
         faceMap.rotateAxis.bindTo,
         faceMap.rotateAxis.invert ? -coord.degree : coord.degree,
       );
