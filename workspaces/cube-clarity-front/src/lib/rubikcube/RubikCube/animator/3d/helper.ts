@@ -27,7 +27,7 @@ export const rotateByWorldAxis = (
   const rotation = new Quaternion();
   rotation.setFromAxisAngle(vector3Axis, MathUtils.degToRad(degree));
 
-  rotation.clone()
+  rotation.clone();
 
   const quaternion = new Quaternion().setFromEuler(
     new Euler(

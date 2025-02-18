@@ -105,12 +105,12 @@ export class RubikCubeAnimator {
 
   patchProgress(progress: number) {
     const tweenPos = progress === 1
-     ? this.tweens.length - 1
-     : Math.floor(progress * this.tweens.length);
+      ? this.tweens.length - 1
+      : Math.floor(progress * this.tweens.length);
 
     const tweenProgress = progress === 1
-     ? 1
-     : (progress - tweenPos / this.tweens.length) * this.tweens.length;
+      ? 1
+      : (progress - tweenPos / this.tweens.length) * this.tweens.length;
 
     for (
       const [_piece, { coord, mesh }] of Object.entries(
