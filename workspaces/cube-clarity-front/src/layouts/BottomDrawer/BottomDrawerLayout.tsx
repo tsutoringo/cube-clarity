@@ -13,7 +13,7 @@ export const BottomDrawerLayout = ({
   viewBox: ReactNode;
   drawer: ReactNode;
   className?: Argument;
-  nodeRef: RefObject<HTMLDivElement>;
+  nodeRef?: RefObject<HTMLDivElement>;
 }) => {
   return (
     <div ref={nodeRef} className={cn(styles.bottomDrawerLayout, className)}>

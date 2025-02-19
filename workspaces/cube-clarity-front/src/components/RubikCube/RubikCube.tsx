@@ -5,49 +5,42 @@ import { RubikCubeRenderer } from "../../lib/rubikcube/RubikCubeRenderer";
 import {
   parseMoveNotation,
   RubikCube,
+  RubikCubeMoveNotation,
 } from "../../lib/rubikcube/RubikCube/RubikCube";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import classNames from "classnames";
+import { RubikCubeAnimator } from "../../lib/rubikcube/RubikCube/animator/RubikCubeAnimator";
 
 interface RubikCubeDisplayProps extends ComponentProps<"div"> {
-  noUpdate?: boolean;
-}
-
-interface RubikCubeDisplayPropsWithMoveNotation extends RubikCubeDisplayProps {
-  moves: string;
-  base64?: never;
-  rubikCube?: never;
-}
-
-interface RubikCubeDisplayPropsWithBase64 extends RubikCubeDisplayProps {
-  moves?: never;
-  base64: string;
-  rubikCube?: never;
-}
-
-interface RubikCubeDisplayPropsWithRubikCube extends RubikCubeDisplayProps {
-  moves?: never;
-  base64?: never;
+  onceRender?: boolean;
   rubikCube: RubikCube;
+  animation?: {
+    moves: RubikCubeMoveNotation[];
+    progress: number;
+  };
 }
 
 export const RubikCubeDisplay = (
   {
     className,
-    moves,
-    base64,
     rubikCube: gotRubikCube,
-    noUpdate = false,
+    onceRender = false,
+    animation,
     ...otherProps
-  }:
-    | RubikCubeDisplayPropsWithBase64
-    | RubikCubeDisplayPropsWithMoveNotation
-    | RubikCubeDisplayPropsWithRubikCube,
+  }: RubikCubeDisplayProps,
 ) => {
   const rubikCubeParentRef = useRef<HTMLDivElement>(null);
   const [rubikCubeRenderer, setRubikCubeRenderer] = useState<
     null | RubikCubeRenderer
   >(null);
+
+  const animator = useRef<RubikCubeAnimator | null>(null);
+
+  const patchProgress = () => {
+    if (!animator.current || !animation) return;
+
+    animator.current.patchProgress(animation.progress);
+  };
 
   useEffect(() => {
     if (rubikCubeParentRef.current) {
@@ -61,9 +54,8 @@ export const RubikCubeDisplay = (
       rubikCubeRenderer.camera.lookAt(new Vector3(0, 0, 0));
 
       setRubikCubeRenderer(rubikCubeRenderer);
-      rubikCubeRenderer.render();
 
-      if (!noUpdate) {
+      if (!onceRender) {
         new OrbitControls(
           rubikCubeRenderer.camera,
           rubikCubeParentRef.current,
@@ -85,19 +77,37 @@ export const RubikCubeDisplay = (
 
   useEffect(() => {
     if (rubikCubeRenderer) {
-      const rubikCube = base64
-        ? RubikCube.decodeBase64(base64).unwrap()
-        : moves
-        ? RubikCube.withMoveNotation(parseMoveNotation(moves).unwrap())
-        : gotRubikCube
-        ? gotRubikCube
-        : null!;
-      rubikCubeRenderer.rerenderRubikCube(
-        rubikCube,
+      const rubikCubeGroup = rubikCubeRenderer.rerenderRubikCube(
+        gotRubikCube,
       );
-      rubikCubeRenderer.render();
+
+      if (animation) {
+        animator.current = RubikCubeAnimator.generate(
+          rubikCubeGroup,
+          animation.moves,
+        );
+        patchProgress();
+      }
     }
-  }, [rubikCubeRenderer, moves, base64, gotRubikCube]);
+  }, [rubikCubeRenderer, gotRubikCube]);
+
+  useEffect(() => {
+    patchProgress();
+  }, [animation?.progress]);
+
+  useEffect(() => {
+    if (animation && rubikCubeRenderer) {
+      const rubikCubeGroup = rubikCubeRenderer.rerenderRubikCube(
+        gotRubikCube,
+      );
+
+      animator.current = RubikCubeAnimator.generate(
+        rubikCubeGroup,
+        animation.moves,
+      );
+      patchProgress();
+    }
+  }, [animation?.moves]);
 
   return (
     <div
