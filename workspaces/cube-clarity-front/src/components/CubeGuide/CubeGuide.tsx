@@ -1,8 +1,10 @@
 import { RubikCube } from "../../lib/rubikcube/RubikCube/RubikCube";
 import { RubikCubeMoveNotation } from "../../lib/rubikcube/RubikCube/MoveNotation";
-import { BoxGeometry, OrthographicCamera, Scene, WebGLRenderer } from "three";
+import { BoxGeometry, OrthographicCamera, Scene, Vector3, WebGLRenderer } from "three";
 import { generateRubikCubeCubeModel } from "../../lib/rubikcube/RubikCubeModel";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { CubeGuideRenderer } from "./CubeGuideRenderer";
+
 
 const CubeGuide = (
   baseCube: RubikCube,
@@ -12,31 +14,28 @@ const CubeGuide = (
   }[],
 ) => {
   const cubeRef = useRef<HTMLDivElement>(null);
+  const [cubeGuideRenderer, setCubeGuideRenderer] = useState<
+    null| CubeGuideRenderer
+  >(null);
+  
   useEffect(() => {
-    const refCurrent = cubeRef.current;
-    if (!refCurrent) return;
+    if (!cubeRef.current) return;
+    const cubeGuideRenderer = new CubeGuideRenderer(
+      cubeRef.current,
+    );
+    // カメラの設定
+    cubeGuideRenderer.camera.position.set(0,0,10);
+    cubeGuideRenderer.camera.lookAt(new Vector3(0,0,0));
 
-    const width = refCurrent?.clientWidth;
-    const height = refCurrent?.clientHeight;
-    const aspect = width / height;
-
-    const frustumSize = height;
-    const left = (frustumSize * aspect) / -2;
-    const right = (frustumSize * aspect) / 2;
-    const top = frustumSize / 2;
-    const bottom = frustumSize / -2;
-
-    // シーンの作成
-    const scene = new Scene();
-
-    // レンダラーの設定
-    const renderer = new WebGLRenderer();
-    renderer.setSize(width, height);
-    refCurrent.appendChild(renderer.domElement);
-
-    // cameraの設定
-    const camera = new OrthographicCamera(left, right, top, bottom, 0.1, 1000);
-    camera.position.z = 20;
+    // useStateを利用して新しく設定
+    setCubeGuideRenderer(cubeGuideRenderer);
+    
+    // レンダリングする
+    cubeGuideRenderer.render();
+    for(const currentCube of cubeList){
+      const cubeGroup = generateRubikCubeCubeModel(currentCube.cube)
+      // 次回ここから処理を書きます
+    }
   }, []);
 
   return (
