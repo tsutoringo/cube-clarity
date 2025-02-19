@@ -6,7 +6,7 @@ import {
 } from "../MoveNotation";
 import { RubikCubeFaceName } from "../RubikCube";
 import { faceRotation2d } from "./2d/faceRotation";
-import { RUBIKC_CUBE_FACE_CUBE_PIECE_MAP } from "./3d/faces";
+import { RUBIK_CUBE_FACE_CUBE_PIECE_MAP } from "./3d/faces";
 import { rotatedCubePieceState } from "./3d/rotatedCubeState";
 import { cloneCubePieceState, RubikCubePieceState } from "./RubikCubeAnimator";
 import { flatMap, zip } from "@core/iterutil/pipe";
@@ -39,7 +39,7 @@ export class MoveNotationTween {
   progress(progress: number) {
     const currentCoords = faceRotation2d(this.direction, progress);
     const clonedCubePieceState = cloneCubePieceState(this.satrt);
-    const faceMap = RUBIKC_CUBE_FACE_CUBE_PIECE_MAP[this.face];
+    const faceMap = RUBIK_CUBE_FACE_CUBE_PIECE_MAP[this.face];
 
     for (
       const [piece, coord] of pipe(

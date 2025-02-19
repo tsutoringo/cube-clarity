@@ -6,7 +6,7 @@ import {
 import { RubikCubeFaceName } from "../../RubikCube";
 
 // deno-fmt-ignore
-export const RUBIKC_CUBE_FACE_CUBE_PIECE_MAP = {
+export const RUBIK_CUBE_FACE_CUBE_PIECE_MAP = {
   U: {
     x: { bindTo: "x", invert: false },
     y: { bindTo: "z", invert: true },

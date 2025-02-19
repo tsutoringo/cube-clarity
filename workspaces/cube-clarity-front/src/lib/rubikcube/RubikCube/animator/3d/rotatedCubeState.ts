@@ -10,7 +10,7 @@ import {
   RotateTo,
   RubikCubeMoveNotation,
 } from "../../MoveNotation";
-import { RUBIKC_CUBE_FACE_CUBE_PIECE_MAP } from "./faces";
+import { RUBIK_CUBE_FACE_CUBE_PIECE_MAP } from "./faces";
 import { cloneCubePieceState, RubikCubePieceState } from "../RubikCubeAnimator";
 import { enumerate, flatMap, map } from "@core/iterutil/pipe";
 import { RUBIK_CUBE_PIECES } from "../../../RubikCubeModel";
@@ -62,7 +62,7 @@ export const rotatedCubePieceState = (
   const { face, rotateTo } = getRotateNotationDetail(moveNotation);
 
   const { degree, mappingTo } = ROTATION_INFOMATIONS[rotateTo];
-  const { mapping, rotateAxis } = RUBIKC_CUBE_FACE_CUBE_PIECE_MAP[face];
+  const { mapping, rotateAxis } = RUBIK_CUBE_FACE_CUBE_PIECE_MAP[face];
 
   // 頑張って読んで^^
   for (
