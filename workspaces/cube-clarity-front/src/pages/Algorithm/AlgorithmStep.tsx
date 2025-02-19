@@ -79,7 +79,7 @@ export const AlgorithmStep = ({
             <div className={styles.stepCubes}>
               <div className={styles.stepCube}>
                 <RubikCubeDisplay
-                  noUpdate
+                  onceRender
                   onClick={() => setViewingRubikCube(steps[0])}
                   rubikCube={steps[0]}
                 />
@@ -90,7 +90,7 @@ export const AlgorithmStep = ({
                     <div className={styles.stepCube}>
                       <span>{move}</span>
                       <RubikCubeDisplay
-                        noUpdate
+                        onceRender
                         key={index}
                         onClick={() => setViewingRubikCube(rubikCube)}
                         rubikCube={rubikCube}
