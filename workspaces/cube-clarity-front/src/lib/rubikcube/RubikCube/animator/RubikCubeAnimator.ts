@@ -55,7 +55,7 @@ export const cloneCubePieceState = (
           savePoint: {
             quaternion: savePoint.quaternion.clone(),
             position: savePoint.position.clone(),
-          }
+          },
         },
       ];
     }),

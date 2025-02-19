@@ -15,9 +15,9 @@ interface RubikCubeDisplayProps extends ComponentProps<"div"> {
   onceRender?: boolean;
   rubikCube: RubikCube;
   animation?: {
-    moves: RubikCubeMoveNotation[]
-    progress: number
-  }
+    moves: RubikCubeMoveNotation[];
+    progress: number;
+  };
 }
 
 export const RubikCubeDisplay = (
@@ -27,7 +27,7 @@ export const RubikCubeDisplay = (
     onceRender = false,
     animation,
     ...otherProps
-  }: RubikCubeDisplayProps
+  }: RubikCubeDisplayProps,
 ) => {
   const rubikCubeParentRef = useRef<HTMLDivElement>(null);
   const [rubikCubeRenderer, setRubikCubeRenderer] = useState<
@@ -84,7 +84,7 @@ export const RubikCubeDisplay = (
       if (animation) {
         animator.current = RubikCubeAnimator.generate(
           rubikCubeGroup,
-          animation.moves
+          animation.moves,
         );
         patchProgress();
       }
@@ -93,7 +93,7 @@ export const RubikCubeDisplay = (
 
   useEffect(() => {
     patchProgress();
-  }, [ animation?.progress ]);
+  }, [animation?.progress]);
 
   useEffect(() => {
     if (animation && rubikCubeRenderer) {
@@ -103,11 +103,11 @@ export const RubikCubeDisplay = (
 
       animator.current = RubikCubeAnimator.generate(
         rubikCubeGroup,
-        animation.moves
+        animation.moves,
       );
       patchProgress();
     }
-  }, [ animation?.moves ]);
+  }, [animation?.moves]);
 
   return (
     <div
