@@ -953,7 +953,7 @@ function solveYellowCross(
   const yellowEdgeKey = yellowEgdes.sort().join(" ");
 
   const yellowEdgeSolutions: Record<string, RubikCubeMoveNotation[]> = {
-    "DB DF DL DR": ["F'", "R'", "D'", "R", "D", "F", "D2", "F'", "R'", "D'", "R", "D", "R'", "D'", "R", "D", "F"],
+    "": ["F'", "R'", "D'", "R", "D", "F", "D2", "F'", "R'", "D'", "R", "D", "R'", "D'", "R", "D", "F"],
     "DF DR": ["D2", "F'", "R'", "D'", "R", "D", "R'", "D'", "R", "D", "F"],
     "DF DL": ["D'", "F'", "R'", "D'", "R", "D", "R'", "D'", "R", "D", "F"],
     "DB DR": ["D", "F'", "R'", "D'", "R", "D", "R'", "D'", "R", "D", "F"],
@@ -1169,17 +1169,8 @@ function solveYellowCorners(
     "DRB": "D2",
     "DLB": "D",
   };
-
-  const mainAlgorithm: RubikCubeMoveNotation[] = [
-    "R'",
-    "D",
-    "L",
-    "D'",
-    "R",
-    "D",
-    "L'",
-    "D'",
-  ];
+  // deno-fmt-ignore
+  const mainAlgorithm: RubikCubeMoveNotation[] = ["R'","D","L","D'","R","D","L'","D'"];
 
   const correctDRFColors: Record<string, RubikCubeFaceColor[]> = {
     "DRF": ["B", "R", "Y"],
@@ -1219,7 +1210,7 @@ function solveYellowCorners(
     cube = cube.rotateCube(mainAlgorithm);
 
     if (
-      !correctDRFColors[correctCornerPosition].every((
+      correctDRFColors[correctCornerPosition].every((
         color: RubikCubeFaceColor,
       ) => newDRFColors.includes(color))
     ) {
