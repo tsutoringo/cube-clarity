@@ -1,3 +1,9 @@
+/**
+ * @module
+ * ルービックキューブの初心者向けの解法方法は7つあります。
+ * それぞれをまとめて一つの関数に呼び出します。
+ */
+
 import {
   FACE_COLOR,
   RubikCube,
@@ -38,11 +44,6 @@ type EdgeIndex = {
   y2: RubikCubeFaceYIndex;
 }[];
 
-/**
- * @module
- * ルービックキューブの初心者向けの解法方法は7つあります。
- * それぞれをまとめて一つの関数に呼び出します。
- */
 export function solveRubikCube(cube: RubikCube) {
   // Step1
   let [step1Cube, step1moves] = solveWhiteCross(cube);
