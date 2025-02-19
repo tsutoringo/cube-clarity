@@ -69,7 +69,7 @@ export type CubePieceCoordState = {
 
 export class RubikCubeAnimator {
   static generate(
-    rubikcubePieces: RubikCubeGroup,
+    rubikCubePieces: RubikCubeGroup,
     moves: RubikCubeMoveNotation[],
   ) {
     const tweens: MoveNotationTween[] = [];
