@@ -54,11 +54,11 @@ export const ROTATION_INFOMATIONS = {
  * 回転されたCubeStateを返します。
  */
 export const rotatedCubePieceState = (
-  beforeCubePieceSatate: RubikCubePieceState,
+  beforeCubePieceState: RubikCubePieceState,
   moveNotation: RubikCubeMoveNotation,
 ) => {
-  const clonedBefore = cloneCubePieceState(beforeCubePieceSatate);
-  const after = cloneCubePieceState(beforeCubePieceSatate);
+  const clonedBefore = cloneCubePieceState(beforeCubePieceState);
+  const after = cloneCubePieceState(beforeCubePieceState);
   const { face, rotateTo } = getRotateNotationDetail(moveNotation);
 
   const { degree, mappingTo } = ROTATION_INFOMATIONS[rotateTo];
