@@ -74,7 +74,7 @@ export class RubikCubeAnimator {
   ) {
     const tweens: MoveNotationTween[] = [];
 
-    let currentCubePieceState = generateDefaultRubikCubeStates(rubikcubePieces);
+    let currentCubePieceState = generateDefaultRubikCubeStates(rubikCubePieces);
 
     for (const move of moves) {
       const { rotatedCubePieceState, moveNotationTween } = MoveNotationTween
