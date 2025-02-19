@@ -15,7 +15,7 @@ export const axisToVector = (axis: "x" | "y" | "z"): Vector3 => {
  * ワールド座標のY軸で回転させる。
  * @param beforeRotation 元のオイラー角
  * @param axis 軸
- * @param degre 回転量
+ * @param degree 回転量
  */
 export const rotateByWorldAxis = (
   beforeQuaternion: Quaternion,
