@@ -12,26 +12,3 @@ export const sizeSet = (currentRefElement: HTMLElement) => {
   const bottom = frustumSize / -2;
   return [left, right, top, bottom];
 };
-/**
- * もらったオブジェクトからキューブを作成する関数
- * @param {RubikCube} cube 
- */
-export const cubeCreate = (cube:RubikCube) => {
-  
-}
-
-// const array = {
-//   U:[
-//     ["W","W","W"],
-//     ["W","W","W"],
-//     ["W","W","W"],
-//   ],
-//   D:[
-//     ["W","W","W"],
-//     ["W","W","W"],
-//     ["W","W","W"],
-//   ],
-//   F:[
-
-//   ]
-// };
