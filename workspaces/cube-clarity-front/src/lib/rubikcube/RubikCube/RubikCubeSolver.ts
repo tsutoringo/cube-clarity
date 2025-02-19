@@ -78,6 +78,13 @@ function solveWhiteCross(
   let cube = gotCube;
   const movesResult: RubikCubeMoveNotation[] = [];
 
+  const correctEdges: Record<string, RubikCubeFaceColor> = {
+    "F": FACE_COLOR.Green,
+    "R": FACE_COLOR.Red,
+    "B": FACE_COLOR.Blue,
+    "L": FACE_COLOR.Orange,
+  };
+
   function getAdjacentFace(key: string): RubikCubeFaceName {
     if (key === "D,0,1") return "F";
     if (key === "D,1,2") return "R";
@@ -480,6 +487,33 @@ function solveWhiteCross(
         } else {
           break;
         }
+      }
+    }
+
+    for (const face in correctEdges) {
+      if (cube.at(face as RubikCubeFaceName, 0, 1) !== correctEdges[face]) {
+
+        if (face === "F") {
+          movesResult.push("F2");
+          cube = cube.rotateCubeOnce("F2");
+        }
+
+        if (face === "R") {
+          movesResult.push("R2");
+          cube = cube.rotateCubeOnce("R2");
+        }
+
+        if (face === "L") {
+          movesResult.push("L2");
+          cube = cube.rotateCubeOnce("L2");
+        }
+
+        if (face === "B") {
+          movesResult.push("B2");
+          cube = cube.rotateCubeOnce("B2");
+        }
+
+        break;
       }
     }
   }
@@ -1152,32 +1186,133 @@ function findCorrectYellowCornerPosition(cube: RubikCube): string {
   return "";
 }
 
-function solveYellowCorners(
-  cube: RubikCube,
-): [RubikCube, RubikCubeMoveNotation[]] {
-  const moveResult: RubikCubeMoveNotation[] = [];
+function checkCorrectColor(cube: RubikCube, correctCornerPosition: string): boolean {
+  
+  const correctDRFColors: Record<string, RubikCubeFaceColor[]> = {
+    "DRF": ["B", "R", "Y"],
+    "DLF": ["G", "R", "Y"],
+    "DRB": ["B", "O", "Y"],
+    "DLB": ["O", "G", "Y"],
+  };
 
-  const correctColors: Record<string, RubikCubeFaceColor[]> = {
+  const checkCornerPosition = [
+    cube.at("F", 2, 2),
+    cube.at("R", 2, 0),
+    cube.at("D", 0, 2),
+  ];
+
+  if (
+    !correctDRFColors[correctCornerPosition].every((
+      color: RubikCubeFaceColor,
+    ) => checkCornerPosition.includes(color))
+  ) {
+    return true;
+  }
+
+  return false;
+}
+
+function checkCorrectCornerColors(cube: RubikCube): boolean {
+
+  let count = 0;
+
+  const correctCorners: Record<string, RubikCubeFaceColor[]> = {
     "DRF": ["G", "R", "Y"],
     "DLF": ["G", "O", "Y"],
     "DRB": ["B", "R", "Y"],
     "DLB": ["B", "O", "Y"],
   };
 
+  const cornerPositions: CornerIndex = [
+    {
+      position: "DRF",
+      face1: "D",
+      x1: 0,
+      y1: 2,
+      face2: "R",
+      x2: 2,
+      y2: 0,
+      face3: "F",
+      x3: 2,
+      y3: 2,
+    },
+    {
+      position: "DLF",
+      face1: "D",
+      x1: 0,
+      y1: 0,
+      face2: "L",
+      x2: 2,
+      y2: 2,
+      face3: "F",
+      x3: 2,
+      y3: 0,
+    },
+    {
+      position: "DRB",
+      face1: "D",
+      x1: 2,
+      y1: 2,
+      face2: "R",
+      x2: 2,
+      y2: 2,
+      face3: "B",
+      x3: 2,
+      y3: 0,
+    },
+    {
+      position: "DLB",
+      face1: "D",
+      x1: 2,
+      y1: 0,
+      face2: "L",
+      x2: 2,
+      y2: 0,
+      face3: "B",
+      x3: 2,
+      y3: 2,
+    },
+  ];
+
+  for (
+    const { position, face1, x1, y1, face2, x2, y2, face3, x3, y3 }
+      of cornerPositions
+  ) {
+    const colors = [
+      cube.at(face1, x1, y1),
+      cube.at(face2, x2, y2),
+      cube.at(face3, x3, y3),
+    ];
+
+    if (
+      correctCorners[position].every((color: RubikCubeFaceColor) =>
+        colors.includes(color)
+      )
+    ) {
+      count = count + 1;
+    }
+  }
+
+  if (count === 4){
+    return true;
+  }
+
+  return false;
+}
+
+function solveYellowCorners(
+  cube: RubikCube,
+): [RubikCube, RubikCubeMoveNotation[]] {
+  const moveResult: RubikCubeMoveNotation[] = [];
+
   const positionAdjustments: Record<string, RubikCubeMoveNotation> = {
     "DRF": "D'",
     "DRB": "D2",
     "DLB": "D",
   };
+
   // deno-fmt-ignore
   const mainAlgorithm: RubikCubeMoveNotation[] = ["R'","D","L","D'","R","D","L'","D'"];
-
-  const correctDRFColors: Record<string, RubikCubeFaceColor[]> = {
-    "DRF": ["B", "R", "Y"],
-    "DLF": ["G", "R", "Y"],
-    "DRB": ["B", "O", "Y"],
-    "DLB": ["G", "O", "Y"],
-  };
 
   const finalAdjustments: Record<string, RubikCubeMoveNotation> = {
     "DRF": "D",
@@ -1185,21 +1320,20 @@ function solveYellowCorners(
     "DLB": "D'",
   };
 
-  const newDRFColors = [
-    cube.at("F", 2, 2),
-    cube.at("R", 2, 0),
-    cube.at("D", 0, 2),
-  ];
-
   let correctCornerPosition = findCorrectYellowCornerPosition(cube);
+  let allcornerCorrect = checkCorrectCornerColors(cube);
 
-  if (
-    correctColors[correctCornerPosition].every((color: RubikCubeFaceColor) =>
-      newDRFColors.includes(color)
-    )
-  ) {
+  if (allcornerCorrect) {
     return [cube, moveResult];
   } else {
+
+    if (!correctCornerPosition) {
+      moveResult.push(...mainAlgorithm);
+      cube = cube.rotateCube(mainAlgorithm);
+
+      correctCornerPosition = findCorrectYellowCornerPosition(cube);
+    }
+
     if (correctCornerPosition) {
       const adjustmentMove = positionAdjustments[correctCornerPosition];
       moveResult.push(adjustmentMove);
@@ -1209,11 +1343,9 @@ function solveYellowCorners(
     moveResult.push(...mainAlgorithm);
     cube = cube.rotateCube(mainAlgorithm);
 
-    if (
-      !correctDRFColors[correctCornerPosition].every((
-        color: RubikCubeFaceColor,
-      ) => newDRFColors.includes(color))
-    ) {
+    const checkedCorrectCorner = checkCorrectColor(cube, correctCornerPosition);
+
+    if (checkedCorrectCorner) {
       moveResult.push(...mainAlgorithm);
       cube = cube.rotateCube(mainAlgorithm);
     }
@@ -1223,9 +1355,9 @@ function solveYellowCorners(
       moveResult.push(finalMove);
       cube = cube.rotateCubeOnce(finalMove);
     }
-
-    return [cube, moveResult];
   }
+
+  return [cube, moveResult];
 }
 
 // Last Step
