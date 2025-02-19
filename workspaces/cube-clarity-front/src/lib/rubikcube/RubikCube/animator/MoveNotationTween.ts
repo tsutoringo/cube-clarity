@@ -28,7 +28,7 @@ export class MoveNotationTween {
   direction: RotateTo;
 
   constructor(
-    public satrt: RubikCubePieceState,
+    public start: RubikCubePieceState,
     public move: RubikCubeMoveNotation,
   ) {
     const { face, rotateTo } = getRotateNotationDetail(move);
@@ -38,7 +38,7 @@ export class MoveNotationTween {
 
   progress(progress: number) {
     const currentCoords = faceRotation2d(this.direction, progress);
-    const clonedCubePieceState = cloneCubePieceState(this.satrt);
+    const clonedCubePieceState = cloneCubePieceState(this.start);
     const faceMap = RUBIK_CUBE_FACE_CUBE_PIECE_MAP[this.face];
 
     for (
@@ -59,7 +59,7 @@ export class MoveNotationTween {
         faceMap.y.invert ? -coord.y : coord.y;
 
       clonedCubePieceState[piece].savePoint.quaternion = rotateByWorldAxis(
-        this.satrt[piece].savePoint.quaternion,
+        this.start[piece].savePoint.quaternion,
         faceMap.rotateAxis.bindTo,
         faceMap.rotateAxis.invert ? -coord.degree : coord.degree,
       );
