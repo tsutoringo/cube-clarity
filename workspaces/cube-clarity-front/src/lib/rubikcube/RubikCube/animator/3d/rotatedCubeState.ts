@@ -16,7 +16,7 @@ import { enumerate, flatMap, map } from "@core/iterutil/pipe";
 import { RUBIK_CUBE_PIECES } from "../../../RubikCubeModel";
 import { rotateByWorldAxis } from "./helper";
 
-export const ROTATION_INFOMATIONS = {
+export const ROTATION_INFORMATIONS = {
   clockwise: {
     degree: -90,
     mappingTo: [
@@ -61,7 +61,7 @@ export const rotatedCubePieceState = (
   const after = cloneCubePieceState(beforeCubePieceState);
   const { face, rotateTo } = getRotateNotationDetail(moveNotation);
 
-  const { degree, mappingTo } = ROTATION_INFOMATIONS[rotateTo];
+  const { degree, mappingTo } = ROTATION_INFORMATIONS[rotateTo];
   const { mapping, rotateAxis } = RUBIK_CUBE_FACE_CUBE_PIECE_MAP[face];
 
   // 頑張って読んで^^
