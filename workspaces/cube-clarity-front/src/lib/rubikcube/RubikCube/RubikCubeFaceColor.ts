@@ -1,5 +1,5 @@
 import { Result } from "@result/result";
-import { DecodeRubikCubeFaceColorError, RubikCubeError, RubikCubeResult } from "./Error";
+import { RubikCubeError, RubikCubeResult } from "./Error";
 
 export const FACE_COLOR = {
   White: "W",
@@ -48,6 +48,12 @@ export const encodeRubikCubeFaceColor = (color: RubikCubeFaceColor) => {
       return 0b0101;
   }
 };
+
+class DecodeRubikCubeFaceColorError extends RubikCubeError {
+  constructor(colorNumber: number) {
+    super(`Unknown rubik cube face color number(${colorNumber}).`);
+  }
+}
 
 /**
  * {@link encodeRubikCubeFaceColor}で符号化された色を戻す。

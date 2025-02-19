@@ -12,10 +12,4 @@ export class RubikCubeDecodeError extends RubikCubeError {
   }
 }
 
-export class DecodeRubikCubeFaceColorError extends RubikCubeError {
-  constructor(colorNumber: number) {
-    super(`Unknown rubik cube face color number(${colorNumber}).`);
-  }
-}
-
 export type RubikCubeResult<T> = Result<T, RubikCubeError>;
