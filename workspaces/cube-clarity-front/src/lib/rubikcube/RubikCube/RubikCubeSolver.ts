@@ -492,7 +492,6 @@ function solveWhiteCross(
 
     for (const face in correctEdges) {
       if (cube.at(face as RubikCubeFaceName, 0, 1) !== correctEdges[face]) {
-
         if (face === "F") {
           movesResult.push("F2");
           cube = cube.rotateCubeOnce("F2");
@@ -986,8 +985,9 @@ function solveYellowCross(
 
   const yellowEdgeKey = yellowEgdes.sort().join(" ");
 
+  // deno-fmt-ignore
   const yellowEdgeSolutions: Record<string, RubikCubeMoveNotation[]> = {
-    "": ["F'", "R'", "D'", "R", "D", "F", "D2", "F'", "R'", "D'", "R", "D", "R'", "D'", "R", "D", "F"],
+    "": ["F'","R'","D'","R","D","F","D2","F'","R'","D'","R","D","R'","D'","R","D","F"],
     "DF DR": ["D2", "F'", "R'", "D'", "R", "D", "R'", "D'", "R", "D", "F"],
     "DF DL": ["D'", "F'", "R'", "D'", "R", "D", "R'", "D'", "R", "D", "F"],
     "DB DR": ["D", "F'", "R'", "D'", "R", "D", "R'", "D'", "R", "D", "F"],
@@ -1186,8 +1186,10 @@ function findCorrectYellowCornerPosition(cube: RubikCube): string {
   return "";
 }
 
-function checkCorrectColor(cube: RubikCube, correctCornerPosition: string): boolean {
-  
+function checkCorrectColor(
+  cube: RubikCube,
+  correctCornerPosition: string,
+): boolean {
   const correctDRFColors: Record<string, RubikCubeFaceColor[]> = {
     "DRF": ["B", "R", "Y"],
     "DLF": ["G", "R", "Y"],
@@ -1213,7 +1215,6 @@ function checkCorrectColor(cube: RubikCube, correctCornerPosition: string): bool
 }
 
 function checkCorrectCornerColors(cube: RubikCube): boolean {
-
   let count = 0;
 
   const correctCorners: Record<string, RubikCubeFaceColor[]> = {
@@ -1293,7 +1294,7 @@ function checkCorrectCornerColors(cube: RubikCube): boolean {
     }
   }
 
-  if (count === 4){
+  if (count === 4) {
     return true;
   }
 
@@ -1326,7 +1327,6 @@ function solveYellowCorners(
   if (allcornerCorrect) {
     return [cube, moveResult];
   } else {
-
     if (!correctCornerPosition) {
       moveResult.push(...mainAlgorithm);
       cube = cube.rotateCube(mainAlgorithm);
