@@ -1,12 +1,14 @@
 import { CSSTransition } from "react-transition-group";
-import { HorizontalRule } from "../../components/HorizontalRule/HorizontalRule";
-import { BottomDrawer } from "../../layouts/BottomDrawer/BottomDrawer";
 import { useMemo, useRef, useState } from "react";
-import styles from "./AlgorithmStep.module.css";
-import { RubikCubeDisplay } from "../../components/RubikCube/RubikCube";
-import { parseMoveNotation } from "../../lib/rubikcube/RubikCube/MoveNotation";
-import { RubikCube } from "../../lib/rubikcube/RubikCube/RubikCube";
 import { drop, zip } from "@core/iterutil";
+
+import { HorizontalRule } from "@components/HorizontalRule/HorizontalRule";
+import { RubikCubeDisplay } from "@components/RubikCube/RubikCube";
+import { BottomDrawer } from "@layouts/BottomDrawer/BottomDrawer";
+import { parseMoveNotation } from "@lib/rubikcube/RubikCube/MoveNotation";
+import { RubikCube } from "@lib/rubikcube/RubikCube/RubikCube";
+
+import styles from "./AlgorithmStep.module.css";
 
 export const AlgorithmStep = ({
   displaying,
@@ -77,7 +79,7 @@ export const AlgorithmStep = ({
             <div className={styles.stepCubes}>
               <div className={styles.stepCube}>
                 <RubikCubeDisplay
-                  noUpdate
+                  onceRender
                   onClick={() => setViewingRubikCube(steps[0])}
                   rubikCube={steps[0]}
                 />
@@ -88,7 +90,7 @@ export const AlgorithmStep = ({
                     <div className={styles.stepCube}>
                       <span>{move}</span>
                       <RubikCubeDisplay
-                        noUpdate
+                        onceRender
                         key={index}
                         onClick={() => setViewingRubikCube(rubikCube)}
                         rubikCube={rubikCube}

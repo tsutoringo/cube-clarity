@@ -16,6 +16,7 @@ export class RubikCubeRenderer {
   resizeObserver: ResizeObserver;
   unmounted: boolean = false;
   rubikCubeGroup: Group;
+  progress: number = 0;
 
   constructor(
     public parentElement: HTMLElement,
@@ -48,10 +49,15 @@ export class RubikCubeRenderer {
 
   rerenderRubikCube(rubikCube: RubikCube) {
     this.scene.remove(this.rubikCubeGroup);
-    this.rubikCubeGroup = generateRubikCubeCubeModel(rubikCube);
+
+    const rubikCubeModel = generateRubikCubeCubeModel(rubikCube);
+
+    this.rubikCubeGroup = rubikCubeModel;
     this.scene.add(this.rubikCubeGroup);
 
     this.render();
+
+    return rubikCubeModel;
   }
 
   /**

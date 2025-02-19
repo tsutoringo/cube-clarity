@@ -15,14 +15,18 @@ export const Playground = () => {
     RubikCube.default(),
   );
 
-  const [ rawStartCube, setRawStartCube ] = useState<string>(RubikCube.default().encodeBase64());
-  const [ startCube, setStartCube ] = useState(RubikCube.default());
+  const [rawStartCube, setRawStartCube] = useState<string>(
+    RubikCube.default().encodeBase64(),
+  );
+  const [startCube, setStartCube] = useState(RubikCube.default());
 
   const [moves, setMoves] = useState(
     parseMoveNotation("U R2 F B R B2 R U2 L B2 R U' D' R2 F R' L B2 U2 F2")
       .unwrap(),
   );
-  const [rawMoves, setRawMoves ] = useState<string>("U R2 F B R B2 R U2 L B2 R U' D' R2 F R' L B2 U2 F2");
+  const [rawMoves, setRawMoves] = useState<string>(
+    "U R2 F B R B2 R U2 L B2 R U' D' R2 F R' L B2 U2 F2",
+  );
 
   const steps = useMemo(
     () => {
@@ -71,7 +75,12 @@ export const Playground = () => {
                 value={rawStartCube}
                 onChange={(e) => setRawStartCube(e.target.value)}
               />
-              <button onClick={() => setStartCube(RubikCube.decodeBase64(rawStartCube).orThrow())}>読み込む</button>
+              <button
+                onClick={() =>
+                  setStartCube(RubikCube.decodeBase64(rawStartCube).orThrow())}
+              >
+                読み込む
+              </button>
             </div>
             <h2 className={styles.title}>moves</h2>
             <div>
@@ -87,7 +96,9 @@ export const Playground = () => {
                 value={viewingRubikCube.encodeBase64()}
                 onChange={(e) => handleSetRubikCube(e.target.value)}
               />
-              <button onClick={() => setStartCube(viewingRubikCube)}>Start Cubeとして読み込む</button>
+              <button onClick={() => setStartCube(viewingRubikCube)}>
+                Start Cubeとして読み込む
+              </button>
             </div>
             <HorizontalRule>
               <HorizontalRule.Content>

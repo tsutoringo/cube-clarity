@@ -1,10 +1,12 @@
-import cube from "../../assets/CUBE.svg";
-import clarity from "../../assets/CLARITY.svg";
-import rectangle from "../../assets/Rectangle.svg";
-import styles from "./Home.module.css";
 import { useEffect, useRef } from "react";
 import { CSSTransition } from "react-transition-group";
-import { Loading } from "../../components/Loading/Loading";
+
+import cube from "@assets/CUBE.svg";
+import clarity from "@assets/CLARITY.svg";
+import rectangle from "@assets/Rectangle.svg";
+import { Loading } from "@components/Loading/Loading";
+
+import styles from "./Home.module.css";
 import { RubikCubeData } from "../../App";
 
 const StartAnimationPage = ({

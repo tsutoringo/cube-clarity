@@ -1,5 +1,6 @@
 import { Result } from "@result/result";
 import { RubikCubeError, RubikCubeResult } from "./Error";
+import { RubikCubeFaceName } from "./RubikCube";
 
 export const RUBIK_CUBE_MOVE_NOTATION = [
   "R",
@@ -75,3 +76,111 @@ export class RubikCubeBadMoveNotationError extends RubikCubeError {
     super(`Bad move notation(${moveNotation})`);
   }
 }
+
+/**
+ * どこに回転するか
+ */
+export type RotateTo = "clockwise" | "counterclockwise" | "diagonal";
+
+/**
+ * 回転するときにどのように回転するかを返す。
+ * @param moveNotation
+ * @returns
+ */
+export const getRotateNotationDetail = (moveNotation: RubikCubeMoveNotation): {
+  rotateTo: RotateTo;
+  face: RubikCubeFaceName;
+} => {
+  switch (moveNotation) {
+    case "R":
+      return {
+        rotateTo: "clockwise",
+        face: "R",
+      };
+    case "R'":
+      return {
+        rotateTo: "counterclockwise",
+        face: "R",
+      };
+    case "R2":
+      return {
+        rotateTo: "diagonal",
+        face: "R",
+      };
+    case "L":
+      return {
+        rotateTo: "clockwise",
+        face: "L",
+      };
+    case "L'":
+      return {
+        rotateTo: "counterclockwise",
+        face: "L",
+      };
+    case "L2":
+      return {
+        rotateTo: "diagonal",
+        face: "L",
+      };
+    case "U":
+      return {
+        rotateTo: "clockwise",
+        face: "U",
+      };
+    case "U'":
+      return {
+        rotateTo: "counterclockwise",
+        face: "U",
+      };
+    case "U2":
+      return {
+        rotateTo: "diagonal",
+        face: "U",
+      };
+    case "D":
+      return {
+        rotateTo: "clockwise",
+        face: "D",
+      };
+    case "D'":
+      return {
+        rotateTo: "counterclockwise",
+        face: "D",
+      };
+    case "D2":
+      return {
+        rotateTo: "diagonal",
+        face: "D",
+      };
+    case "F":
+      return {
+        rotateTo: "clockwise",
+        face: "F",
+      };
+    case "F'":
+      return {
+        rotateTo: "counterclockwise",
+        face: "F",
+      };
+    case "F2":
+      return {
+        rotateTo: "diagonal",
+        face: "F",
+      };
+    case "B":
+      return {
+        rotateTo: "clockwise",
+        face: "B",
+      };
+    case "B'":
+      return {
+        rotateTo: "counterclockwise",
+        face: "B",
+      };
+    case "B2":
+      return {
+        rotateTo: "diagonal",
+        face: "B",
+      };
+  }
+};
