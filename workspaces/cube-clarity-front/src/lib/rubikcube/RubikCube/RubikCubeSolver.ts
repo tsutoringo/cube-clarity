@@ -953,7 +953,7 @@ function solveYellowCross(
   const yellowEdgeKey = yellowEgdes.sort().join(" ");
 
   const yellowEdgeSolutions: Record<string, RubikCubeMoveNotation[]> = {
-    "DB DF DL DR": [],
+    "DB DF DL DR": ["F'", "R'", "D'", "R", "D", "F", "D2", "F'", "R'", "D'", "R", "D", "R'", "D'", "R", "D", "F"],
     "DF DR": ["D2", "F'", "R'", "D'", "R", "D", "R'", "D'", "R", "D", "F"],
     "DF DL": ["D'", "F'", "R'", "D'", "R", "D", "R'", "D'", "R", "D", "F"],
     "DB DR": ["D", "F'", "R'", "D'", "R", "D", "R'", "D'", "R", "D", "F"],
