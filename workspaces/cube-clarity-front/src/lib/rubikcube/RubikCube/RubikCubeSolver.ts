@@ -1,22 +1,12 @@
-import { parseMoveNotation, RubikCubeMoveNotation } from "./RubikCube.ts";
-import { FACE_COLOR } from "./RubikCube.ts";
 import {
+  FACE_COLOR,
   RubikCube,
   RubikCubeFaceColor,
   RubikCubeFaceName,
   RubikCubeFaceXIndex,
   RubikCubeFaceYIndex,
+  RubikCubeMoveNotation
 } from "./RubikCube.ts";
-
-// Scramble 2
-const scrambledCube = RubikCube.default().rotateCube(
-  "L2 D2 F' D2 F R2 B U2 B R2 B F2 D' F2 L B U R' B D' L'".split(
-    " ",
-  ) as RubikCubeMoveNotation[],
-);
-export const scramble = parseMoveNotation(
-  "L2 D2 F' D2 F R2 B U2 B R2 B F2 D' F2 L B U R' B D' L'",
-).unwrap();
 
 type SolvingIndex = {
   face: RubikCubeFaceName;
@@ -48,8 +38,32 @@ type EdgeIndex = {
   y2: RubikCubeFaceYIndex;
 }[];
 
+/**
+* @module
+* ルービックキューブの初心者向けの解法方法は7つあります。
+* それぞれをまとめて一つの関数に呼び出します。
+*/
+export function solveRubikCube(cube: RubikCube) {
+  // Step1
+  let [ step1Cube, step1moves ] = solveWhiteCross(cube);
+  // Step2
+  let [ step2Cube, step2moves ] = solveWhiteLayer(step1Cube);
+  // Step3
+  let [ step3Cube, step3moves ] = solveSecondLayer(step2Cube);
+  // Step4
+  let [ step4Cube, step4moves ] = solveYellowCross(step3Cube);
+  // Step5
+  let [ step5Cube, step5moves ] = solveCrossColor(step4Cube);
+  // Step6
+  let [ step6Cube, step6moves ] = solveYellowCorners(step5Cube);
+  // Step7
+  let step7moves = solveLastLayer(step6Cube);
+
+  return {step1moves, step2moves, step3moves, step4moves, step5moves, step6moves, step7moves}
+};
+
 // 十字の作成
-export function solveWhiteCross(gotCube: RubikCube): RubikCubeMoveNotation[] {
+function solveWhiteCross(gotCube: RubikCube): [ RubikCube, RubikCubeMoveNotation[] ] {
   let cube = gotCube;
   const movesResult: RubikCubeMoveNotation[] = [];
 
@@ -302,7 +316,6 @@ export function solveWhiteCross(gotCube: RubikCube): RubikCubeMoveNotation[] {
   }
 
   for (let repeat = 0; repeat < 2; repeat++) {
-    // ➀ F талд байгаа цагаан ирмэгүүдийг шилжүүлэх
     const whiteEdgesF: SolvingIndex = [
       { face: "F", x: 0, y: 1, moves: ["F", "R'", "F'"] },
       { face: "F", x: 1, y: 2, moves: ["R'"] },
@@ -329,7 +342,6 @@ export function solveWhiteCross(gotCube: RubikCube): RubikCubeMoveNotation[] {
       }
     }
 
-    // ➁ R талд байгаа цагаан ирмэгүүдийг шилжүүлэх
     const whiteEdgesR: SolvingIndex = [
       { face: "R", x: 0, y: 1, moves: ["R'", "F", "R"] },
       { face: "R", x: 1, y: 2, moves: ["B'"] },
@@ -357,7 +369,6 @@ export function solveWhiteCross(gotCube: RubikCube): RubikCubeMoveNotation[] {
       }
     }
 
-    // ➂ B талд байгаа цагаан ирмэгүүдийг шилжүүлэх
     const whiteEdgesB: SolvingIndex = [
       { face: "B", x: 0, y: 1, moves: ["B'", "R", "B"] },
       { face: "B", x: 1, y: 2, moves: ["L'"] },
@@ -384,7 +395,6 @@ export function solveWhiteCross(gotCube: RubikCube): RubikCubeMoveNotation[] {
       }
     }
 
-    // ➃ L талд байгаа цагаан ирмэгүүдийг шилжүүлэх
     const whiteEdgesL: SolvingIndex = [
       { face: "L", x: 0, y: 1, moves: ["L", "F'", "L'"] },
       { face: "L", x: 1, y: 2, moves: ["F'"] },
@@ -463,8 +473,7 @@ export function solveWhiteCross(gotCube: RubikCube): RubikCubeMoveNotation[] {
     }
   }
 
-  solveWhiteLayer(cube);
-  return movesResult;
+  return [cube, movesResult];
 }
 
 // コーナー解法
@@ -586,7 +595,7 @@ function fixUpperLayer(cube: RubikCube): RubikCubeMoveNotation[] {
   return moves;
 }
 
-function solveWhiteLayer(cube: RubikCube): RubikCubeMoveNotation[] {
+function solveWhiteLayer(cube: RubikCube): [ RubikCube, RubikCubeMoveNotation[] ] {
   const movesResult: RubikCubeMoveNotation[] = [];
 
   const correctCornerPositions: Record<string, Record<string, string>> = {
@@ -697,11 +706,7 @@ function solveWhiteLayer(cube: RubikCube): RubikCubeMoveNotation[] {
     if (!adjusted) break;
   }
 
-  console.log("Solving White Layer...");
-  console.log("Moves: ", movesResult.join(" "));
-
-  solveSecondLayer(cube);
-  return movesResult;
+  return [cube, movesResult];
 }
 
 // セコンドレイヤ解法
@@ -768,7 +773,7 @@ function fixFlippedEdge(cube: RubikCube): RubikCubeMoveNotation[] {
   return moves;
 }
 
-function solveSecondLayer(cube: RubikCube): RubikCubeMoveNotation[] {
+function solveSecondLayer(cube: RubikCube): [ RubikCube, RubikCubeMoveNotation[] ] {
   const movesResult: RubikCubeMoveNotation[] = [];
 
   const correctEdgePositions: Record<string, Record<string, string>> = {
@@ -901,15 +906,11 @@ function solveSecondLayer(cube: RubikCube): RubikCubeMoveNotation[] {
     if (!adjusted) break;
   }
 
-  console.log("Solving Second Layer...");
-  console.log("Moves: ", movesResult.join(" "));
-
-  solveYellowCross(cube);
-  return movesResult;
+  return [cube, movesResult];
 }
 
 // 黄色の十字
-function solveYellowCross(cube: RubikCube): RubikCubeMoveNotation[] {
+function solveYellowCross(cube: RubikCube): [ RubikCube, RubikCubeMoveNotation[] ] {
   const moveResult: RubikCubeMoveNotation[] = [];
 
   const yellowEdgePositions: Record<
@@ -950,11 +951,7 @@ function solveYellowCross(cube: RubikCube): RubikCubeMoveNotation[] {
     cube = cube.rotateCube(moveSequence);
   }
 
-  console.log("Solving Yellow Cross...");
-  console.log("Moves: ", moveResult.join(" "));
-
-  solveCrossColor(cube);
-  return moveResult;
+  return [cube, moveResult];
 }
 
 // Match Cross Color
@@ -994,19 +991,19 @@ function findGreenEdgeAndSides(
   return null;
 }
 
-function solveCrossColor(cube: RubikCube): RubikCubeMoveNotation[] {
+function solveCrossColor(cube: RubikCube): [ RubikCube, RubikCubeMoveNotation[] ] {
   const moveResult: RubikCubeMoveNotation[] = [];
 
   const greenEdgeData = findGreenEdgeAndSides(cube);
 
   if (!greenEdgeData) {
-    console.log("⚠️ D талд ногоон өнгө орсон edge олдсонгүй!");
-    return moveResult;
+    return [cube, moveResult];
   }
 
   const { position, leftColor, rightColor } = greenEdgeData;
   const edgeColors = `${leftColor},${rightColor}`;
 
+  // deno-fmt-ignore
   const adjustmentMoves: Record<
     string,
     Record<string, RubikCubeMoveNotation[]>
@@ -1014,24 +1011,7 @@ function solveCrossColor(cube: RubikCube): RubikCubeMoveNotation[] {
     "DF": {
       "O,R": [],
       "O,B": ["D2", "R'", "D'", "R", "D'", "R'", "D2", "R", "D"],
-      "R,O": [
-        "R'",
-        "D'",
-        "R",
-        "D'",
-        "R'",
-        "D2",
-        "R",
-        "D",
-        "R'",
-        "D'",
-        "R",
-        "D'",
-        "R'",
-        "D2",
-        "R",
-        "D2",
-      ],
+      "R,O": ["R'","D'","R","D'","R'","D2","R","D","R'","D'","R","D'","R'","D2","R","D2"],
       "R,B": ["R'", "D'", "R", "D'", "R'", "D2", "R"],
       "B,R": ["D", "R'", "D'", "R", "D'", "R'", "D2", "R", "D2"],
       "B,O": ["D'", "R'", "D'", "R", "D'", "R'", "D2", "R", "D'"],
@@ -1039,24 +1019,7 @@ function solveCrossColor(cube: RubikCube): RubikCubeMoveNotation[] {
     "DR": {
       "O,R": ["D'"],
       "O,B": ["D", "R'", "D'", "R", "D'", "R'", "D2", "R", "D"],
-      "R,O": [
-        "R'",
-        "D'",
-        "R",
-        "D'",
-        "R'",
-        "D2",
-        "R",
-        "D",
-        "R'",
-        "D'",
-        "R",
-        "D'",
-        "R'",
-        "D2",
-        "R",
-        "D'",
-      ],
+      "R,O": ["R'","D'","R","D'","R'","D2","R","D","R'","D'","R","D'","R'","D2","R","D'"],
       "R,B": ["D'", "R'", "D'", "R", "D'", "R'", "D2", "R"],
       "B,R": ["R'", "D'", "R", "D'", "R'", "D2", "R", "D2"],
       "B,O": ["D2", "R'", "D'", "R", "D'", "R'", "D2", "R", "D'"],
@@ -1064,24 +1027,7 @@ function solveCrossColor(cube: RubikCube): RubikCubeMoveNotation[] {
     "DL": {
       "O,R": ["D"],
       "O,B": ["D'", "R'", "D'", "R", "D'", "R'", "D2", "R", "D"],
-      "R,O": [
-        "R'",
-        "D'",
-        "R",
-        "D'",
-        "R'",
-        "D2",
-        "R",
-        "D",
-        "R'",
-        "D'",
-        "R",
-        "D'",
-        "R'",
-        "D2",
-        "R",
-        "D",
-      ],
+      "R,O": ["R'","D'","R","D'","R'","D2","R","D","R'","D'","R","D'","R'","D2","R","D"],
       "R,B": ["D", "R'", "D'", "R", "D'", "R'", "D2", "R"],
       "B,R": ["D2", "R'", "D'", "R", "D'", "R'", "D2", "R", "D2"],
       "B,O": ["R'", "D'", "R", "D'", "R'", "D2", "R", "D'"],
@@ -1089,23 +1035,7 @@ function solveCrossColor(cube: RubikCube): RubikCubeMoveNotation[] {
     "DB": {
       "O,R": ["D2"],
       "O,B": ["R'", "D'", "R", "D'", "R'", "D2", "R", "D"],
-      "R,O": [
-        "R'",
-        "D'",
-        "R",
-        "D'",
-        "R'",
-        "D2",
-        "R",
-        "D",
-        "R'",
-        "D'",
-        "R",
-        "D'",
-        "R'",
-        "D2",
-        "R",
-      ],
+      "R,O": ["R'","D'","R","D'","R'","D2","R","D","R'","D'","R","D'","R'","D2","R"],
       "R,B": ["D2", "R'", "D'", "R", "D'", "R'", "D2", "R"],
       "B,R": ["D'", "R'", "D'", "R", "D'", "R'", "D2", "R", "D2"],
       "B,O": ["D", "R'", "D'", "R", "D'", "R'", "D2", "R", "D'"],
@@ -1118,11 +1048,7 @@ function solveCrossColor(cube: RubikCube): RubikCubeMoveNotation[] {
     cube = cube.rotateCube(moveSequence);
   }
 
-  console.log("Solving Cross Color...");
-  console.log("Moves: ", moveResult.join(" "));
-
-  solveYellowCorners(cube);
-  return moveResult;
+  return [cube, moveResult];
 }
 
 // Match Corners
@@ -1207,7 +1133,7 @@ function findCorrectYellowCornerPosition(cube: RubikCube): string {
   return "";
 }
 
-function solveYellowCorners(cube: RubikCube): RubikCubeMoveNotation[] {
+function solveYellowCorners(cube: RubikCube): [ RubikCube, RubikCubeMoveNotation[] ] {
   const moveResult: RubikCubeMoveNotation[] = [];
 
   const correctColors: Record<string, RubikCubeFaceColor[]> = {
@@ -1223,16 +1149,7 @@ function solveYellowCorners(cube: RubikCube): RubikCubeMoveNotation[] {
     "DLB": "D",
   };
 
-  const mainAlgorithm: RubikCubeMoveNotation[] = [
-    "R'",
-    "D",
-    "L",
-    "D'",
-    "R",
-    "D",
-    "L'",
-    "D'",
-  ];
+  const mainAlgorithm: RubikCubeMoveNotation[] = ["R'","D","L","D'","R","D","L'","D'"];
 
   const correctDRFColors: Record<string, RubikCubeFaceColor[]> = {
     "DRF": ["B", "R", "Y"],
@@ -1261,11 +1178,7 @@ function solveYellowCorners(cube: RubikCube): RubikCubeMoveNotation[] {
       newDRFColors.includes(color)
     )
   ) {
-    console.log("Solving Yellow Corners...");
-    console.log("Solved!!!");
-
-    solveLastLayer(cube);
-    return moveResult;
+    return [cube, moveResult];
   } else {
     if (correctCornerPosition) {
       const adjustmentMove = positionAdjustments[correctCornerPosition];
@@ -1292,11 +1205,7 @@ function solveYellowCorners(cube: RubikCube): RubikCubeMoveNotation[] {
       cube = cube.rotateCubeOnce(finalMove);
     }
 
-    console.log("Solving Yellow Corners...");
-    console.log("Moves: ", moveResult.join(" "));
-
-    solveLastLayer(cube);
-    return moveResult;
+    return [cube, moveResult];
   }
 }
 
@@ -1350,13 +1259,5 @@ function solveLastLayer(cube: RubikCube): RubikCubeMoveNotation[] {
     }
   }
 
-  console.log("Last Layer Solved!");
-  console.log("Moves:", moveResult.join(" "));
-
   return moveResult;
 }
-
-// 🔥🔥🔥
-const moves = solveWhiteCross(scrambledCube);
-console.log("Solving White Cross...");
-console.log("Moves: ", moves.join(" "));
