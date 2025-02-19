@@ -10,6 +10,7 @@
     "npm:@jsr/core__pipe@0.4": "0.4.0",
     "npm:@jsr/result__result@^1.1.0": "1.1.0",
     "npm:@jsr/std__encoding@^1.0.7": "1.0.7",
+    "npm:@types/node@^22.13.4": "22.13.4",
     "npm:@types/react-dom@^18.3.1": "18.3.5_@types+react@18.3.17",
     "npm:@types/react-transition-group@^4.4.12": "4.4.12_@types+react@18.3.17",
     "npm:@types/react@^18.3.12": "18.3.17",
@@ -655,6 +656,12 @@
     },
     "@types/json-schema@7.0.15": {
       "integrity": "sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA=="
+    },
+    "@types/node@22.13.4": {
+      "integrity": "sha512-ywP2X0DYtX3y08eFVx5fNIw7/uIv8hYUKgXoK8oayJlLnKcRfEYCxWMVE1XagUdVtCJlZT1AU4LXEABW+L1Peg==",
+      "dependencies": [
+        "undici-types"
+      ]
     },
     "@types/prop-types@15.7.14": {
       "integrity": "sha512-gNMvNH49DJ7OJYv+KAKn0Xp45p8PLl6zo2YnvDIbTd4J6MER2BmWN49TG7n9LvkyihINxeKW8+3bfS2yDC9dzQ=="
@@ -2036,6 +2043,9 @@
     "typescript@5.6.3": {
       "integrity": "sha512-hjcS1mhfuyi4WW8IWtjP7brDrG2cuDZukyrYrSauoXGNgx0S7zceP07adYkJycEr56BOUTNPzbInooiN3fn1qw=="
     },
+    "undici-types@6.20.0": {
+      "integrity": "sha512-Ny6QZ2Nju20vw1SRHe3d9jVu6gJ+4e3+MMpqu7pqE5HT6WsTSlce++GQmK5UXS8mzV8DSYHrQH+Xrf2jVcuKNg=="
+    },
     "update-browserslist-db@1.1.2_browserslist@4.24.4": {
       "integrity": "sha512-PPypAm5qvlD7XMZC3BujecnaOxwhrtoFR+Dqkk5Aa/6DssiH0ibKoketaj9w8LP7Bont1rYeoV5plxD7RTEPRg==",
       "dependencies": [
@@ -2200,6 +2210,7 @@
             "npm:@jsr/core__pipe@0.4",
             "npm:@jsr/result__result@^1.1.0",
             "npm:@jsr/std__encoding@^1.0.7",
+            "npm:@types/node@^22.13.4",
             "npm:@types/react-dom@^18.3.1",
             "npm:@types/react-transition-group@^4.4.12",
             "npm:@types/react@^18.3.12",
