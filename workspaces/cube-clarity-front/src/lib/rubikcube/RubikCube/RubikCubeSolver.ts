@@ -1200,7 +1200,6 @@ function solveYellowCorners(
   ];
 
   let correctCornerPosition = findCorrectYellowCornerPosition(cube);
-  console.log(correctCornerPosition);
 
   if (
     correctColors[correctCornerPosition].every((color: RubikCubeFaceColor) =>
@@ -1223,7 +1222,6 @@ function solveYellowCorners(
         color: RubikCubeFaceColor,
       ) => newDRFColors.includes(color))
     ) {
-      console.log(correctDRFColors[correctCornerPosition]);
       moveResult.push(...mainAlgorithm);
       cube = cube.rotateCube(mainAlgorithm);
     }
