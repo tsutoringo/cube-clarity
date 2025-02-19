@@ -5,7 +5,7 @@ import {
   RubikCubeFaceName,
   RubikCubeFaceXIndex,
   RubikCubeFaceYIndex,
-  RubikCubeMoveNotation
+  RubikCubeMoveNotation,
 } from "./RubikCube.ts";
 
 type SolvingIndex = {
@@ -39,31 +39,41 @@ type EdgeIndex = {
 }[];
 
 /**
-* @module
-* ルービックキューブの初心者向けの解法方法は7つあります。
-* それぞれをまとめて一つの関数に呼び出します。
-*/
+ * @module
+ * ルービックキューブの初心者向けの解法方法は7つあります。
+ * それぞれをまとめて一つの関数に呼び出します。
+ */
 export function solveRubikCube(cube: RubikCube) {
   // Step1
-  let [ step1Cube, step1moves ] = solveWhiteCross(cube);
+  let [step1Cube, step1moves] = solveWhiteCross(cube);
   // Step2
-  let [ step2Cube, step2moves ] = solveWhiteLayer(step1Cube);
+  let [step2Cube, step2moves] = solveWhiteLayer(step1Cube);
   // Step3
-  let [ step3Cube, step3moves ] = solveSecondLayer(step2Cube);
+  let [step3Cube, step3moves] = solveSecondLayer(step2Cube);
   // Step4
-  let [ step4Cube, step4moves ] = solveYellowCross(step3Cube);
+  let [step4Cube, step4moves] = solveYellowCross(step3Cube);
   // Step5
-  let [ step5Cube, step5moves ] = solveCrossColor(step4Cube);
+  let [step5Cube, step5moves] = solveCrossColor(step4Cube);
   // Step6
-  let [ step6Cube, step6moves ] = solveYellowCorners(step5Cube);
+  let [step6Cube, step6moves] = solveYellowCorners(step5Cube);
   // Step7
   let step7moves = solveLastLayer(step6Cube);
 
-  return {step1moves, step2moves, step3moves, step4moves, step5moves, step6moves, step7moves}
-};
+  return {
+    step1moves,
+    step2moves,
+    step3moves,
+    step4moves,
+    step5moves,
+    step6moves,
+    step7moves,
+  };
+}
 
 // 十字の作成
-function solveWhiteCross(gotCube: RubikCube): [ RubikCube, RubikCubeMoveNotation[] ] {
+function solveWhiteCross(
+  gotCube: RubikCube,
+): [RubikCube, RubikCubeMoveNotation[]] {
   let cube = gotCube;
   const movesResult: RubikCubeMoveNotation[] = [];
 
@@ -595,7 +605,9 @@ function fixUpperLayer(cube: RubikCube): RubikCubeMoveNotation[] {
   return moves;
 }
 
-function solveWhiteLayer(cube: RubikCube): [ RubikCube, RubikCubeMoveNotation[] ] {
+function solveWhiteLayer(
+  cube: RubikCube,
+): [RubikCube, RubikCubeMoveNotation[]] {
   const movesResult: RubikCubeMoveNotation[] = [];
 
   const correctCornerPositions: Record<string, Record<string, string>> = {
@@ -773,7 +785,9 @@ function fixFlippedEdge(cube: RubikCube): RubikCubeMoveNotation[] {
   return moves;
 }
 
-function solveSecondLayer(cube: RubikCube): [ RubikCube, RubikCubeMoveNotation[] ] {
+function solveSecondLayer(
+  cube: RubikCube,
+): [RubikCube, RubikCubeMoveNotation[]] {
   const movesResult: RubikCubeMoveNotation[] = [];
 
   const correctEdgePositions: Record<string, Record<string, string>> = {
@@ -910,7 +924,9 @@ function solveSecondLayer(cube: RubikCube): [ RubikCube, RubikCubeMoveNotation[]
 }
 
 // 黄色の十字
-function solveYellowCross(cube: RubikCube): [ RubikCube, RubikCubeMoveNotation[] ] {
+function solveYellowCross(
+  cube: RubikCube,
+): [RubikCube, RubikCubeMoveNotation[]] {
   const moveResult: RubikCubeMoveNotation[] = [];
 
   const yellowEdgePositions: Record<
@@ -991,7 +1007,9 @@ function findGreenEdgeAndSides(
   return null;
 }
 
-function solveCrossColor(cube: RubikCube): [ RubikCube, RubikCubeMoveNotation[] ] {
+function solveCrossColor(
+  cube: RubikCube,
+): [RubikCube, RubikCubeMoveNotation[]] {
   const moveResult: RubikCubeMoveNotation[] = [];
 
   const greenEdgeData = findGreenEdgeAndSides(cube);
@@ -1133,7 +1151,9 @@ function findCorrectYellowCornerPosition(cube: RubikCube): string {
   return "";
 }
 
-function solveYellowCorners(cube: RubikCube): [ RubikCube, RubikCubeMoveNotation[] ] {
+function solveYellowCorners(
+  cube: RubikCube,
+): [RubikCube, RubikCubeMoveNotation[]] {
   const moveResult: RubikCubeMoveNotation[] = [];
 
   const correctColors: Record<string, RubikCubeFaceColor[]> = {
@@ -1149,7 +1169,16 @@ function solveYellowCorners(cube: RubikCube): [ RubikCube, RubikCubeMoveNotation
     "DLB": "D",
   };
 
-  const mainAlgorithm: RubikCubeMoveNotation[] = ["R'","D","L","D'","R","D","L'","D'"];
+  const mainAlgorithm: RubikCubeMoveNotation[] = [
+    "R'",
+    "D",
+    "L",
+    "D'",
+    "R",
+    "D",
+    "L'",
+    "D'",
+  ];
 
   const correctDRFColors: Record<string, RubikCubeFaceColor[]> = {
     "DRF": ["B", "R", "Y"],
