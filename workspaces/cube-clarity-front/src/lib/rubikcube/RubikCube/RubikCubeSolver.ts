@@ -1210,7 +1210,7 @@ function solveYellowCorners(
     cube = cube.rotateCube(mainAlgorithm);
 
     if (
-      correctDRFColors[correctCornerPosition].every((
+      !correctDRFColors[correctCornerPosition].every((
         color: RubikCubeFaceColor,
       ) => newDRFColors.includes(color))
     ) {
