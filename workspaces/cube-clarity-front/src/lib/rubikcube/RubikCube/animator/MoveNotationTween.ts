@@ -1,16 +1,19 @@
 import { pipe } from "@core/pipe";
 import {
   getRotateNotationDetail,
-  RotateTo,
-  RubikCubeMoveNotation,
+  type RotateTo,
+  type RubikCubeMoveNotation,
 } from "../MoveNotation";
-import { RubikCubeFaceName } from "../RubikCube";
+import type { RubikCubeFaceName } from "../RubikCube";
 import { faceRotation2d } from "./2d/faceRotation";
 import { RUBIK_CUBE_FACE_CUBE_PIECE_MAP } from "./3d/faces";
 import { rotatedCubePieceState } from "./3d/rotatedCubeState";
-import { cloneCubePieceState, RubikCubePieceState } from "./RubikCubeAnimator";
+import {
+  cloneCubePieceState,
+  type RubikCubePieceState,
+} from "./RubikCubeAnimator";
 import { flatMap, zip } from "@core/iterutil/pipe";
-import { RubikCubePiece } from "../../RubikCubeModel";
+import type { RubikCubePiece } from "../../RubikCubeModel";
 import { rotateByWorldAxis } from "./3d/helper";
 
 export class MoveNotationTween {

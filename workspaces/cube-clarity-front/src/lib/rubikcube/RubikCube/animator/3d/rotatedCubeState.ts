@@ -7,11 +7,14 @@
 import { pipe } from "@core/pipe";
 import {
   getRotateNotationDetail,
-  RotateTo,
-  RubikCubeMoveNotation,
+  type RotateTo,
+  type RubikCubeMoveNotation,
 } from "../../MoveNotation";
 import { RUBIK_CUBE_FACE_CUBE_PIECE_MAP } from "./faces";
-import { cloneCubePieceState, RubikCubePieceState } from "../RubikCubeAnimator";
+import {
+  cloneCubePieceState,
+  type RubikCubePieceState,
+} from "../RubikCubeAnimator";
 import { enumerate, flatMap, map } from "@core/iterutil/pipe";
 import { RUBIK_CUBE_PIECES } from "../../../RubikCubeModel";
 import { rotateByWorldAxis } from "./helper";

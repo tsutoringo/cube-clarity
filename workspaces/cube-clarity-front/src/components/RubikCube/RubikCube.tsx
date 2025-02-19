@@ -1,9 +1,8 @@
-import { ComponentProps, useEffect, useRef, useState } from "react";
+import { type ComponentProps, useEffect, useRef, useState } from "react";
 import { Vector3 } from "three";
 import styles from "./RubikCube.module.css";
 import { RubikCubeRenderer } from "../../lib/rubikcube/RubikCubeRenderer";
-import {
-  parseMoveNotation,
+import type {
   RubikCube,
   RubikCubeMoveNotation,
 } from "../../lib/rubikcube/RubikCube/RubikCube";

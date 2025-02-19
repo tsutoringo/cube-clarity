@@ -4,7 +4,7 @@ import { Screen } from "../layouts/Screen/Screen";
 import { AlgorithmStep } from "./Algorithm/AlgorithmStep";
 
 export type ScreenStatus = "none" | "start" | "scan" | "load" | "algorithm";
-export type RubikCubeData = {};
+export type RubikCubeData = null;
 
 export const Main = () => {
   const [screenStatus, setScreenStatus] = useState<ScreenStatus>("none");

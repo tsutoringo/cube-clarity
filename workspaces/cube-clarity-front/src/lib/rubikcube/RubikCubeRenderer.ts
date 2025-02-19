@@ -6,7 +6,7 @@ import {
   WebGLRenderer,
 } from "three";
 import { calcAspectRatio } from "./helper";
-import { RubikCube } from "./RubikCube/RubikCube";
+import type { RubikCube } from "./RubikCube/RubikCube";
 import { generateRubikCubeCubeModel } from "./RubikCubeModel";
 
 export class RubikCubeRenderer {
