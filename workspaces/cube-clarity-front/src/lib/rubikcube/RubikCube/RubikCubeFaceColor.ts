@@ -1,5 +1,9 @@
 import { Result } from "@result/result";
-import { RubikCubeError, type RubikCubeResult, DecodeRubikCubeFaceColorError } from "./Error";
+import {
+  DecodeRubikCubeFaceColorError,
+  RubikCubeError,
+  type RubikCubeResult,
+} from "./Error";
 
 export const FACE_COLOR = {
   White: "W",
