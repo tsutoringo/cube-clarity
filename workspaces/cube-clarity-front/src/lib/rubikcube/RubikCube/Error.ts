@@ -18,5 +18,4 @@ export class DecodeRubikCubeFaceColorError extends RubikCubeError {
   }
 }
 
-
 export type RubikCubeResult<T> = Result<T, RubikCubeError>;
