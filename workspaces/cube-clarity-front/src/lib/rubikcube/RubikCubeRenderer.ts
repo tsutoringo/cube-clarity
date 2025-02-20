@@ -23,7 +23,7 @@ export class RubikCubeRenderer {
     this.scene = new Scene();
     this.camera = new PerspectiveCamera(
       75,
-      1/1,
+      1 / 1,
       0.1,
       1000,
     );
@@ -35,7 +35,7 @@ export class RubikCubeRenderer {
   }
 
   /**
-   * @param parent 
+   * @param parent
    * @returns cleanup function
    */
   setParent(parent: HTMLElement) {
@@ -53,7 +53,7 @@ export class RubikCubeRenderer {
       );
       this.camera.aspect = calcAspectRatio(parent);
       this.camera.updateProjectionMatrix();
-  
+
       this.renderer.render(this.scene, this.camera);
     };
 

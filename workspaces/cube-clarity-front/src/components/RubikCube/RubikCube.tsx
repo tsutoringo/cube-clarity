@@ -30,14 +30,14 @@ export const RubikCubeDisplay = (
 ) => {
   const rubikCubeParentRef = useRef<HTMLDivElement>(null);
   const rubikCubeRenderer = useMemo(() => {
-    const renderer = new RubikCubeRenderer()
+    const renderer = new RubikCubeRenderer();
     renderer.camera.position.x = 3.5;
     renderer.camera.position.y = 3.5;
     renderer.camera.position.z = 3.5;
     renderer.camera.lookAt(new Vector3(0, 0, 0));
 
     return renderer;
-  }, [ rubikCubeParentRef.current ]);
+  }, [rubikCubeParentRef.current]);
 
   useEffect(() => {
     if (!rubikCubeParentRef.current) return;
@@ -62,7 +62,7 @@ export const RubikCubeDisplay = (
     return () => {
       cleanup();
     };
-  }, [ rubikCubeRenderer ]);
+  }, [rubikCubeRenderer]);
 
   const animator = useMemo(() => {
     const rubikCubeGroup = rubikCubeRenderer.rerenderRubikCube(
@@ -75,7 +75,7 @@ export const RubikCubeDisplay = (
         animation.moves,
       );
     }
-  }, [ animation?.moves, rubikCubeRenderer ]);
+  }, [animation?.moves, rubikCubeRenderer]);
 
   useEffect(() => {
     if (animator && animation?.progress) {
