@@ -5,7 +5,7 @@ export default {
       create(context) {
         return {
           ImportDefaultSpecifier(node) {
-            const parent = getParentNode(context, node)
+            const parent = getParentNode(context, node);
             if (parent?.type != "ImportDeclaration") return;
             if (parent.source.value != "classnames") return;
 
@@ -15,7 +15,7 @@ export default {
               node,
               message: "classname import default name should be classNames",
             });
-          }
+          },
         };
       },
     },
