@@ -1,4 +1,4 @@
-import { Result } from "@result/result";
+import type { Result } from "@result/result";
 import { RubikCube } from "./RubikCube";
 
 export class RubikCubeError extends Error {

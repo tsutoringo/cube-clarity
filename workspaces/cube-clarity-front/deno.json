@@ -7,11 +7,27 @@
     "build": "deno run -A --node-modules-dir npm:vite build",
     "preview": "deno run -A --node-modules-dir npm:vite preview",
     "serve": "deno run --allow-net --allow-read https://deno.land/std@0.157.0/http/file_server.ts dist/",
+    "fmt:fmt": "deno fmt",
     "fmt:check": "deno fmt --check",
-    "test": "deno run -A --node-modules-dir npm:vitest"
+    "test": "deno run -A --node-modules-dir npm:vitest",
+    "lint:lint": "deno lint",
+    "lint:fix": "deno lint",
+
+    "fix": {
+      "dependencies": [
+        "lint:fix",
+        "fmt:fmt"
+      ]
+    }
   },
   "imports": {
     "@result/result": "jsr:@result/result@^1.1.0",
     "@std/assert": "jsr:@std/assert@1"
+  },
+  "lint": {
+    "plugins": [
+      "./lint/classNamesName.ts",
+      "./lint/aliasImport.ts"
+    ]
   }
 }

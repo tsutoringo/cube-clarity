@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { CSSTransition } from "react-transition-group";
 
 import cube from "@assets/CUBE.svg";
@@ -7,7 +7,6 @@ import rectangle from "@assets/Rectangle.svg";
 import { Loading } from "@components/Loading/Loading";
 
 import styles from "./Home.module.css";
-import { RubikCubeData } from "../../App";
 
 const StartAnimationPage = ({
   displaying,
@@ -44,7 +43,7 @@ const ScanPage = ({
   onScanComplete,
 }: {
   displaying: boolean;
-  onScanComplete: (rubikCubeData: RubikCubeData) => void;
+  onScanComplete: (rubikCubeData: unknown) => void;
 }) => {
   const homepageRef = useRef<HTMLDivElement>(null);
 

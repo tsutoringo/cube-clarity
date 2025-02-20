@@ -1,15 +1,14 @@
-import { ComponentProps, useEffect, useRef, useState } from "react";
+import { type ComponentProps, useEffect, useRef, useState } from "react";
 import { Vector3 } from "three";
 import styles from "./RubikCube.module.css";
-import { RubikCubeRenderer } from "../../lib/rubikcube/RubikCubeRenderer";
-import {
-  parseMoveNotation,
+import { RubikCubeRenderer } from "@lib/rubikcube/RubikCubeRenderer";
+import type {
   RubikCube,
   RubikCubeMoveNotation,
-} from "../../lib/rubikcube/RubikCube/RubikCube";
+} from "@lib/rubikcube/RubikCube/RubikCube";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import classNames from "classnames";
-import { RubikCubeAnimator } from "../../lib/rubikcube/RubikCube/animator/RubikCubeAnimator";
+import { RubikCubeAnimator } from "@lib/rubikcube/RubikCube/animator/RubikCubeAnimator";
 
 interface RubikCubeDisplayProps extends ComponentProps<"div"> {
   onceRender?: boolean;

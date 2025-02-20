@@ -1,6 +1,6 @@
 import { Result } from "@result/result";
-import { RubikCubeError, RubikCubeResult } from "./Error";
-import { RubikCubeFaceName } from "./RubikCube";
+import { RubikCubeError, type RubikCubeResult } from "./Error";
+import type { RubikCubeFaceName } from "./RubikCube";
 
 export const RUBIK_CUBE_MOVE_NOTATION = [
   "R",

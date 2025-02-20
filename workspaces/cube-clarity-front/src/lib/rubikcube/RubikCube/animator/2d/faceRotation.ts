@@ -1,7 +1,7 @@
-import { RotateTo } from "../../MoveNotation";
+import type { RotateTo } from "../../MoveNotation";
 import { cornerCubeTween } from "./corner";
 import { edgeCubeTween } from "./edge";
-import { CalculatedCubeCoordinate2d } from "./mod";
+import type { CalculatedCubeCoordinate2d } from "./mod";
 
 // deno-fmt-ignore
 export const faceRotation2d = (rotateDirection: RotateTo, progress: number, ): [

@@ -1,11 +1,11 @@
-import { MathUtils, Mesh, Quaternion, Vector3 } from "three";
+import { type Mesh, Quaternion, Vector3 } from "three";
 import {
   RUBIK_CUBE_PIECE_NAMES,
   RUBIK_CUBE_PIECES,
-  RubikCubeGroup,
-  RubikCubePiece,
+  type RubikCubeGroup,
+  type RubikCubePiece,
 } from "../../RubikCubeModel";
-import { RubikCubeMoveNotation } from "../MoveNotation";
+import type { RubikCubeMoveNotation } from "../MoveNotation";
 import { MoveNotationTween } from "./MoveNotationTween";
 
 export type RubikCubePieceState = Record<
