@@ -16,7 +16,10 @@ export const BottomDrawerLayout = ({
   nodeRef?: RefObject<HTMLDivElement>;
 }) => {
   return (
-    <div ref={nodeRef} className={classNames(styles.bottomDrawerLayout, className)}>
+    <div
+      ref={nodeRef}
+      className={classNames(styles.bottomDrawerLayout, className)}
+    >
       {viewBox}
       {drawer}
     </div>
