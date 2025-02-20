@@ -1,12 +1,12 @@
 import { useMemo, useState } from "react";
-import { HorizontalRule } from "../../components/HorizontalRule/HorizontalRule";
-import { RubikCubeDisplay } from "../../components/RubikCube/RubikCube";
-import { BottomDrawer } from "../../layouts/BottomDrawer/BottomDrawer";
-import { Screen } from "../../layouts/Screen/Screen";
+import { HorizontalRule } from "@components/HorizontalRule/HorizontalRule";
+import { RubikCubeDisplay } from "@components/RubikCube/RubikCube";
+import { BottomDrawer } from "@layouts/BottomDrawer/BottomDrawer";
+import { Screen } from "@layouts/Screen/Screen";
 import {
   parseMoveNotation,
   RubikCube,
-} from "../../lib/rubikcube/RubikCube/RubikCube";
+} from "@lib/rubikcube/RubikCube/RubikCube";
 import styles from "./Playground.module.css";
 import { drop, zip } from "@core/iterutil";
 
