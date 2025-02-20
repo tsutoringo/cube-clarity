@@ -159,7 +159,7 @@ if __name__ == '__main__':
             current_state.append(color_name)
 
         k = cv2.waitKey(5) & 0xFF
-        if k == 27:
+        if k == 27 or k == 13:
             break
         elif k == ord('u'):
             state['up'] = current_state
@@ -182,47 +182,6 @@ if __name__ == '__main__':
         elif k == ord('\r'):
             if len(set(check_state)) == 6:
                 print("All sides scanned.")
-
-
-
-                latest_cube_state = {}
-
-                # def scan_cube(state):
-                #     global latest_cube_state  
-                    
-                #     if len(set(check_state)) == 6:
-                #         print("All sides scanned.")
-
-                #         # Mappa colori → lettere
-                #         color_to_sign = {
-                #             'white': 'W',
-                #             'red': 'R',
-                #             'blue': 'B',
-                #             'green': 'G',
-                #             'orange': 'O',
-                #             'yellow': 'Y'
-                #         }
-
-                #         # Conversione dello stato
-                #         latest_cube_state = {
-                #             'U': [[color_to_sign[color] for color in state['up'][i:i+3]] for i in range(0, 9, 3)],
-                #             'R': [[color_to_sign[color] for color in state['right'][i:i+3]] for i in range(0, 9, 3)],
-                #             'F': [[color_to_sign[color] for color in state['front'][i:i+3]] for i in range(0, 9, 3)],
-                #             'D': [[color_to_sign[color] for color in state['down'][i:i+3]] for i in range(0, 9, 3)],
-                #             'L': [[color_to_sign[color] for color in state['left'][i:i+3]] for i in range(0, 9, 3)],
-                #             'B': [[color_to_sign[color] for color in state['back'][i:i+3]] for i in range(0, 9, 3)]
-                #         }
-
-                        
-                #         print(json.dumps(latest_cube_state, indent=2))
-
-                #         with open("latest_cube_state.json", "w") as file:
-                #                 json.dump(latest_cube_state, file, indent=2)
-                #                 print("Stato del cubo salvato in latest_cube_state.json")
-
-                    
-                #     return latest_cube_state
-
                 
                 color_to_sign = {
                     'white': 'W',
@@ -233,7 +192,6 @@ if __name__ == '__main__':
                     'yellow': 'Y'
                 }
 
-                
                 cube_state = {
                     'U': [[color_to_sign[color] for color in state['up'][i:i+3]] for i in range(0, 9, 3)],
                     'R': [[color_to_sign[color] for color in state['right'][i:i+3]] for i in range(0, 9, 3)],
@@ -243,18 +201,14 @@ if __name__ == '__main__':
                     'B': [[color_to_sign[color] for color in state['back'][i:i+3]] for i in range(0, 9, 3)]
                 }
 
-                
                 print(json.dumps(cube_state, indent=2))
-                
                 
                 with open("latest_cube_state.json", "w") as file:
                                 json.dump(cube_state, file, indent=2)
 
 
                                 print("Stato del cubo salvato in latest_cube_state.json")
-
-
-                
+  
             else:
                 print("All sides are not scanned.")
                 print("Left to scan:", 6 - len(set(check_state)))
