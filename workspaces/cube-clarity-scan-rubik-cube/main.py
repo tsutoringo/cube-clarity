@@ -159,7 +159,7 @@ if __name__ == '__main__':
             current_state.append(color_name)
 
         k = cv2.waitKey(5) & 0xFF
-        if k == 27 or k == 13:
+        if k == 27:
             break
         elif k == ord('u'):
             state['up'] = current_state
@@ -179,10 +179,12 @@ if __name__ == '__main__':
         elif k == ord('b'):
             check_state.append('b')
             state['back'] = current_state
-        elif k == ord('\r'):
+        elif k == 13:
             if len(set(check_state)) == 6:
                 print("All sides scanned.")
-                
+
+                latest_cube_state = {}
+
                 color_to_sign = {
                     'white': 'W',
                     'red': 'R',
@@ -204,11 +206,11 @@ if __name__ == '__main__':
                 print(json.dumps(cube_state, indent=2))
                 
                 with open("latest_cube_state.json", "w") as file:
-                                json.dump(cube_state, file, indent=2)
+                    json.dump(cube_state, file, indent=2)
+                    print("Stato del cubo salvato in latest_cube_state.json")
+                
+                break
 
-
-                                print("Stato del cubo salvato in latest_cube_state.json")
-  
             else:
                 print("All sides are not scanned.")
                 print("Left to scan:", 6 - len(set(check_state)))
