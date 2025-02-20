@@ -16,7 +16,8 @@
   },
   "lint": {
     "plugins": [
-      "./lint/classNamesName.ts"
+      "./lint/classNamesName.ts",
+      "./lint/aliasImport.ts"
     ]
   }
 }
