@@ -11,7 +11,7 @@
     "fmt:check": "deno fmt --check",
     "test": "deno run -A --node-modules-dir npm:vitest",
     "lint:lint": "deno lint",
-    "lint:fix": "deno lint",
+    "lint:fix": "deno lint --fix",
 
     "fix": {
       "dependencies": [
