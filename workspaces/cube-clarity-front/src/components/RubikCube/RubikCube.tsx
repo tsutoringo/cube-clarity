@@ -1,4 +1,4 @@
-import { type ComponentProps, useEffect, useRef, useState } from "react";
+import { type ComponentProps, useEffect, useMemo, useRef } from "react";
 import { Vector3 } from "three";
 import styles from "./RubikCube.module.css";
 import { RubikCubeRenderer } from "@lib/rubikcube/RubikCubeRenderer";
@@ -29,84 +29,59 @@ export const RubikCubeDisplay = (
   }: RubikCubeDisplayProps,
 ) => {
   const rubikCubeParentRef = useRef<HTMLDivElement>(null);
-  const [rubikCubeRenderer, setRubikCubeRenderer] = useState<
-    null | RubikCubeRenderer
-  >(null);
+  const rubikCubeRenderer = useMemo(() => {
+    const renderer = new RubikCubeRenderer()
+    renderer.camera.position.x = 3.5;
+    renderer.camera.position.y = 3.5;
+    renderer.camera.position.z = 3.5;
+    renderer.camera.lookAt(new Vector3(0, 0, 0));
 
-  const animator = useRef<RubikCubeAnimator | null>(null);
-
-  const patchProgress = () => {
-    if (!animator.current || !animation) return;
-
-    animator.current.patchProgress(animation.progress);
-  };
+    return renderer;
+  }, [ rubikCubeParentRef.current ]);
 
   useEffect(() => {
-    if (rubikCubeParentRef.current) {
-      const rubikCubeRenderer = new RubikCubeRenderer(
+    if (!rubikCubeParentRef.current) return;
+
+    const cleanup = rubikCubeRenderer.setParent(rubikCubeParentRef.current);
+
+    if (!onceRender) {
+      new OrbitControls(
+        rubikCubeRenderer.camera,
         rubikCubeParentRef.current,
       );
 
-      rubikCubeRenderer.camera.position.x = 3.5;
-      rubikCubeRenderer.camera.position.y = 3.5;
-      rubikCubeRenderer.camera.position.z = 3.5;
-      rubikCubeRenderer.camera.lookAt(new Vector3(0, 0, 0));
-
-      setRubikCubeRenderer(rubikCubeRenderer);
-
-      if (!onceRender) {
-        new OrbitControls(
-          rubikCubeRenderer.camera,
-          rubikCubeParentRef.current,
-        );
-
-        const frame = () => {
-          requestAnimationFrame(frame);
-          rubikCubeRenderer.render();
-        };
-
-        frame();
-      }
-
-      return () => {
-        rubikCubeRenderer.unmount();
+      // clearnuo時に止める機構を作る。
+      const frame = () => {
+        requestAnimationFrame(frame);
+        rubikCubeRenderer.render();
       };
+
+      frame();
     }
-  }, []);
 
-  useEffect(() => {
-    if (rubikCubeRenderer) {
-      const rubikCubeGroup = rubikCubeRenderer.rerenderRubikCube(
-        gotRubikCube,
-      );
+    return () => {
+      cleanup();
+    };
+  }, [ rubikCubeRenderer ]);
 
-      if (animation) {
-        animator.current = RubikCubeAnimator.generate(
-          rubikCubeGroup,
-          animation.moves,
-        );
-        patchProgress();
-      }
-    }
-  }, [rubikCubeRenderer, gotRubikCube]);
+  const animator = useMemo(() => {
+    const rubikCubeGroup = rubikCubeRenderer.rerenderRubikCube(
+      gotRubikCube,
+    );
 
-  useEffect(() => {
-    patchProgress();
-  }, [animation?.progress]);
-
-  useEffect(() => {
-    if (animation && rubikCubeRenderer) {
-      const rubikCubeGroup = rubikCubeRenderer.rerenderRubikCube(
-        gotRubikCube,
-      );
-
-      animator.current = RubikCubeAnimator.generate(
+    if (animation) {
+      return RubikCubeAnimator.generate(
         rubikCubeGroup,
         animation.moves,
       );
-      patchProgress();
     }
-  }, [animation?.moves]);
+  }, [ animation?.moves, rubikCubeRenderer ]);
+
+  useEffect(() => {
+    if (animator && animation?.progress) {
+      animator.patchProgress(animation.progress);
+    }
+  }, [animator, animation?.progress]);
 
   return (
     <div

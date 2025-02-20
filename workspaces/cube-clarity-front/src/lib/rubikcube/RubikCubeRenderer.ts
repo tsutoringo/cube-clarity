@@ -13,27 +13,17 @@ export class RubikCubeRenderer {
   renderer: WebGLRenderer;
   scene: Scene;
   camera: PerspectiveCamera;
-  resizeObserver: ResizeObserver;
   unmounted: boolean = false;
   rubikCubeGroup: Group;
   progress: number = 0;
 
-  constructor(
-    public parentElement: HTMLElement,
-  ) {
+  constructor() {
     this.renderer = new WebGLRenderer({ alpha: true });
-
-    parentElement.appendChild(this.renderer.domElement);
-
-    this.renderer.setSize(
-      parentElement.clientWidth,
-      parentElement.clientHeight,
-    );
 
     this.scene = new Scene();
     this.camera = new PerspectiveCamera(
       75,
-      calcAspectRatio(parentElement),
+      1/1,
       0.1,
       1000,
     );
@@ -41,10 +31,43 @@ export class RubikCubeRenderer {
     this.scene.add(new AxesHelper(10));
     // this.scene.add(new GridHelper(80, 50, 0xffff00));
 
-    this.resizeObserver = new ResizeObserver(() => this.resize());
-    this.resizeObserver.observe(parentElement);
-
     this.rubikCubeGroup = new Group();
+  }
+
+  /**
+   * @param parent 
+   * @returns cleanup function
+   */
+  setParent(parent: HTMLElement) {
+    parent.appendChild(this.renderer.domElement);
+
+    this.renderer.setSize(
+      parent.clientWidth,
+      parent.clientHeight,
+    );
+
+    const resize = () => {
+      this.renderer.setSize(
+        parent.clientWidth,
+        parent.clientHeight,
+      );
+      this.camera.aspect = calcAspectRatio(parent);
+      this.camera.updateProjectionMatrix();
+  
+      this.renderer.render(this.scene, this.camera);
+    };
+
+    const resizeObserver = new ResizeObserver(() => resize());
+    resizeObserver.observe(parent);
+
+    resize();
+
+    return () => {
+      resizeObserver.disconnect();
+      parent.removeChild(this.renderer.domElement);
+
+      this.dispose();
+    };
   }
 
   rerenderRubikCube(rubikCube: RubikCube) {
@@ -68,24 +91,10 @@ export class RubikCubeRenderer {
   }
 
   resize() {
-    this.renderer.setSize(
-      this.parentElement.clientWidth,
-      this.parentElement.clientHeight,
-    );
-    this.camera.aspect = calcAspectRatio(this.parentElement);
-    this.camera.updateProjectionMatrix();
-
-    this.renderer.render(this.scene, this.camera);
   }
 
   dispose() {
     this.renderer.dispose();
-  }
-
-  unmount() {
-    this.parentElement.removeChild(this.renderer.domElement);
-    this.resizeObserver.disconnect();
-
     this.unmounted = true;
   }
 }
