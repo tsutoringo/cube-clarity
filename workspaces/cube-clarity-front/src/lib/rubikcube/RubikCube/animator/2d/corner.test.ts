@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   CORNER_CUBE_POSITIONS,
-  CornerCubeName,
+  type CornerCubeName,
   cornerCubeTween,
 } from "./corner";
 

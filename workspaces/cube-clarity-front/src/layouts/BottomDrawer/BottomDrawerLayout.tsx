@@ -1,8 +1,8 @@
-import { ReactNode, RefObject } from "react";
-import { BottomDrawer as _BottomDrawer } from "./BottomDrawer";
-import styles from "./BottomDrawerLayout.module.css";
+import type { ReactNode, RefObject } from "react";
+import type { BottomDrawer as _BottomDrawer } from "./BottomDrawer";
+import classNames, { type Argument } from "classnames";
 
-import cn, { Argument } from "classnames";
+import styles from "./BottomDrawerLayout.module.css";
 
 export const BottomDrawerLayout = ({
   viewBox,
@@ -16,7 +16,10 @@ export const BottomDrawerLayout = ({
   nodeRef?: RefObject<HTMLDivElement>;
 }) => {
   return (
-    <div ref={nodeRef} className={cn(styles.bottomDrawerLayout, className)}>
+    <div
+      ref={nodeRef}
+      className={classNames(styles.bottomDrawerLayout, className)}
+    >
       {viewBox}
       {drawer}
     </div>

@@ -1,9 +1,9 @@
-import {
+import type {
   RubikCubeCenterPiece,
   RubikCubeCornerPiece,
   RubikCubeEdgePiece,
 } from "../../../RubikCubeModel";
-import { RubikCubeFaceName } from "../../RubikCube";
+import type { RubikCubeFaceName } from "../../RubikCube";
 
 // deno-fmt-ignore
 export const RUBIK_CUBE_FACE_CUBE_PIECE_MAP = {

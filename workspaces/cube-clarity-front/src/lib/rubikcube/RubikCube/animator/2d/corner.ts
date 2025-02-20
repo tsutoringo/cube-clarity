@@ -1,5 +1,5 @@
 import { rubikCubeTween } from "./helper.ts";
-import { CubeCoordinate2d, RotateDirection } from "./mod.ts";
+import type { CubeCoordinate2d, RotateDirection } from "./mod.ts";
 
 /**
  * ```plane

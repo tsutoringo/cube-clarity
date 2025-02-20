@@ -1,7 +1,7 @@
 import { BottomDrawerLayout } from "./BottomDrawerLayout";
 import { BottomDrawerViewBox } from "./BottomDrawerViewBox";
 import styles from "./BottomDrawer.module.css";
-import { ComponentProps, ReactNode } from "react";
+import type { ComponentProps, ReactNode } from "react";
 import { BottomDrawerTitle } from "./Drawer/BottomDrawerTitle";
 import classNames from "classnames";
 
