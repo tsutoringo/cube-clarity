@@ -18,13 +18,16 @@ def load_cube_state():
 @app.route("/detectface")
 def detect_face():
   global current_status
-  current_status = 1
-  command = ["python","main.py"]
-  proc = subprocess.Popen(command)
-  proc.communicate()
-  if proc.poll() != None:
-     current_status = 2
-  return Response(None,status = 200)
+  if current_status == 0:
+   current_status = 1
+   command = ["python","main.py"]
+   proc = subprocess.Popen(command)
+   if proc.poll() == None:
+      return Response(None,status = 423)
+   proc.communicate()
+   if proc.poll() != None:
+      current_status = 2
+  return Response(None,content_type='text/plane',status = 200)
   
 @app.route("/getface")
 def get_face():
