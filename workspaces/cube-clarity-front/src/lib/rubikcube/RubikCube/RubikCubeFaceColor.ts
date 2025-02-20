@@ -1,7 +1,6 @@
 import { Result } from "@result/result";
 import {
   DecodeRubikCubeFaceColorError,
-  RubikCubeError,
   type RubikCubeResult,
 } from "./Error";
 

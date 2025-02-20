@@ -6,12 +6,12 @@
 
 import {
   FACE_COLOR,
-  RubikCube,
-  RubikCubeFaceColor,
-  RubikCubeFaceName,
-  RubikCubeFaceXIndex,
-  RubikCubeFaceYIndex,
-  RubikCubeMoveNotation,
+  type RubikCube,
+  type RubikCubeFaceColor,
+  type RubikCubeFaceName,
+  type RubikCubeFaceXIndex,
+  type RubikCubeFaceYIndex,
+  type RubikCubeMoveNotation,
 } from "./RubikCube.ts";
 
 type SolvingIndex = {
@@ -46,19 +46,19 @@ type EdgeIndex = {
 
 export function solveRubikCube(cube: RubikCube) {
   // Step1
-  let [step1Cube, step1moves] = solveWhiteCross(cube);
+  const [step1Cube, step1moves] = solveWhiteCross(cube);
   // Step2
-  let [step2Cube, step2moves] = solveWhiteLayer(step1Cube);
+  const [step2Cube, step2moves] = solveWhiteLayer(step1Cube);
   // Step3
-  let [step3Cube, step3moves] = solveSecondLayer(step2Cube);
+  const [step3Cube, step3moves] = solveSecondLayer(step2Cube);
   // Step4
-  let [step4Cube, step4moves] = solveYellowCross(step3Cube);
+  const [step4Cube, step4moves] = solveYellowCross(step3Cube);
   // Step5
-  let [step5Cube, step5moves] = solveCrossColor(step4Cube);
+  const [step5Cube, step5moves] = solveCrossColor(step4Cube);
   // Step6
-  let [step6Cube, step6moves] = solveYellowCorners(step5Cube);
+  const [step6Cube, step6moves] = solveYellowCorners(step5Cube);
   // Step7
-  let step7moves = solveLastLayer(step6Cube);
+  const step7moves = solveLastLayer(step6Cube);
 
   return {
     step1moves,
@@ -688,7 +688,7 @@ function solveWhiteLayer(
   }
 
   while (true) {
-    let whiteCorners = findWhiteCorners(cube);
+    const whiteCorners = findWhiteCorners(cube);
     let adjusted = false;
 
     if (whiteCorners.length === 0) {
@@ -702,7 +702,7 @@ function solveWhiteLayer(
 
     for (const { position, colors } of whiteCorners) {
       const colorKey = normalizeCornerColors(colors);
-      let moveSequence: RubikCubeMoveNotation[] = [];
+      const moveSequence: RubikCubeMoveNotation[] = [];
 
       if (
         position in correctCornerPositions &&
@@ -887,7 +887,7 @@ function solveSecondLayer(
   };
 
   while (true) {
-    let noneYellowEdges = findEdges(cube);
+    const noneYellowEdges = findEdges(cube);
     let adjusted = false;
 
     if (noneYellowEdges.length === 0) {
@@ -900,7 +900,7 @@ function solveSecondLayer(
     }
 
     for (const { position, colors } of noneYellowEdges) {
-      let moveSequence: RubikCubeMoveNotation[] = [];
+      const moveSequence: RubikCubeMoveNotation[] = [];
 
       if (
         position in correctEdgePositions &&
@@ -973,7 +973,7 @@ function solveYellowCross(
     "DB": { face: "B", x: 2, y: 1 },
   };
 
-  let yellowEgdes: string[] = [];
+  const yellowEgdes: string[] = [];
 
   for (
     const [position, { face, x, y }] of Object.entries(yellowEdgePositions)
@@ -1322,7 +1322,7 @@ function solveYellowCorners(
   };
 
   let correctCornerPosition = findCorrectYellowCornerPosition(cube);
-  let allcornerCorrect = checkCorrectCornerColors(cube);
+  const allcornerCorrect = checkCorrectCornerColors(cube);
 
   if (allcornerCorrect) {
     return [cube, moveResult];

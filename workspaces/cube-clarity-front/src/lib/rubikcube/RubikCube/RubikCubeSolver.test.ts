@@ -1,5 +1,5 @@
-import { assert, describe, expect, it } from "vitest";
-import { parseMoveNotation, RubikCubeMoveNotation } from "./MoveNotation";
+import { describe, expect, it } from "vitest";
+import { parseMoveNotation, type RubikCubeMoveNotation } from "./MoveNotation";
 import { RubikCube } from "./RubikCube";
 import { solveRubikCube } from "./RubikCubeSolver";
 describe.each(
