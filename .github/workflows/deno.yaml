@@ -33,7 +33,7 @@ jobs:
         # uses: denoland/setup-deno@v1
         uses: denoland/setup-deno@v2  # v1.1.2
         with:
-          deno-version: v2.x
+          deno-version: v2.2.x
 
       # - name: install dependencies
       #   run: deno install
@@ -42,5 +42,5 @@ jobs:
       - name: Verify formatting
         run: deno task --filter @cube-clarity/front fmt:check
 
-      # - name: Run server code type check
-      #   run: deno task --filter @cube-clarity/front fmt:check
+      - name: Linting
+        run: deno task --filter @cube-clarity/front lint:lint

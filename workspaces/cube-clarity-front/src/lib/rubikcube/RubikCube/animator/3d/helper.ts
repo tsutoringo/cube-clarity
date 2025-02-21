@@ -1,4 +1,4 @@
-import { Euler, MathUtils, Quaternion, Vector3, Vector3Like } from "three";
+import { MathUtils, Quaternion, Vector3 } from "three";
 
 export const axisToVector = (axis: "x" | "y" | "z"): Vector3 => {
   switch (axis) {

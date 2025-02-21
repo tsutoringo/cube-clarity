@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 import styles from "./HorizontalRule.module.css";
 import { HorizontalRuleContent } from "./Content/HorizontalRuleContent";
 

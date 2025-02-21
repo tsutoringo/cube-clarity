@@ -1,4 +1,4 @@
-import {
+import type {
   CalculatedCubeCoordinate2d,
   CubeCoordinate2d,
   RotateDirection,

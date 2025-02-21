@@ -1,10 +1,10 @@
 import { BoxGeometry, Group, Mesh, MeshBasicMaterial } from "three";
 import {
-  RubikCube,
+  type RubikCube,
   rubikCubeFaceColorToHex,
-  RubikCubeFaceName,
-  RubikCubeFaceXIndex,
-  RubikCubeFaceYIndex,
+  type RubikCubeFaceName,
+  type RubikCubeFaceXIndex,
+  type RubikCubeFaceYIndex,
 } from "./RubikCube/RubikCube";
 
 export type CUBE_INFO = {

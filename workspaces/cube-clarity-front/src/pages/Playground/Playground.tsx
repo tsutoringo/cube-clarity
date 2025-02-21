@@ -1,12 +1,12 @@
 import { useMemo, useState } from "react";
-import { HorizontalRule } from "../../components/HorizontalRule/HorizontalRule";
-import { RubikCubeDisplay } from "../../components/RubikCube/RubikCube";
-import { BottomDrawer } from "../../layouts/BottomDrawer/BottomDrawer";
-import { Screen } from "../../layouts/Screen/Screen";
+import { HorizontalRule } from "@components/HorizontalRule/HorizontalRule";
+import { RubikCubeDisplay } from "@components/RubikCube/RubikCube";
+import { BottomDrawer } from "@layouts/BottomDrawer/BottomDrawer";
+import { Screen } from "@layouts/Screen/Screen";
 import {
   parseMoveNotation,
   RubikCube,
-} from "../../lib/rubikcube/RubikCube/RubikCube";
+} from "@lib/rubikcube/RubikCube/RubikCube";
 import styles from "./Playground.module.css";
 import { drop, zip } from "@core/iterutil";
 
@@ -76,6 +76,7 @@ export const Playground = () => {
                 onChange={(e) => setRawStartCube(e.target.value)}
               />
               <button
+                type="button"
                 onClick={() =>
                   setStartCube(RubikCube.decodeBase64(rawStartCube).orThrow())}
               >
@@ -88,7 +89,9 @@ export const Playground = () => {
                 value={rawMoves}
                 onChange={(e) => setRawMoves(e.target.value)}
               />
-              <button onClick={() => handleSetMoves()}>読み込む</button>
+              <button type="button" onClick={() => handleSetMoves()}>
+                読み込む
+              </button>
             </div>
             <h2 className={styles.title}>Current Cube</h2>
             <div>
@@ -96,7 +99,10 @@ export const Playground = () => {
                 value={viewingRubikCube.encodeBase64()}
                 onChange={(e) => handleSetRubikCube(e.target.value)}
               />
-              <button onClick={() => setStartCube(viewingRubikCube)}>
+              <button
+                type="button"
+                onClick={() => setStartCube(viewingRubikCube)}
+              >
                 Start Cubeとして読み込む
               </button>
             </div>
