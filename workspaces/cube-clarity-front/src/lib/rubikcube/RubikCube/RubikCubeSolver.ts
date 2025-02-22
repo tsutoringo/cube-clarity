@@ -61,14 +61,38 @@ export function solveRubikCube(cube: RubikCube) {
   const step7moves = solveLastLayer(step6Cube);
 
   return {
-    step1moves,
-    step2moves,
-    step3moves,
-    step4moves,
-    step5moves,
-    step6moves,
-    step7moves,
-  };
+    step1: {
+      startRubikCube: cube,
+      moves: step1moves,
+    },
+    step2: {
+      startRubikCube: step1Cube,
+      moves: step2moves,
+    },
+    step3: {
+      startRubikCube: step2Cube,
+      moves: step3moves,
+    },
+    step4: {
+      startRubikCube: step3Cube,
+      moves: step4moves,
+    },
+    step5: {
+      startRubikCube: step4Cube,
+      moves: step5moves,
+    },
+    step6: {
+      startRubikCube: step5Cube,
+      moves: step6moves,
+    },
+    step7: {
+      startRubikCube: step6Cube,
+      moves: step7moves,
+    },
+  } satisfies Record<
+    string,
+    { moves: RubikCubeMoveNotation[]; startRubikCube: RubikCube }
+  >;
 }
 
 // 十字の作成

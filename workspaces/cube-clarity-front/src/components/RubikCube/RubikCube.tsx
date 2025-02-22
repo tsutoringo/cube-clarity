@@ -1,16 +1,16 @@
-import { type ComponentProps, useEffect, useMemo, useRef } from "react";
-import { Vector3 } from "three";
+import { type HTMLAttributes, useEffect, useMemo } from "react";
 import styles from "./RubikCube.module.css";
-import { RubikCubeRenderer } from "@lib/rubikcube/RubikCubeRenderer";
 import type {
   RubikCube,
   RubikCubeMoveNotation,
 } from "@lib/rubikcube/RubikCube/RubikCube";
-import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import classNames from "classnames";
 import { RubikCubeAnimator } from "@lib/rubikcube/RubikCube/animator/RubikCubeAnimator";
+import { Canvas, useThree } from "@react-three/fiber";
+import { generateRubikCubeCubeModel } from "@lib/rubikcube/RubikCubeModel";
+import { Vector3, type Vector3Like } from "three";
 
-interface RubikCubeDisplayProps extends ComponentProps<"div"> {
+interface RubikCubeDisplayProps extends HTMLAttributes<HTMLDivElement> {
   onceRender?: boolean;
   rubikCube: RubikCube;
   animation?: {
@@ -19,76 +19,85 @@ interface RubikCubeDisplayProps extends ComponentProps<"div"> {
   };
 }
 
-export const RubikCubeDisplay = (
+export const SingleRubikCubeDisplay = (
   {
     className,
     rubikCube: gotRubikCube,
-    onceRender = false,
+    onceRender: _onceRenderer = false,
     animation,
     ...otherProps
   }: RubikCubeDisplayProps,
 ) => {
-  const rubikCubeParentRef = useRef<HTMLDivElement>(null);
-  const rubikCubeRenderer = useMemo(() => {
-    const renderer = new RubikCubeRenderer();
-    renderer.camera.position.x = 3.5;
-    renderer.camera.position.y = 3.5;
-    renderer.camera.position.z = 3.5;
-    renderer.camera.lookAt(new Vector3(0, 0, 0));
+  return (
+    <Canvas
+      {...otherProps}
+      camera={{
+        position: [3, 3, 3],
+      }}
+      className={classNames(styles.rubikCube, className)}
+    >
+      <axesHelper args={[10]} />
+      <RubikCubeThreeGroup
+        {...{
+          animation,
+          rubikCube: gotRubikCube,
+        }}
+      />
+    </Canvas>
+  );
+};
 
-    return renderer;
-  }, [rubikCubeParentRef.current]);
+const RubikCubeThreeGroup = ({
+  rubikCube,
+  animation,
+  position = new Vector3(0, 0, 0),
+}: {
+  rubikCube: RubikCube;
+  animation?: {
+    moves: RubikCubeMoveNotation[];
+    progress: number;
+  };
+  position?: Vector3Like;
+}) => {
+  const { scene, camera, gl } = useThree();
+  const group = useMemo(() => {
+    return generateRubikCubeCubeModel(rubikCube);
+  }, [rubikCube]);
 
   useEffect(() => {
-    if (!rubikCubeParentRef.current) return;
-
-    const cleanup = rubikCubeRenderer.setParent(rubikCubeParentRef.current);
-
-    if (!onceRender) {
-      new OrbitControls(
-        rubikCubeRenderer.camera,
-        rubikCubeParentRef.current,
-      );
-
-      // clearnuo時に止める機構を作る。
-      const frame = () => {
-        requestAnimationFrame(frame);
-        rubikCubeRenderer.render();
-      };
-
-      frame();
-    }
+    group.position.copy(position);
+    scene.add(group);
 
     return () => {
-      cleanup();
+      scene.remove(group);
     };
-  }, [rubikCubeRenderer]);
-
-  const animator = useMemo(() => {
-    const rubikCubeGroup = rubikCubeRenderer.rerenderRubikCube(
-      gotRubikCube,
-    );
-
-    if (animation) {
-      return RubikCubeAnimator.generate(
-        rubikCubeGroup,
-        animation.moves,
-      );
-    }
-  }, [animation?.moves, rubikCubeRenderer]);
+  }, [group]);
 
   useEffect(() => {
-    if (animator && animation?.progress) {
-      animator.patchProgress(animation.progress);
-    }
-  }, [animator, animation?.progress]);
+    group.position.copy(position);
+  }, [position.x, position.y, position.z]);
 
-  return (
-    <div
-      {...otherProps}
-      className={classNames(styles.rubikCube, className)}
-      ref={rubikCubeParentRef}
-    >
-    </div>
-  );
+  const animator = useMemo(() => {
+    if (!animation) return;
+
+    const animator = RubikCubeAnimator.generate(
+      group,
+      animation.moves,
+    );
+    animator.patchProgress(animation.progress);
+
+    return animator;
+  }, [group, animation?.moves]);
+
+  useEffect(() => {
+    if (!animation) return;
+
+    console.log(animation.progress);
+
+    animator?.patchProgress(animation.progress);
+
+    gl.render(scene, camera);
+  }, [animation?.progress]);
+
+  return null;
 };
