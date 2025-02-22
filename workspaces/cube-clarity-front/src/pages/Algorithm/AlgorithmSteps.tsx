@@ -76,7 +76,8 @@ export const AlgorithmSteps = ({
               {currentStep > 0 && (
                 <Button
                   type="button"
-                  onClick={() => setCurrentStepHandler(currentStep - 1 as StepIndex)}
+                  onClick={() =>
+                    setCurrentStepHandler(currentStep - 1 as StepIndex)}
                 >
                   前のステップへ
                 </Button>
@@ -84,7 +85,8 @@ export const AlgorithmSteps = ({
               {currentStep < 6 && (
                 <Button
                   type="button"
-                  onClick={() => setCurrentStepHandler(currentStep + 1 as StepIndex)}
+                  onClick={() =>
+                    setCurrentStepHandler(currentStep + 1 as StepIndex)}
                   className={styles.nextButton}
                 >
                   次のステップへ
