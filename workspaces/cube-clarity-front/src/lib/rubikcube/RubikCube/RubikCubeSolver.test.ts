@@ -97,13 +97,13 @@ describe.each(
     const solvings = solveRubikCube(scrambledCube);
 
     const patchedCube = scrambledCube
-      .rotateCube(solvings.step1moves)
-      .rotateCube(solvings.step2moves)
-      .rotateCube(solvings.step3moves)
-      .rotateCube(solvings.step4moves)
-      .rotateCube(solvings.step5moves)
-      .rotateCube(solvings.step6moves)
-      .rotateCube(solvings.step7moves);
+      .rotateCube(solvings.step1.moves)
+      .rotateCube(solvings.step2.moves)
+      .rotateCube(solvings.step3.moves)
+      .rotateCube(solvings.step4.moves)
+      .rotateCube(solvings.step5.moves)
+      .rotateCube(solvings.step6.moves)
+      .rotateCube(solvings.step7.moves);
 
     if (
       !patchedCube.equal(
@@ -111,13 +111,13 @@ describe.each(
       )
     ) {
       console.log("scramble:           ", moves.join(" "));
-      console.log("solveWhiteCross:    ", solvings.step1moves.join(" "));
-      console.log("solveWhiteLayer:    ", solvings.step2moves.join(" "));
-      console.log("solveSecondLayer:   ", solvings.step3moves.join(" "));
-      console.log("solveYellowCross:   ", solvings.step4moves.join(" "));
-      console.log("solveCrossColor:    ", solvings.step5moves.join(" "));
-      console.log("solveYellowCorners: ", solvings.step6moves.join(" "));
-      console.log("step7moves:         ", solvings.step7moves.join(" "));
+      console.log("solveWhiteCross:    ", solvings.step1.moves.join(" "));
+      console.log("solveWhiteLayer:    ", solvings.step2.moves.join(" "));
+      console.log("solveSecondLayer:   ", solvings.step3.moves.join(" "));
+      console.log("solveYellowCross:   ", solvings.step4.moves.join(" "));
+      console.log("solveCrossColor:    ", solvings.step5.moves.join(" "));
+      console.log("solveYellowCorners: ", solvings.step6.moves.join(" "));
+      console.log("step7moves:         ", solvings.step7.moves.join(" "));
       console.log(patchedCube.net());
     }
 

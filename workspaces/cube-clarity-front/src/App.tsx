@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router";
-import { Main } from "./pages/Miain";
-import { Playground } from "./pages/Playground/Playground";
+import { Main } from "./pages/Miain.tsx";
+import { Playground } from "./pages/Playground/Playground.tsx";
 
 const App = () => {
   return (

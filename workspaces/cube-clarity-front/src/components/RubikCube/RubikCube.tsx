@@ -1,16 +1,16 @@
-import { type ComponentProps, useEffect, useRef, useState } from "react";
-import { Vector3 } from "three";
+import { type HTMLAttributes, useEffect, useMemo } from "react";
 import styles from "./RubikCube.module.css";
-import { RubikCubeRenderer } from "@lib/rubikcube/RubikCubeRenderer";
 import type {
   RubikCube,
   RubikCubeMoveNotation,
 } from "@lib/rubikcube/RubikCube/RubikCube";
-import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import classNames from "classnames";
 import { RubikCubeAnimator } from "@lib/rubikcube/RubikCube/animator/RubikCubeAnimator";
+import { Canvas, useThree } from "@react-three/fiber";
+import { generateRubikCubeCubeModel } from "@lib/rubikcube/RubikCubeModel";
+import { Vector3, type Vector3Like } from "three";
 
-interface RubikCubeDisplayProps extends ComponentProps<"div"> {
+interface RubikCubeDisplayProps extends HTMLAttributes<HTMLDivElement> {
   onceRender?: boolean;
   rubikCube: RubikCube;
   animation?: {
@@ -19,101 +19,85 @@ interface RubikCubeDisplayProps extends ComponentProps<"div"> {
   };
 }
 
-export const RubikCubeDisplay = (
+export const SingleRubikCubeDisplay = (
   {
     className,
     rubikCube: gotRubikCube,
-    onceRender = false,
+    onceRender: _onceRenderer = false,
     animation,
     ...otherProps
   }: RubikCubeDisplayProps,
 ) => {
-  const rubikCubeParentRef = useRef<HTMLDivElement>(null);
-  const [rubikCubeRenderer, setRubikCubeRenderer] = useState<
-    null | RubikCubeRenderer
-  >(null);
+  return (
+    <Canvas
+      {...otherProps}
+      camera={{
+        position: [3, 3, 3],
+      }}
+      className={classNames(styles.rubikCube, className)}
+    >
+      <axesHelper args={[10]} />
+      <RubikCubeThreeGroup
+        {...{
+          animation,
+          rubikCube: gotRubikCube,
+        }}
+      />
+    </Canvas>
+  );
+};
 
-  const animator = useRef<RubikCubeAnimator | null>(null);
-
-  const patchProgress = () => {
-    if (!animator.current || !animation) return;
-
-    animator.current.patchProgress(animation.progress);
+const RubikCubeThreeGroup = ({
+  rubikCube,
+  animation,
+  position = new Vector3(0, 0, 0),
+}: {
+  rubikCube: RubikCube;
+  animation?: {
+    moves: RubikCubeMoveNotation[];
+    progress: number;
   };
+  position?: Vector3Like;
+}) => {
+  const { scene, camera, gl } = useThree();
+  const group = useMemo(() => {
+    return generateRubikCubeCubeModel(rubikCube);
+  }, [rubikCube]);
 
   useEffect(() => {
-    if (rubikCubeParentRef.current) {
-      const rubikCubeRenderer = new RubikCubeRenderer(
-        rubikCubeParentRef.current,
-      );
+    group.position.copy(position);
+    scene.add(group);
 
-      rubikCubeRenderer.camera.position.x = 3.5;
-      rubikCubeRenderer.camera.position.y = 3.5;
-      rubikCubeRenderer.camera.position.z = 3.5;
-      rubikCubeRenderer.camera.lookAt(new Vector3(0, 0, 0));
-
-      setRubikCubeRenderer(rubikCubeRenderer);
-
-      if (!onceRender) {
-        new OrbitControls(
-          rubikCubeRenderer.camera,
-          rubikCubeParentRef.current,
-        );
-
-        const frame = () => {
-          requestAnimationFrame(frame);
-          rubikCubeRenderer.render();
-        };
-
-        frame();
-      }
-
-      return () => {
-        rubikCubeRenderer.unmount();
-      };
-    }
-  }, []);
+    return () => {
+      scene.remove(group);
+    };
+  }, [group]);
 
   useEffect(() => {
-    if (rubikCubeRenderer) {
-      const rubikCubeGroup = rubikCubeRenderer.rerenderRubikCube(
-        gotRubikCube,
-      );
+    group.position.copy(position);
+  }, [position.x, position.y, position.z]);
 
-      if (animation) {
-        animator.current = RubikCubeAnimator.generate(
-          rubikCubeGroup,
-          animation.moves,
-        );
-        patchProgress();
-      }
-    }
-  }, [rubikCubeRenderer, gotRubikCube]);
+  const animator = useMemo(() => {
+    if (!animation) return;
+
+    const animator = RubikCubeAnimator.generate(
+      group,
+      animation.moves,
+    );
+    animator.patchProgress(animation.progress);
+
+    return animator;
+  }, [group, animation?.moves]);
 
   useEffect(() => {
-    patchProgress();
+    if (!animation) return;
+
+    console.log(animation.progress);
+
+    animator?.patchProgress(animation.progress);
+
+    gl.render(scene, camera);
   }, [animation?.progress]);
 
-  useEffect(() => {
-    if (animation && rubikCubeRenderer) {
-      const rubikCubeGroup = rubikCubeRenderer.rerenderRubikCube(
-        gotRubikCube,
-      );
-
-      animator.current = RubikCubeAnimator.generate(
-        rubikCubeGroup,
-        animation.moves,
-      );
-      patchProgress();
-    }
-  }, [animation?.moves]);
-
-  return (
-    <div
-      {...otherProps}
-      className={classNames(styles.rubikCube, className)}
-      ref={rubikCubeParentRef}
-    >
-    </div>
-  );
+  return null;
 };

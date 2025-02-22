@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@react-three/fiber": "^9.0.4",
     "@result/result": "npm:@jsr/result__result@^1.1.0",
     "@std/encoding": "npm:@jsr/std__encoding@^1.0.7",
     "@core/iterutil": "npm:@jsr/core__iterutil@^0.9.0",
