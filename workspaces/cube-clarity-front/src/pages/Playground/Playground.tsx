@@ -1,12 +1,12 @@
 import { useMemo, useState } from "react";
-import { HorizontalRule } from "@components/HorizontalRule/HorizontalRule";
-import { RubikCubeDisplay } from "@components/RubikCube/RubikCube";
-import { BottomDrawer } from "@layouts/BottomDrawer/BottomDrawer";
-import { Screen } from "@layouts/Screen/Screen";
+import { HorizontalRule } from "@components/HorizontalRule/HorizontalRule.tsx";
+import { SingleRubikCubeDisplay } from "@components/RubikCube/RubikCube.tsx";
+import { BottomDrawer } from "@layouts/BottomDrawer/BottomDrawer.tsx";
+import { Screen } from "@layouts/Screen/Screen.tsx";
 import {
   parseMoveNotation,
   RubikCube,
-} from "@lib/rubikcube/RubikCube/RubikCube";
+} from "@lib/rubikcube/RubikCube/RubikCube.ts";
 import styles from "./Playground.module.css";
 import { drop, zip } from "@core/iterutil";
 
@@ -15,13 +15,15 @@ export const Playground = () => {
     RubikCube.default(),
   );
 
+  const [seek, setSeek] = useState(0);
+
   const [rawStartCube, setRawStartCube] = useState<string>(
     RubikCube.default().encodeBase64(),
   );
   const [startCube, setStartCube] = useState(RubikCube.default());
 
   const [moves, setMoves] = useState(
-    parseMoveNotation("U R2 F B R B2 R U2 L B2 R U' D' R2 F R' L B2 U2 F2")
+    parseMoveNotation("F R F")
       .unwrap(),
   );
   const [rawMoves, setRawMoves] = useState<string>(
@@ -60,7 +62,13 @@ export const Playground = () => {
         // className={styles.algorithmStep}
         viewBox={
           <BottomDrawer.ViewBox>
-            <RubikCubeDisplay rubikCube={viewingRubikCube} />
+            <SingleRubikCubeDisplay
+              animation={{
+                progress: seek,
+                moves,
+              }}
+              rubikCube={viewingRubikCube}
+            />
           </BottomDrawer.ViewBox>
         }
         drawer={
@@ -68,7 +76,13 @@ export const Playground = () => {
             <BottomDrawer.Drawer.Title>
               Playground
             </BottomDrawer.Drawer.Title>
-
+            <input
+              type="range"
+              step="0.001"
+              max={1}
+              value={seek}
+              onChange={(evt) => setSeek(Number(evt.target.value))}
+            />
             <h2 className={styles.title}>StartCube</h2>
             <div>
               <textarea
@@ -113,7 +127,7 @@ export const Playground = () => {
             </HorizontalRule>
             <div className={styles.stepCubes}>
               <div className={styles.stepCube}>
-                <RubikCubeDisplay
+                <SingleRubikCubeDisplay
                   onceRender
                   onClick={() => setViewingRubikCube(steps[0])}
                   rubikCube={steps[0]}
@@ -124,7 +138,7 @@ export const Playground = () => {
                   return (
                     <div key={index} className={styles.stepCube}>
                       <span>{move}</span>
-                      <RubikCubeDisplay
+                      <SingleRubikCubeDisplay
                         onceRender
                         onClick={() => setViewingRubikCube(rubikCube)}
                         rubikCube={rubikCube}
