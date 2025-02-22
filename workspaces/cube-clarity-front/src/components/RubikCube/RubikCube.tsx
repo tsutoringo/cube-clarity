@@ -38,16 +38,14 @@ export const SingleRubikCubeDisplay = (
     >
       <axesHelper args={[10]} />
       <RubikCubeThreeGroup
-        {...{
-          animation,
-          rubikCube: gotRubikCube,
-        }}
+        animation={animation}
+        rubikCube={gotRubikCube}
       />
     </Canvas>
   );
 };
 
-const RubikCubeThreeGroup = ({
+export const RubikCubeThreeGroup = ({
   rubikCube,
   animation,
   position = new Vector3(0, 0, 0),
