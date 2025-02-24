@@ -105,6 +105,11 @@
     transition: all ease-in 1s;
     opacity: 0;
   }
+
+  .main-cube {
+    margin: 50px 0;
+    height: 300px;
+  }
 }
 
 .square {
