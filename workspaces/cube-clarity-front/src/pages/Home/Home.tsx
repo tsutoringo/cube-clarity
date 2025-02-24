@@ -3,7 +3,6 @@ import { CSSTransition } from "react-transition-group";
 
 import cube from "@assets/CUBE.svg";
 import clarity from "@assets/CLARITY.svg";
-import rectangle from "@assets/Rectangle.svg";
 import { Loading } from "@components/Loading/Loading";
 
 import styles from "./Home.module.css";

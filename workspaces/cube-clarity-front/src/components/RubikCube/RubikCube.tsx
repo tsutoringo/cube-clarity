@@ -6,7 +6,7 @@ import type {
 } from "@lib/rubikcube/RubikCube/RubikCube";
 import classNames from "classnames";
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls } from '@react-three/drei'
+import { OrbitControls } from "@react-three/drei";
 import { RubikCubeThreeGroup } from "./RubikCubeGroup";
 
 interface RubikCubeDisplayProps extends HTMLAttributes<HTMLDivElement> {
