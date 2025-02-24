@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@react-three/drei": "^10.0.1",
     "@react-three/fiber": "^9.0.4",
     "@result/result": "npm:@jsr/result__result@^1.1.0",
     "@std/encoding": "npm:@jsr/std__encoding@^1.0.7",
