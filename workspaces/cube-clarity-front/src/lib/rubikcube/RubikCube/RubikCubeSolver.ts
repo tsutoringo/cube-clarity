@@ -1334,7 +1334,7 @@ function solveYellowCorners(
       correctCornerPosition = findCorrectYellowCornerPosition(cube);
     }
 
-    if (correctCornerPosition) {
+    if (correctCornerPosition && correctCornerPosition !== "DLF") {
       const adjustmentMove = positionAdjustments[correctCornerPosition];
       moveResult.push(adjustmentMove);
       cube = cube.rotateCubeOnce(adjustmentMove);
@@ -1350,7 +1350,7 @@ function solveYellowCorners(
       cube = cube.rotateCube(mainAlgorithm);
     }
 
-    if (correctCornerPosition) {
+    if (correctCornerPosition && correctCornerPosition !== "DLF") {
       const finalMove = finalAdjustments[correctCornerPosition];
       moveResult.push(finalMove);
       cube = cube.rotateCubeOnce(finalMove);
