@@ -74,11 +74,9 @@ export const AlgorithmSteps = ({
               </HorizontalRule.Content>
             </HorizontalRule>
             <div className={styles.stepCubes}>
-              {
-                currentStepInformation.algorithm.moves.length === 0
-                 ? "このステップは飛ばしてもいいみたいです！"
-                 : currentStepInformation.algorithm.moves.join(" ")
-              }
+              {currentStepInformation.algorithm.moves.length === 0
+                ? "このステップは飛ばしてもいいみたいです！"
+                : currentStepInformation.algorithm.moves.join(" ")}
             </div>
             <footer className={styles.footer}>
               {currentStep > 0 && (
