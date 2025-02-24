@@ -1,11 +1,52 @@
 import { RubikCube } from "../../lib/rubikcube/RubikCube/RubikCube";
 import { RubikCubeMoveNotation } from "../../lib/rubikcube/RubikCube/MoveNotation";
-import { Vector3, TextureLoader, BoxGeometry, ImageUtils, MeshPhongMaterial, Mesh, PlaneGeometry } from "three";
-import { generateRubikCubeCubeModel } from "../../lib/rubikcube/RubikCubeModel";
-import { useEffect, useRef, useState } from "react";
-import { CubeGuideRenderer } from "./CubeGuideRenderer";
-import { RubikCubeAnimator } from "../../lib/rubikcube/RubikCube/animator/RubikCubeAnimator"
+import { Canvas,  } from "@react-three/fiber";
+import { useContext, useRef, useMemo, useEffect } from "react"
+import { RubikCubeThreeGroup } from "@components/RubikCube/RubikCube";
+import { OrthographicCamera, Sprite } from "three";
 
+
+interface MoveInvertResult {
+  moves: RubikCubeMoveNotation[];
+  progress:number;
+}
+/**
+ * 回転記号を反転する関数
+ */
+const moveInvert = (move:RubikCubeMoveNotation): MoveInvertResult => {
+  const moveList = [
+    "R",
+    "L",
+    "U",
+    "B",
+    "F",
+    "D",
+  ]
+  if(moveList.includes(move)){
+    return {
+      moves:[`${move}'` as RubikCubeMoveNotation],
+      progress:0.5
+    };
+  }
+  if(move.includes("'")){
+    return {
+      moves:[move.replace("'","") as RubikCubeMoveNotation],
+      progress:0.5
+    };
+  }
+  if(move.includes("2")){
+    const afterMove   = move.replace("2","");
+    const reverseMove = `${afterMove}'` as RubikCubeMoveNotation
+    return {
+      moves:[reverseMove, reverseMove],
+      progress:0.5
+    }
+  }
+  return {
+    moves:[],
+    progress:0
+  }
+}
 
 export const CubeGuide = (
   baseCube: RubikCube,
@@ -14,83 +55,89 @@ export const CubeGuide = (
     cube: RubikCube;
   }[],
 ) => {
-  const cubeRef = useRef<HTMLDivElement>(null);
-  const [cubeGuideRenderer, setCubeGuideRenderer] = useState<
-    null| CubeGuideRenderer
-  >(null);
-  
-  useEffect(() => {
-    if (!cubeRef.current) return;
-    const cubeGuideRenderer = new CubeGuideRenderer(
-      cubeRef.current,
-    );
-    // カメラの設定
-    cubeGuideRenderer.camera.position.set(0,0,10);
-    cubeGuideRenderer.camera.lookAt(new Vector3(0,0,0));
+  if(cubeList.length === 0) return;
 
-    // useStateを利用して新しく設定
-    setCubeGuideRenderer(cubeGuideRenderer);
+  const canvasElement = useRef<HTMLCanvasElement>(null)
+  if(!canvasElement.current) return;
+  const current = canvasElement.current;
+  OrthographicCamera
+  const camera = new OrthographicCamera(
+    current.width / -2,
+    current.width /  2,
+    current.height/ -2,
+    current.height/  2,
+    1,
+    1000,
+  )
+  const cubeLength = cubeList.length * 2 - 1
 
-    // レンダリングする
-    cubeGuideRenderer.render();
-    
-    // 案１
-    // const geometry = new BoxGeometry()
-    // const texture = ImageUtils.loadTexture("images/arrows/leftArrows.svg")
-    // const material = new MeshPhongMaterial({ map:texture });
-    // const cube = new Mesh( geometry, material );
-    // cubeGuideRenderer.scene.add(cube)
+  // 矢印画像挿入
+  const Arrow = () => {
+    // グループを受け取って挿入する…？調べるようにリンク貼らせてもらいます
+    // useContext:https://ja.react.dev/reference/react/useContext
+    // useMemo:https://ja.react.dev/reference/react/useMemo
+    const group = useContext(RubikCubeGroupContext)
+    const sprite = useMemo(() => {
+      return new Sprite()
+    }, []);
 
-    // 案２
-    const texture = new TextureLoader().load("./images/allows/leftAllows.svg",
-      (tex) => {
-        const w = 5;
-        const h = tex.image.height/(tex.image.width/w)
+    useEffect(() => {
+      group.add(sprite);
 
-        const geometry = new PlaneGeometry(1, 1);
-        const material = new MeshPhongMaterial({map:texture});
-        const plane = new Mesh(geometry, material);
-        plane.scale.set(w,h,1);
-        cubeGuideRenderer.scene.add(plane);
+      return () => {
+        group.remove(sprite);
       }
-    )
+    }, [])
 
+    return null;
+  }
 
-
-
-    // const baseCubeGroup = generateRubikCubeCubeModel(baseCube)
-    // cubeGuideRenderer.scene.add(baseCubeGroup)
-    // =====================================================
-    // for(const currentCube of cubeList){
-    //   const cubeGroup = generateRubikCubeCubeModel(currentCube.cube)
-    //   // 次回ここから処理を書きます
-    //   const cloneCubeGroup = cubeGroup.clone()
-      
-    //   // 回転をかける
-    //   RubikCubeAnimator.generate(cloneCubeGroup,[currentCube.move]).patchProgress(0.5)
-      
-    //   switch(currentCube.move){
-    //     case "R":
-    //   }
-
-    //   // positionを設定
-    //   cubeGroup.position.set(0,0,0)
-    //   cloneCubeGroup.position.set(0,0,0)
-      
-      
-    //   // sceneにキューブを追加
-    //   cubeGuideRenderer.scene.add(cubeGroup)
-    //   cubeGuideRenderer.scene.add(cloneCubeGroup)
-      
-    // }
-    // =====================================================
-
-  }, []);
 
   return (
-    <div
-      ref={cubeRef}
+    <Canvas
+      camera={camera}
+      ref={canvasElement}
     >
-    </div>
+
+    {/* 最初のキューブ */}
+    <RubikCubeThreeGroup
+      rubikCube={baseCube}
+      position={{x:1, y:1, z:1}}
+    >
+      <Arrow />
+    </RubikCubeThreeGroup>
+    
+    {
+      cubeList.map(( item, index ) => (
+        
+        <RubikCubeThreeGroup
+        // 折り返しの条件分岐が必用
+          rubikCube={item.cube}
+          animation={{
+            moves:moveInvert(item.move)?.moves,
+            progress:moveInvert(item.move)?.progress
+          }}
+          position={{
+            x:index * 2,
+            y:0,
+            z:index * 2
+          }}
+        >
+        </RubikCubeThreeGroup>
+      ))
+    }
+    <RubikCubeThreeGroup
+      rubikCube={cubeList[cubeList.length-1].cube}
+      position={{
+        x:cubeLength,
+        y:0,
+        z:0
+      }}
+    >
+
+    </RubikCubeThreeGroup>
+
+
+    </Canvas>
   );
 };
