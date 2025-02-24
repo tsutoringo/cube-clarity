@@ -1,7 +1,6 @@
 import { Group, OrthographicCamera, Scene, WebGLRenderer } from "three";
 import { sizeSet } from "./cubeSizeCreate";
 
-
 export class CubeGuideRenderer {
   renderer: WebGLRenderer;
   scene: Scene;
