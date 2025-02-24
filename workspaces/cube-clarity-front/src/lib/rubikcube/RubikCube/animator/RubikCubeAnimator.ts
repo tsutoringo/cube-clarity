@@ -94,6 +94,8 @@ export class RubikCubeAnimator {
   }
 
   patchProgress(progress: number) {
+    if (this.tweens.length === 0) return 0;
+
     const tweenPos = progress === 1
       ? this.tweens.length - 1
       : Math.floor(progress * this.tweens.length);
