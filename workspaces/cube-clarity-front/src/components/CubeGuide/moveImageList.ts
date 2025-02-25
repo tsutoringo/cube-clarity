@@ -1,4 +1,4 @@
-import { RubikCubeMoveNotation } from "@lib/rubikcube/RubikCube/MoveNotation";
+import type { RubikCubeMoveNotation } from "@lib/rubikcube/RubikCube/MoveNotation";
 
 interface MoveImageList {
   up: RubikCubeMoveNotation[];

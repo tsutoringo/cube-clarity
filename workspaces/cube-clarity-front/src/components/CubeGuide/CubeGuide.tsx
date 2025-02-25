@@ -1,5 +1,5 @@
-import { RubikCube } from "../../lib/rubikcube/RubikCube/RubikCube";
-import { RubikCubeMoveNotation } from "../../lib/rubikcube/RubikCube/MoveNotation";
+import type { RubikCube } from "../../lib/rubikcube/RubikCube/RubikCube";
+import type { RubikCubeMoveNotation } from "../../lib/rubikcube/RubikCube/MoveNotation";
 import { Canvas } from "@react-three/fiber";
 import { useContext, useEffect, useMemo, useRef } from "react";
 import { RubikCubeThreeGroup } from "@components/RubikCube/RubikCube";
@@ -10,54 +10,15 @@ import {
   TextureLoader,
 } from "three";
 import { moveImageList } from "./moveImageList";
+import { moveInvert } from "./moveInvert";
 
 // 画像のインポート
 import upArrow from "./images/arrows/up_Arrows.svg";
 import downArrow from "./images/arrows/down_Arrow.svg";
 import leftArrow from "./images/arrows/left_Arrow.svg";
 import rightArrow from "./images/arrows/right_Arrow.svg";
-
-interface MoveInvertResult {
-  moves: RubikCubeMoveNotation[];
-  progress: number;
-}
-/**
- * 回転記号を反転する関数
- */
-const moveInvert = (move: RubikCubeMoveNotation): MoveInvertResult => {
-  const moveList = [
-    "R",
-    "L",
-    "U",
-    "B",
-    "F",
-    "D",
-  ];
-  if (moveList.includes(move)) {
-    return {
-      moves: [`${move}'` as RubikCubeMoveNotation],
-      progress: 0.5,
-    };
-  }
-  if (move.includes("'")) {
-    return {
-      moves: [move.replace("'", "") as RubikCubeMoveNotation],
-      progress: 0.5,
-    };
-  }
-  if (move.includes("2")) {
-    const afterMove = move.replace("2", "");
-    const reverseMove = `${afterMove}'` as RubikCubeMoveNotation;
-    return {
-      moves: [reverseMove, reverseMove],
-      progress: 0.5,
-    };
-  }
-  return {
-    moves: [],
-    progress: 0,
-  };
-};
+import rightCircle from "./images/arrows/right_Circle.svg";
+import leftCircle from "./images/arrows/left_Circle.svg";
 
 export const CubeGuide = (
   baseCube: RubikCube,
@@ -105,6 +66,12 @@ export const CubeGuide = (
       }
       if (moveImageList.right.includes(move)) {
         imagePath = rightArrow;
+      }
+      if (moveImageList.leftTurn.includes(move)) {
+        imagePath = leftCircle;
+      }
+      if (moveImageList.rightTurn.includes(move)) {
+        imagePath = rightCircle;
       }
 
       // パスからthreeオブジェクトを作成してSpriteとしてreturnする
