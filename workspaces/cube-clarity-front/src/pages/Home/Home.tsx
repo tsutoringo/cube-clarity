@@ -1,12 +1,13 @@
-import { useRef } from "react";
+import { useMemo, useRef } from "react";
 import { CSSTransition } from "react-transition-group";
 
 import cube from "@assets/CUBE.svg";
 import clarity from "@assets/CLARITY.svg";
-import rectangle from "@assets/Rectangle.svg";
 import { Loading } from "@components/Loading/Loading";
 
 import styles from "./Home.module.css";
+import { SingleRubikCubeDisplay } from "@components/RubikCube/RubikCube";
+import { RubikCube } from "@lib/rubikcube/RubikCube/RubikCube";
 
 const StartAnimationPage = ({
   displaying,
@@ -46,6 +47,7 @@ const ScanPage = ({
   onScanComplete: (rubikCubeData: unknown) => void;
 }) => {
   const homepageRef = useRef<HTMLDivElement>(null);
+  const viewingRubikCube = useMemo(() => RubikCube.default(), []);
 
   return (
     <CSSTransition
@@ -65,9 +67,11 @@ const ScanPage = ({
             <img src={clarity} alt="" className={styles.cubeClarity} />
           </p>
         </div>
-        <p>
-          <img src={rectangle} alt="" className={styles.square} />
-        </p>
+        <section className={styles.mainCube}>
+          <SingleRubikCubeDisplay
+            rubikCube={viewingRubikCube}
+          />
+        </section>
         <p className={styles.text}>
           <span className={styles.spanHeader}>スキャンして、解こう！</span>
           <br />

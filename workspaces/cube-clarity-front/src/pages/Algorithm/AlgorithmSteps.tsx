@@ -17,7 +17,7 @@ export const AlgorithmSteps = ({
   displaying: boolean;
   startCube: RubikCube;
 }) => {
-  const [currentStep, setCurrentStep] = useState<StepIndex>(6);
+  const [currentStep, setCurrentStep] = useState<StepIndex>(0);
   const solveAlgorithm = useMemo(() => solveRubikCube(startCube), [startCube]);
   const currentStepInformation = stepInformations(currentStep, solveAlgorithm);
   const stepsRef = useRef<HTMLDivElement>(null);
@@ -25,7 +25,6 @@ export const AlgorithmSteps = ({
   const [currentProgress, setCurrentProgress] = useState<number>(0);
 
   const setCurrentStepHandler = (step: StepIndex) => {
-    // console.log(currentProgress);
     setCurrentProgress(0);
     setTimeout(() => setCurrentStep(step));
   };
@@ -45,6 +44,11 @@ export const AlgorithmSteps = ({
         viewBox={
           <BottomDrawer.ViewBox>
             <SingleRubikCubeDisplay
+              animation={{
+                moves: currentStepInformation.algorithm.moves,
+                progress: currentProgress /
+                  currentStepInformation.algorithm.moves.length,
+              }}
               rubikCube={currentStepInformation.algorithm.startRubikCube}
             />
           </BottomDrawer.ViewBox>
@@ -70,7 +74,9 @@ export const AlgorithmSteps = ({
               </HorizontalRule.Content>
             </HorizontalRule>
             <div className={styles.stepCubes}>
-              {currentStepInformation.algorithm.moves.join(" ")}
+              {currentStepInformation.algorithm.moves.length === 0
+                ? "このステップは飛ばしてもいいみたいです！"
+                : currentStepInformation.algorithm.moves.join(" ")}
             </div>
             <footer className={styles.footer}>
               {currentStep > 0 && (
