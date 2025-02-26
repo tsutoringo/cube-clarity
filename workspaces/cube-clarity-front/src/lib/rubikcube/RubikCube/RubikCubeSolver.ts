@@ -1371,8 +1371,8 @@ function solvedLastLayer(cube: RubikCube): boolean {
 }
 
 function solveLastLayer(cube: RubikCube): RubikCubeMoveNotation[] {
-  // deno-fmt-ignore
   const moveResult: RubikCubeMoveNotation[] = [];
+  // deno-fmt-ignore
   const lastAlgorithm: RubikCubeMoveNotation[] = ["R","U","R'","U'","R","U","R'","U'",];
   const moveNextCorner: RubikCubeMoveNotation = "D'";
 
@@ -1402,7 +1402,6 @@ function solveLastLayer(cube: RubikCube): RubikCubeMoveNotation[] {
       cube = cube.rotateCubeOnce(moveNextCorner);
     }
   }
-
 
   return moveResult;
 }
