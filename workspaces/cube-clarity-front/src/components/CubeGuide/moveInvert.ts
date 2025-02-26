@@ -20,14 +20,14 @@ export const moveInvert = (move: RubikCubeMoveNotation): MoveInvertResult => {
   if (moveList.includes(move)) {
     return {
       moves: [`${move}'` as RubikCubeMoveNotation],
-      progress: 0.3,
+      progress: 0.7,
     };
   }
 
   if (move.includes("'")) {
     return {
       moves: [move.replace("'", "") as RubikCubeMoveNotation],
-      progress: 0.3,
+      progress: 0.7,
     };
   }
 

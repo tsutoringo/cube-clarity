@@ -48,7 +48,7 @@ export const RubikCubeThreeGroup = ({
   useEffect(() => {
     group.position.copy(position);
   }, [position.x, position.y, position.z]);
-  
+
   useEffect(() => {
     group.rotation.copy(rotation);
     scene.add(group);
@@ -61,12 +61,6 @@ export const RubikCubeThreeGroup = ({
   useEffect(() => {
     group.rotation.copy(rotation);
   }, [rotation.x, rotation.y, rotation.z]);
-
-  
-  
-
-
-
 
   const animator = useMemo(() => {
     if (!animation) return;

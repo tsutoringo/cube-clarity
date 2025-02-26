@@ -1,5 +1,5 @@
-import { RubikCube, RubikCubeBadMoveNotationError } from "@lib/rubikcube/RubikCube/RubikCube";
-import { RubikCubeMoveNotation } from "@lib/rubikcube/RubikCube/MoveNotation"
+import type { RubikCube } from "@lib/rubikcube/RubikCube/RubikCube";
+import type { RubikCubeMoveNotation } from "@lib/rubikcube/RubikCube/MoveNotation";
 import { type ReactNode, useMemo, useRef, useState } from "react";
 import { CSSTransition } from "react-transition-group";
 import styles from "./AlgorithmStep.module.css";
@@ -21,7 +21,10 @@ export const AlgorithmSteps = ({
 }) => {
   const [currentStep, setCurrentStep] = useState<StepIndex>(0);
   const solveAlgorithm = useMemo(() => solveRubikCube(startCube), [startCube]);
-  const currentStepInformation = useMemo(() => stepInformations(currentStep, solveAlgorithm), [currentStep, solveAlgorithm]);
+  const currentStepInformation = useMemo(
+    () => stepInformations(currentStep, solveAlgorithm),
+    [currentStep, solveAlgorithm],
+  );
   const stepsRef = useRef<HTMLDivElement>(null);
 
   const [currentProgress, setCurrentProgress] = useState<number>(0);
@@ -34,24 +37,24 @@ export const AlgorithmSteps = ({
   const cubeGuideMemo = useMemo(() => {
     return currentStepInformation.algorithm.moves.reduce<{
       moves: {
-        move:RubikCubeMoveNotation,
-        cube:RubikCube
-      }[],
-      currentCube: RubikCube
+        move: RubikCubeMoveNotation;
+        cube: RubikCube;
+      }[];
+      currentCube: RubikCube;
     }>((acc, current) => {
       const rotatedCube = acc.currentCube.rotateCubeOnce(current);
       return {
         moves: [...acc.moves, {
           move: current,
-          cube: rotatedCube
+          cube: rotatedCube,
         }],
-        currentCube: rotatedCube
+        currentCube: rotatedCube,
       };
     }, {
-      moves:[],
-      currentCube: startCube
+      moves: [],
+      currentCube: startCube,
     }).moves;
-  }, [currentStepInformation.algorithm.moves, startCube])
+  }, [currentStepInformation.algorithm.moves, startCube]);
 
   return (
     <CSSTransition
@@ -101,12 +104,11 @@ export const AlgorithmSteps = ({
               {currentStepInformation.algorithm.moves.length === 0
                 ? "このステップは飛ばしてもいいみたいです！"
                 : (
-                  <CubeGuide 
+                  <CubeGuide
                     baseCube={currentStepInformation.algorithm.startRubikCube}
                     cubeList={cubeGuideMemo}
                   />
-                )
-              }
+                )}
             </div>
             <footer className={styles.footer}>
               {currentStep > 0 && (
