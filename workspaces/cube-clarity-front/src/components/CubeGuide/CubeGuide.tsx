@@ -9,13 +9,14 @@ import {
 import {
   Euler,
   MathUtils,
+  Mesh,
+  MeshBasicMaterial,
   OrthographicCamera,
-  Sprite,
-  SpriteMaterial,
+  PlaneGeometry,
   TextureLoader,
 } from "three";
 import { moveInvert } from "./moveInvert";
-import { movePathCreate } from "./movePathCreate";
+import { createMovePath } from "./movePathCreate";
 
 type MoveGuideElement = {
   kind: "move";
@@ -169,11 +170,13 @@ const Arrow = ({
     const textureLoader = new TextureLoader();
 
     // 座標とパスを取得
-    const paths = movePathCreate(move);
+    const paths = createMovePath(move);
     // パスからthreeオブジェクトを作成してSpriteとしてreturnする
     const texture = textureLoader.load(paths.path);
-    const material = new SpriteMaterial({ map: texture });
-    const sprite = new Sprite(material);
+    const geometry = new PlaneGeometry(paths.size.width, paths.size.height);
+    const material = new MeshBasicMaterial({ map: texture, transparent: true });
+    const sprite = new Mesh(geometry, material);
+
     sprite.position.copy(paths.position);
     sprite.rotation.copy(paths.rotation);
 
@@ -186,7 +189,7 @@ const Arrow = ({
     return () => {
       group.remove(sprite);
     };
-  }, []);
+  }, [move]);
 
   return null;
 };
