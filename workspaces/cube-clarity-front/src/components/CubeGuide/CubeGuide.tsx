@@ -93,7 +93,7 @@ export const CubeGuide = ({
     camera.position.y = y;
   }, [guides.length]);
 
-  const canvasHeight = (Math.ceil(guides.length / 6) * GAP + PADDING) * 11.9
+  const canvasHeight = (Math.ceil(guides.length / 6) * GAP + PADDING) * 12.8
 
   const rotation = new Euler(
     MathUtils.degToRad(10),
@@ -204,16 +204,8 @@ const Arrow = ({
     const texture = textureLoader.load(paths.path);
     const material = new SpriteMaterial({ map: texture });
     const sprite = new Sprite(material);
-    sprite.position.set(
-      paths.position.x,
-      paths.position.y,
-      paths.position.z,
-    );
-    sprite.rotation.set(
-      paths.rotation.x,
-      paths.rotation.y,
-      paths.rotation.z,
-    )
+    sprite.position.copy(paths.position);
+    sprite.rotation.copy(paths.rotation);
 
     return sprite;
   }, [move]);
