@@ -1,7 +1,6 @@
 import cv2
 import numpy as np
-import kociemba as Cube
-
+import json
 
 state = {
     'up': ['white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', ],
@@ -89,25 +88,10 @@ textPoints = {
 }
 
 check_state = []
-solution = []
-solved = False
 cap = cv2.VideoCapture(0)
 cv2.namedWindow('frame')
 
-
-def solve(state):
-    raw = ''
-    for i in state:
-        for j in state[i]:
-            raw += sign_conv[j]
-    print("answer:", Cube.solve(raw))
-    return Cube.solve(raw)
-
-
 def color_detect(h, s, v):
-
-
-
     if s < 40 and v > 200:
         return 'white'
     elif 0 <= h <= 10 or 170 <= h <= 180: 
@@ -122,33 +106,15 @@ def color_detect(h, s, v):
         return 'blue'
     return 'white'
 
-    # if s < 50 and v > 200:
-    #     return 'white'
-    # elif 0 <= h <= 10 or 170 <= h <= 180: 
-    #     return 'red'
-    # elif 10 < h <= 25:  
-    #     return 'orange'
-    # elif 25 < h <= 40:  
-    #     return 'yellow'
-    # elif 40 < h <= 85:  
-    #     return 'green'
-    # elif 85 < h <= 130:  
-    #     return 'blue'
-    
-    # return 'white'
-
-
 def draw_stickers(frame, stickers, name):
     for x, y in stickers[name]:
         cv2.rectangle(frame, (x, y), (x + 30, y + 30), (255, 255, 255), 2)
-
 
 def draw_preview_stickers(frame, stickers):
     stick = ['front', 'back', 'left', 'right', 'up', 'down']
     for name in stick:
         for x, y in stickers[name]:
             cv2.rectangle(frame, (x, y), (x + 40, y + 40), (255, 255, 255), 2)
-
 
 def texton_preview_stickers(frame, stickers):
     stick = ['front', 'back', 'left', 'right', 'up', 'down']
@@ -159,7 +125,6 @@ def texton_preview_stickers(frame, stickers):
             sym, col, x1, y1 = textPoints[name][1][0], textPoints[name][1][1], textPoints[name][1][2], textPoints[name][1][3]
             cv2.putText(preview, sym, (x1, y1), font, 0.5, col, 1, cv2.LINE_AA)
 
-
 def fill_stickers(frame, stickers, sides):
     for side, colors in sides.items():
         num = 0
@@ -167,23 +132,13 @@ def fill_stickers(frame, stickers, sides):
             cv2.rectangle(frame, (x, y), (x + 40, y + 40), color[colors[num]], -1)
             num += 1
 
-
 if __name__ == '__main__':
-    
-
-    
-
-
     preview = np.zeros((700, 800, 3), np.uint8)
 
-   
     while True:
-        # cap = cv2.VideoCapture(url)
-        # cv2.namedWindow('frame')
         hsv = []
         current_state = []
         ret, img = cap.read()
-        # img=cv2.flip(img,1)
         frame = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
         mask = np.zeros(frame.shape, dtype=np.uint8)
 
@@ -224,18 +179,41 @@ if __name__ == '__main__':
         elif k == ord('b'):
             check_state.append('b')
             state['back'] = current_state
-        elif k == ord('\r'):
-            # process(["R","R'"])
+        elif k == 13:
             if len(set(check_state)) == 6:
-                try:
-                    solved = solve(state)
-                    print("")
-                    print(solved)
-                except:
-                    print("detection error")
+                print("All sides scanned.")
+
+                latest_cube_state = {}
+
+                color_to_sign = {
+                    'white': 'W',
+                    'red': 'R',
+                    'blue': 'B',
+                    'green': 'G',
+                    'orange': 'O',
+                    'yellow': 'Y'
+                }
+
+                cube_state = {
+                    'U': [[color_to_sign[color] for color in state['up'][i:i+3]] for i in range(0, 9, 3)],
+                    'R': [[color_to_sign[color] for color in state['right'][i:i+3]] for i in range(0, 9, 3)],
+                    'F': [[color_to_sign[color] for color in state['front'][i:i+3]] for i in range(0, 9, 3)],
+                    'D': [[color_to_sign[color] for color in state['down'][i:i+3]] for i in range(0, 9, 3)],
+                    'L': [[color_to_sign[color] for color in state['left'][i:i+3]] for i in range(0, 9, 3)],
+                    'B': [[color_to_sign[color] for color in state['back'][i:i+3]] for i in range(0, 9, 3)]
+                }
+
+                print(json.dumps(cube_state, indent=2))
+                
+                with open("latest_cube_state.json", "w") as file:
+                    json.dump(cube_state, file, indent=2)
+                    print("Stato del cubo salvato in latest_cube_state.json")
+                
+                break
+
             else:
-                print("all side are not scanned")
-                print("left to scan:", 6 - len(set(check_state)))
+                print("All sides are not scanned.")
+                print("Left to scan:", 6 - len(set(check_state)))
         cv2.imshow('preview', preview)
         cv2.imshow('frame', img[0:500, 0:500])
 
