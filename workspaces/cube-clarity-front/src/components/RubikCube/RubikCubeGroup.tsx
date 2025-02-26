@@ -9,7 +9,7 @@ import {
 } from "@lib/rubikcube/RubikCubeModel";
 import { useThree } from "@react-three/fiber";
 import { createContext, type ReactNode, useEffect, useMemo } from "react";
-import { Vector3, type Vector3Like } from "three";
+import { Euler, Vector3, type Vector3Like } from "three";
 
 export const RubikCubeGroupContext = createContext<RubikCubeGroup>(
   "nuaall" as never,
@@ -19,6 +19,7 @@ export const RubikCubeThreeGroup = ({
   rubikCube,
   animation,
   position = new Vector3(0, 0, 0),
+  rotation = new Euler(0, 0, 0),
   children,
 }: {
   rubikCube: RubikCube;
@@ -27,6 +28,7 @@ export const RubikCubeThreeGroup = ({
     progress: number;
   };
   position?: Vector3Like;
+  rotation?: Euler;
   children?: ReactNode;
 }) => {
   const { scene, camera, gl } = useThree();
@@ -46,6 +48,25 @@ export const RubikCubeThreeGroup = ({
   useEffect(() => {
     group.position.copy(position);
   }, [position.x, position.y, position.z]);
+  
+  useEffect(() => {
+    group.rotation.copy(rotation);
+    scene.add(group);
+
+    return () => {
+      scene.remove(group);
+    };
+  }, [group]);
+
+  useEffect(() => {
+    group.rotation.copy(rotation);
+  }, [rotation.x, rotation.y, rotation.z]);
+
+  
+  
+
+
+
 
   const animator = useMemo(() => {
     if (!animation) return;
