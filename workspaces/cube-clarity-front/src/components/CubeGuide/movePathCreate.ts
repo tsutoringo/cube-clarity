@@ -8,36 +8,12 @@ import rightArrow from "./images/arrows/right_Arrow.svg";
 import rightCircle from "./images/arrows/right_Circle.svg";
 import leftCircle from "./images/arrows/left_Circle.svg";
 import { RubikCubeMoveNotation } from "@lib/rubikcube/RubikCube/MoveNotation";
-import { LargeNumberLike } from "crypto";
-
-class positionSet {
-  x:number;
-  y:number;
-  z:number;
-  constructor(
-    x:number = 0,
-    y:number = 0,
-    z:number = 0,
-  ){
-    this.x = x;
-    this.y = y;
-    this.z = z;
-  }
-  set(
-    x:number,
-    y:number,
-    z:number,
-  ){
-    this.x = x;
-    this.y = y;
-    this.z = z;
-  }
-}
+import { Euler, Vector3 } from 'three';
 
 export const movePathCreate = (move:RubikCubeMoveNotation) => {
   let imagePath = "";
-  const position = new positionSet()
-  const rotation = new positionSet()
+  const position = new Vector3();
+  const rotation = new Euler();
   if (moveImageList.up.includes(move)) {
     imagePath = upArrow;
     switch(move){
@@ -130,7 +106,7 @@ export const movePathCreate = (move:RubikCubeMoveNotation) => {
     imagePath = rightCircle;
     switch(move){
       case "F":
-        position.set(0,0,1)
+        position.set(0,0,1.51)
         rotation.set(0,0,0)
         break;
       case "F2":
