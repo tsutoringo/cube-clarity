@@ -1371,44 +1371,38 @@ function solvedLastLayer(cube: RubikCube): boolean {
 }
 
 function solveLastLayer(cube: RubikCube): RubikCubeMoveNotation[] {
+  // deno-fmt-ignore
   const moveResult: RubikCubeMoveNotation[] = [];
-  const lastAlgorithm: RubikCubeMoveNotation[] = [
-    "R",
-    "U",
-    "R'",
-    "U'",
-    "R",
-    "U",
-    "R'",
-    "U'",
-  ];
+  const lastAlgorithm: RubikCubeMoveNotation[] = ["R","U","R'","U'","R","U","R'","U'",];
   const moveNextCorner: RubikCubeMoveNotation = "D'";
 
   const lastAdjustment: Record<string, RubikCubeMoveNotation> = {
-    [FACE_COLOR.Red]: "D'",
-    [FACE_COLOR.Orange]: "D",
+    [FACE_COLOR.Red]: "D",
+    [FACE_COLOR.Orange]: "D'",
     [FACE_COLOR.Blue]: "D2",
   };
 
   for (let i = 0; i < 4; i++) {
-    while (cube.at("D", 0, 2) !== FACE_COLOR.Yellow) {
-      moveResult.push(...lastAlgorithm);
-      cube = cube.rotateCube(lastAlgorithm);
+    if (solvedLastLayer(cube)) {
+      const color = cube.at("F", 2, 1);
+      if (color in lastAdjustment) {
+        const adjustment = lastAdjustment[color];
+        if (adjustment) {
+          moveResult.push(adjustment);
+          cube = cube.rotateCubeOnce(adjustment);
+        }
+      }
+      break;
+    } else {
+      while (cube.at("D", 0, 2) !== FACE_COLOR.Yellow) {
+        moveResult.push(...lastAlgorithm);
+        cube = cube.rotateCube(lastAlgorithm);
+      }
+      moveResult.push(moveNextCorner);
+      cube = cube.rotateCubeOnce(moveNextCorner);
     }
-    moveResult.push(moveNextCorner);
-    cube = cube.rotateCubeOnce(moveNextCorner);
   }
 
-  if (solvedLastLayer(cube)) {
-    const color = cube.at("F", 2, 1);
-    if (color in lastAdjustment) {
-      const adjustment = lastAdjustment[color];
-      if (adjustment) {
-        moveResult.push(adjustment);
-        cube = cube.rotateCubeOnce(adjustment);
-      }
-    }
-  }
 
   return moveResult;
 }
