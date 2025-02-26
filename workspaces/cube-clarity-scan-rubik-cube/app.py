@@ -32,6 +32,7 @@ def detect_face():
     if current_status == 0:
         call_thread = threading.Thread(target=process_call)
         call_thread.start()
+        return Response(None,content_type='text/plane',status = 200)
     if current_status == 1:
         return Response(None,status = 423)
     return Response(None,content_type='text/plane',status = 200)
