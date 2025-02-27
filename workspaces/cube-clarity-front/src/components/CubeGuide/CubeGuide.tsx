@@ -37,15 +37,12 @@ const PADDING = 6;
 
 export const CubeGuide = ({
   baseCube,
-  cubeList,
+  moves,
 }: {
   baseCube: RubikCube;
-  cubeList: {
-    move: RubikCubeMoveNotation;
-    cube: RubikCube;
-  }[];
+  moves: RubikCubeMoveNotation[];
 }) => {
-  if (cubeList.length === 0) return;
+  if (moves.length === 0) return;
 
   const canvasElement = useRef<HTMLCanvasElement>(null);
 
@@ -61,21 +58,26 @@ export const CubeGuide = ({
       },
     ];
 
-    return cubeList.reduce((acc, current) => {
+    return moves.reduce((acc, currentMoves) => {
+      const beforeCube = acc[acc.length - 1] as CubeGuideElement;
+      const afterCube = beforeCube.cube.rotateCubeOnce(currentMoves);
+
+      console.log("aa");
+
       acc.push({
         kind: "move",
-        afterCube: current.cube,
-        move: current.move,
+        afterCube,
+        move: currentMoves,
       });
 
       acc.push({
         kind: "cube",
-        cube: current.cube,
+        cube: afterCube,
       });
 
       return acc;
     }, guides);
-  }, [baseCube.encodeBase64(), cubeList]);
+  }, [baseCube.encodeBase64(), moves]);
 
   useEffect(() => {
     if (!canvasElement.current) return;

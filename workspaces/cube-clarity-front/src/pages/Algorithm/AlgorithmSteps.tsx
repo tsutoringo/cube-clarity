@@ -19,7 +19,7 @@ export const AlgorithmSteps = ({
   displaying: boolean;
   startCube: RubikCube;
 }) => {
-  const [currentStep, setCurrentStep] = useState<StepIndex>(2);
+  const [currentStep, setCurrentStep] = useState<StepIndex>(0);
   const solveAlgorithm = useMemo(() => solveRubikCube(startCube), [startCube]);
   const currentStepInformation = useMemo(
     () => stepInformations(currentStep, solveAlgorithm),
@@ -33,28 +33,6 @@ export const AlgorithmSteps = ({
     setCurrentProgress(0);
     setTimeout(() => setCurrentStep(step));
   };
-
-  const cubeGuideMemo = useMemo(() => {
-    return currentStepInformation.algorithm.moves.reduce<{
-      moves: {
-        move: RubikCubeMoveNotation;
-        cube: RubikCube;
-      }[];
-      currentCube: RubikCube;
-    }>((acc, current) => {
-      const rotatedCube = acc.currentCube.rotateCubeOnce(current);
-      return {
-        moves: [...acc.moves, {
-          move: current,
-          cube: rotatedCube,
-        }],
-        currentCube: rotatedCube,
-      };
-    }, {
-      moves: [],
-      currentCube: currentStepInformation.algorithm.startRubikCube,
-    }).moves;
-  }, [currentStepInformation.algorithm.moves, startCube]);
 
   return (
     <CSSTransition
@@ -106,7 +84,7 @@ export const AlgorithmSteps = ({
                 : (
                   <CubeGuide
                     baseCube={currentStepInformation.algorithm.startRubikCube}
-                    cubeList={cubeGuideMemo}
+                    moves={currentStepInformation.algorithm.moves}
                   />
                 )}
             </div>
