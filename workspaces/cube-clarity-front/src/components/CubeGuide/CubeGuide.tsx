@@ -17,6 +17,7 @@ import {
 } from "three";
 import { moveInvert } from "./moveInvert";
 import { createMovePath } from "./movePathCreate";
+import { Group } from 'three';
 
 type MoveGuideElement = {
   kind: "move";
@@ -178,9 +179,11 @@ const Arrow = ({
     const sprite = new Mesh(geometry, material);
 
     sprite.position.copy(paths.position);
-    sprite.rotation.copy(paths.rotation);
+    const spriteGroup = new Group();
+    spriteGroup.rotation.copy(paths.rotation);
+    spriteGroup.add(sprite);
 
-    return sprite;
+    return spriteGroup;
   }, [move]);
 
   useEffect(() => {

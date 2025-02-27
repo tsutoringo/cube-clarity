@@ -8,7 +8,7 @@ import rightArrow from "./images/arrows/right_Arrow.svg";
 import rightCircle from "./images/arrows/right_Circle.svg";
 import leftCircle from "./images/arrows/left_Circle.svg";
 import type { RubikCubeMoveNotation } from "@lib/rubikcube/RubikCube/MoveNotation";
-import { Euler, Vector3 } from "three";
+import { Euler, MathUtils, Vector3 } from "three";
 
 export const createMovePath = (move: RubikCubeMoveNotation) => {
   let imagePath = "";
@@ -22,41 +22,57 @@ export const createMovePath = (move: RubikCubeMoveNotation) => {
   // ここで
   switch (move) {
     case "R":
+      position.set(1, 0, 1.6);
+      rotation.set(MathUtils.degToRad(-28), 0, 0);
+      break;
     case "R'":
+      position.set(1, 0, 1.6);
+      rotation.set(MathUtils.degToRad(31), 0, 0);
+      break;
     case "R2":
+      position.set(1, 0, 1.6);
+      rotation.set(MathUtils.degToRad(32), 0, 0);
+      break;
     case "L":
     case "L'":
     case "L2":
     case "U":
     case "U'":
     case "U2":
+      break;
     case "D":
+      position.set(0, -1, 1.6);
+      rotation.set(0, MathUtils.degToRad(31), 0)
+      break;
     case "D'":
+      position.set(0, -1, 1.6);
+      rotation.set(0, MathUtils.degToRad(-28), 0)
+      break;
     case "D2":
+      position.set(0, -1, 1.6);
+      rotation.set(0, MathUtils.degToRad(-32), 0)
       break;
     case "F":
     case "F'":
     case "F2":
       position.set(0, 0, 1.6);
-      size.width = 2.5;
-      size.height = 2.5;
       break;
     case "B":
+      break;
     case "B'":
+      break;
     case "B2":
   }
   if (moveImageList.up.includes(move)) {
     imagePath = upArrow;
+    size.width = 1;
+    size.height = 2.5;
     switch (move) {
       case "R":
-        position.set(1, 0, 1);
         break;
       case "R2":
-        position.set(1, 0, 1);
         break;
       case "B":
-        position.set(1, 0, -1);
-        rotation.set(0, Math.PI / 2, 0);
         break;
       case "B2":
         position.set(1, 0, -1);
@@ -69,13 +85,14 @@ export const createMovePath = (move: RubikCubeMoveNotation) => {
   }
   if (moveImageList.down.includes(move)) {
     imagePath = downArrow;
+    size.width = 1;
+    size.height = 2.5;
     switch (move) {
       case "R'":
-        position.set(1, 0, 1);
         break;
       case "B'":
-        position.set(1, 0, -1);
-        rotation.set(0, Math.PI / 2, 0);
+        // position.set(1, 0, -1);
+        // rotation.set(0, Math.PI / 2, 0);
         break;
       case "L":
         position.set(-1, 0, 1);
@@ -87,6 +104,8 @@ export const createMovePath = (move: RubikCubeMoveNotation) => {
   }
   if (moveImageList.left.includes(move)) {
     imagePath = leftArrow;
+    size.width = 2.5;
+    size.height = 1;
     switch (move) {
       case "U":
         position.set(0, 1, 1);
@@ -95,29 +114,35 @@ export const createMovePath = (move: RubikCubeMoveNotation) => {
         position.set(0, 1, 1);
         break;
       case "D'":
-        position.set(0, -1, 1);
+        // position.set(0, -1, 1);
         break;
     }
   }
   if (moveImageList.right.includes(move)) {
     imagePath = rightArrow;
+    size.width = 2.5;
+    size.height = 1;
     switch (move) {
       case "U'":
         position.set(0, 1, 1);
         break;
       case "D":
-        position.set(0, -1, 1);
+        // position.set(0, -1, 1);
         break;
       case "D2":
-        position.set(0, -1, 1);
+        // position.set(0, -1, 1);
         break;
     }
   }
   if (moveImageList.leftTurn.includes(move)) {
     imagePath = leftCircle;
+    size.width = 2.5;
+    size.height = 2.5;
   }
   if (moveImageList.rightTurn.includes(move)) {
     imagePath = rightCircle;
+    size.width = 2.5;
+    size.height = 2.5;
   }
   return {
     path: imagePath,
