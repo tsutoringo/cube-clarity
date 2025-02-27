@@ -19,7 +19,7 @@ export const AlgorithmSteps = ({
   displaying: boolean;
   startCube: RubikCube;
 }) => {
-  const [currentStep, setCurrentStep] = useState<StepIndex>(0);
+  const [currentStep, setCurrentStep] = useState<StepIndex>(2);
   const solveAlgorithm = useMemo(() => solveRubikCube(startCube), [startCube]);
   const currentStepInformation = useMemo(
     () => stepInformations(currentStep, solveAlgorithm),
