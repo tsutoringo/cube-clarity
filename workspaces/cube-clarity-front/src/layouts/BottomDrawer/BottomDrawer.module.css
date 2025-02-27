@@ -6,6 +6,7 @@
   background-color: #1d1e22;
   border-radius: 0.8em 0.8em 0 0;
 
+  padding-bottom: 1em;
   & > * {
     padding: 0 0.8em;
   }

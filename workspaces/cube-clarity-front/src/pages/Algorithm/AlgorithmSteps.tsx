@@ -7,6 +7,7 @@ import { SingleRubikCubeDisplay } from "@components/RubikCube/RubikCube";
 import { HorizontalRule } from "@components/HorizontalRule/HorizontalRule";
 import { solveRubikCube } from "@lib/rubikcube/RubikCube/RubikCubeSolver";
 import { Button } from "@components/Button/Button";
+import { CubeGuide } from "@components/CubeGuide/CubeGuide";
 
 type StepIndex = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
@@ -19,7 +20,10 @@ export const AlgorithmSteps = ({
 }) => {
   const [currentStep, setCurrentStep] = useState<StepIndex>(0);
   const solveAlgorithm = useMemo(() => solveRubikCube(startCube), [startCube]);
-  const currentStepInformation = stepInformations(currentStep, solveAlgorithm);
+  const currentStepInformation = useMemo(
+    () => stepInformations(currentStep, solveAlgorithm),
+    [currentStep, solveAlgorithm],
+  );
   const stepsRef = useRef<HTMLDivElement>(null);
 
   const [currentProgress, setCurrentProgress] = useState<number>(0);
@@ -76,7 +80,12 @@ export const AlgorithmSteps = ({
             <div className={styles.stepCubes}>
               {currentStepInformation.algorithm.moves.length === 0
                 ? "このステップは飛ばしてもいいみたいです！"
-                : currentStepInformation.algorithm.moves.join(" ")}
+                : (
+                  <CubeGuide
+                    baseCube={currentStepInformation.algorithm.startRubikCube}
+                    moves={currentStepInformation.algorithm.moves}
+                  />
+                )}
             </div>
             <footer className={styles.footer}>
               {currentStep > 0 && (
