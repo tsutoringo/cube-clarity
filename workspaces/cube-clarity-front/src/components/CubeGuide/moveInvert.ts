@@ -32,9 +32,11 @@ export const moveInvert = (move: RubikCubeMoveNotation): MoveInvertResult => {
   }
 
   if (move.includes("2")) {
+    const afterMove = move.replace("2", "");
+    const reverseMove = `${afterMove}'` as RubikCubeMoveNotation;
     return {
-      moves: [move],
-      progress: 0.2,
+      moves: [reverseMove, reverseMove],
+      progress: 0.8,
     };
   }
   return {
