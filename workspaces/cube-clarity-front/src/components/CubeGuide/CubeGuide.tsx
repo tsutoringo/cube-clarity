@@ -62,8 +62,6 @@ export const CubeGuide = ({
       const beforeCube = acc[acc.length - 1] as CubeGuideElement;
       const afterCube = beforeCube.cube.rotateCubeOnce(currentMoves);
 
-      console.log("aa");
-
       acc.push({
         kind: "move",
         afterCube,
