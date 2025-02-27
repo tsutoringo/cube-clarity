@@ -52,7 +52,7 @@ export const AlgorithmSteps = ({
       };
     }, {
       moves: [],
-      currentCube: startCube,
+      currentCube: currentStepInformation.algorithm.startRubikCube,
     }).moves;
   }, [currentStepInformation.algorithm.moves, startCube]);
 
