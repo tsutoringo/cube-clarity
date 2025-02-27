@@ -1,5 +1,4 @@
 import type { RubikCube } from "@lib/rubikcube/RubikCube/RubikCube";
-import type { RubikCubeMoveNotation } from "@lib/rubikcube/RubikCube/MoveNotation";
 import { type ReactNode, useMemo, useRef, useState } from "react";
 import { CSSTransition } from "react-transition-group";
 import styles from "./AlgorithmStep.module.css";
