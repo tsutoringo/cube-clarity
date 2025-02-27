@@ -48,27 +48,27 @@ export const createMovePath = (move: RubikCubeMoveNotation) => {
       break;
     case "U":
       position.set(0, 1, 1.6);
-      rotation.set(0, MathUtils.degToRad(-31), 0)
+      rotation.set(0, MathUtils.degToRad(-31), 0);
       break;
     case "U'":
       position.set(0, 1, 1.6);
-      rotation.set(0, MathUtils.degToRad(28), 0)
+      rotation.set(0, MathUtils.degToRad(28), 0);
       break;
     case "U2":
       position.set(0, 1, 1.6);
-      rotation.set(0, MathUtils.degToRad(-36), 0)
+      rotation.set(0, MathUtils.degToRad(-36), 0);
       break;
     case "D":
       position.set(0, -1, 1.6);
-      rotation.set(0, MathUtils.degToRad(31), 0)
+      rotation.set(0, MathUtils.degToRad(31), 0);
       break;
     case "D'":
       position.set(0, -1, 1.6);
-      rotation.set(0, MathUtils.degToRad(-28), 0)
+      rotation.set(0, MathUtils.degToRad(-28), 0);
       break;
     case "D2":
       position.set(0, -1, 1.6);
-      rotation.set(0, MathUtils.degToRad(36), 0)
+      rotation.set(0, MathUtils.degToRad(36), 0);
       break;
     case "F":
       position.set(0, 0, 1.6);
@@ -82,18 +82,18 @@ export const createMovePath = (move: RubikCubeMoveNotation) => {
 
     case "B":
       position.set(1.6, 0, -1);
-      rotation.set(0, 0, MathUtils.degToRad(27))
-      spriteRotation.set(0, MathUtils.degToRad(90), 0)
+      rotation.set(0, 0, MathUtils.degToRad(27));
+      spriteRotation.set(0, MathUtils.degToRad(90), 0);
       break;
     case "B'":
       position.set(1.6, 0, -1);
-      rotation.set(0, 0, MathUtils.degToRad(63))
-      spriteRotation.set(0, MathUtils.degToRad(90), 0)
+      rotation.set(0, 0, MathUtils.degToRad(63));
+      spriteRotation.set(0, MathUtils.degToRad(90), 0);
       break;
     case "B2":
       position.set(1.6, 0, -1);
-      rotation.set(0, 0, MathUtils.degToRad(36))
-      spriteRotation.set(0, MathUtils.degToRad(90), 0)
+      rotation.set(0, 0, MathUtils.degToRad(36));
+      spriteRotation.set(0, MathUtils.degToRad(90), 0);
       break;
   }
   if (moveImageList.up.includes(move)) {
@@ -131,6 +131,6 @@ export const createMovePath = (move: RubikCubeMoveNotation) => {
     position,
     rotation,
     size,
-    spriteRotation
+    spriteRotation,
   };
 };

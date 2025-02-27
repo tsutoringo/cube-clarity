@@ -17,8 +17,7 @@ import {
 } from "three";
 import { moveInvert } from "./moveInvert";
 import { createMovePath } from "./movePathCreate";
-import { Group } from 'three';
-import path from "path";
+import { Group } from "three";
 
 type MoveGuideElement = {
   kind: "move";
@@ -179,7 +178,7 @@ const Arrow = ({
     const material = new MeshBasicMaterial({ map: texture, transparent: true });
     const sprite = new Mesh(geometry, material);
 
-    sprite.rotation.copy(paths.spriteRotation)
+    sprite.rotation.copy(paths.spriteRotation);
     sprite.position.copy(paths.position);
     const spriteGroup = new Group();
     spriteGroup.rotation.copy(paths.rotation);
