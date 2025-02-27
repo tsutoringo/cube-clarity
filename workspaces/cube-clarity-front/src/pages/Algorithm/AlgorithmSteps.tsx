@@ -110,6 +110,7 @@ const stepInformations = (
     typeof solveRubikCube
   >[keyof ReturnType<typeof solveRubikCube>];
 } => {
+  // deno-fmt-ignore
   switch (step) {
     case 0:
       return {
