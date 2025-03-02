@@ -2,7 +2,7 @@ import type {
   CalculatedCubeCoordinate2d,
   CubeCoordinate2d,
   RotateDirection,
-} from "./mod";
+} from "./mod.ts";
 import { MathUtils } from "three";
 
 export type Coordnate2d = {

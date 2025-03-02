@@ -3,7 +3,7 @@ import {
   CORNER_CUBE_POSITIONS,
   type CornerCubeName,
   cornerCubeTween,
-} from "./corner";
+} from "./corner.ts";
 
 describe.each(
   [

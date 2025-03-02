@@ -4,7 +4,7 @@ import { type ReactNode, useRef } from "react";
 import { HorizontalRule } from "@components/HorizontalRule/HorizontalRule";
 import { SingleRubikCubeDisplay } from "@components/RubikCube/RubikCube";
 import { BottomDrawer } from "@layouts/BottomDrawer/BottomDrawer";
-import type { RubikCube } from "@lib/rubikcube/RubikCube/RubikCube";
+import type { RubikCube } from "@cube-clarity/core";
 
 import styles from "./AlgorithmStep.module.css";
 import { Button } from "@components/Button/Button";

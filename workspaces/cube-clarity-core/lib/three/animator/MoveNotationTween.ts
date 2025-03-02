@@ -3,18 +3,18 @@ import {
   getRotateNotationDetail,
   type RotateTo,
   type RubikCubeMoveNotation,
-} from "../MoveNotation";
-import type { RubikCubeFaceName } from "../RubikCube";
-import { faceRotation2d } from "./2d/faceRotation";
-import { RUBIK_CUBE_FACE_CUBE_PIECE_MAP } from "./3d/faces";
-import { rotatedCubePieceState } from "./3d/rotatedCubeState";
+} from "../../mod.ts";
+import type { RubikCubeFaceName } from "../../mod.ts";
+import { faceRotation2d } from "./2d/faceRotation.ts";
+import { RUBIK_CUBE_FACE_CUBE_PIECE_MAP } from "./3d/faces.ts";
+import { rotatedCubePieceState } from "./3d/rotatedCubeState.ts";
 import {
   cloneCubePieceState,
   type RubikCubePieceState,
-} from "./RubikCubeAnimator";
+} from "./RubikCubeAnimator.ts";
 import { flatMap, zip } from "@core/iterutil/pipe";
-import type { RubikCubePiece } from "../../RubikCubeModel";
-import { rotateByWorldAxis } from "./3d/helper";
+import type { RubikCubePiece } from "../RubikCubeModel.ts";
+import { rotateByWorldAxis } from "./3d/helper.ts";
 
 export class MoveNotationTween {
   static generate(

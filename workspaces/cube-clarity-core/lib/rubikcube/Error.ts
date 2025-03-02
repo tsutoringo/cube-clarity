@@ -1,5 +1,5 @@
 import type { Result } from "@result/result";
-import { RubikCube } from "./RubikCube";
+import { RubikCube } from "./RubikCube.ts";
 
 export class RubikCubeError extends Error {
 }

@@ -5,7 +5,7 @@ import {
   type RubikCubeFaceName,
   type RubikCubeFaceXIndex,
   type RubikCubeFaceYIndex,
-} from "./RubikCube/RubikCube";
+} from "../rubikcube/mod.ts";
 
 export type CUBE_INFO = {
   position: [x: number, y: number, z: number];

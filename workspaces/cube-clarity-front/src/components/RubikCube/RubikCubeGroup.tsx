@@ -1,12 +1,11 @@
-import { RubikCubeAnimator } from "@lib/rubikcube/RubikCube/animator/RubikCubeAnimator";
-import type {
-  RubikCube,
-  RubikCubeMoveNotation,
-} from "@lib/rubikcube/RubikCube/RubikCube";
 import {
   generateRubikCubeCubeModel,
+  type RubikCube,
+  RubikCubeAnimator,
   type RubikCubeGroup,
-} from "@lib/rubikcube/RubikCubeModel";
+  type RubikCubeMoveNotation,
+} from "@cube-clarity/core";
+
 import { useThree } from "@react-three/fiber";
 import { createContext, type ReactNode, useEffect, useMemo } from "react";
 import { Euler, Vector3, type Vector3Like } from "three";

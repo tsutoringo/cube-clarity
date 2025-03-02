@@ -2,8 +2,8 @@ import type {
   RubikCubeCenterPiece,
   RubikCubeCornerPiece,
   RubikCubeEdgePiece,
-} from "../../../RubikCubeModel";
-import type { RubikCubeFaceName } from "../../RubikCube";
+} from "../../RubikCubeModel.ts";
+import type { RubikCubeFaceName } from "../../../rubikcube/mod.ts";
 
 // deno-fmt-ignore
 export const RUBIK_CUBE_FACE_CUBE_PIECE_MAP = {
@@ -13,7 +13,7 @@ export const RUBIK_CUBE_FACE_CUBE_PIECE_MAP = {
     rotateAxis: { bindTo: "y", invert: false },
     mapping: [
       ["UBL", "UB", "UBR"],
-      ["UL",  "U",  "UR" ],
+      ["UL", "U", "UR"],
       ["UFL", "UF", "UFR"],
     ]
   },
@@ -23,7 +23,7 @@ export const RUBIK_CUBE_FACE_CUBE_PIECE_MAP = {
     rotateAxis: { bindTo: "y", invert: true },
     mapping: [
       ["DFL", "DF", "DFR"],
-      ["DL",  "D",  "DR" ],
+      ["DL", "D", "DR"],
       ["DBL", "DB", "DBR"],
     ]
   },
@@ -33,7 +33,7 @@ export const RUBIK_CUBE_FACE_CUBE_PIECE_MAP = {
     rotateAxis: { bindTo: "z", invert: false },
     mapping: [
       ["UFL", "UF", "UFR"],
-      ["FL",  "F",  "FR" ],
+      ["FL", "F", "FR"],
       ["DFL", "DF", "DFR"],
     ]
   },
@@ -43,7 +43,7 @@ export const RUBIK_CUBE_FACE_CUBE_PIECE_MAP = {
     rotateAxis: { bindTo: "z", invert: true },
     mapping: [
       ["UBR", "UB", "UBL"],
-      ["BR",  "B",  "BL" ],
+      ["BR", "B", "BL"],
       ["DBR", "DB", "DBL"],
     ]
   },
@@ -53,7 +53,7 @@ export const RUBIK_CUBE_FACE_CUBE_PIECE_MAP = {
     rotateAxis: { bindTo: "x", invert: true },
     mapping: [
       ["UBL", "UL", "UFL"],
-      ["BL",  "L",  "FL" ],
+      ["BL", "L", "FL"],
       ["DBL", "DL", "DFL"],
     ]
   },
@@ -63,17 +63,17 @@ export const RUBIK_CUBE_FACE_CUBE_PIECE_MAP = {
     rotateAxis: { bindTo: "x", invert: false },
     mapping: [
       ["UFR", "UR", "UBR"],
-      ["FR",  "R",  "BR" ],
+      ["FR", "R", "BR"],
       ["DFR", "DR", "DBR"],
     ]
   },
 } as const satisfies Record<RubikCubeFaceName, {
-  x: { bindTo: "x" | "y" | "z", invert: boolean },
-  y: { bindTo: "x" | "y" | "z", invert: boolean },
-  rotateAxis: { bindTo: "x" | "y" | "z", invert: boolean }
+  x: { bindTo: "x" | "y" | "z", invert: boolean; },
+  y: { bindTo: "x" | "y" | "z", invert: boolean; },
+  rotateAxis: { bindTo: "x" | "y" | "z", invert: boolean; };
   mapping: [
-    [RubikCubeCornerPiece, RubikCubeEdgePiece,   RubikCubeCornerPiece],
-    [RubikCubeEdgePiece,   RubikCubeCenterPiece, RubikCubeEdgePiece  ],
-    [RubikCubeCornerPiece, RubikCubeEdgePiece,   RubikCubeCornerPiece]
-  ]
+    [RubikCubeCornerPiece, RubikCubeEdgePiece, RubikCubeCornerPiece],
+    [RubikCubeEdgePiece, RubikCubeCenterPiece, RubikCubeEdgePiece],
+    [RubikCubeCornerPiece, RubikCubeEdgePiece, RubikCubeCornerPiece]
+  ];
 }>;

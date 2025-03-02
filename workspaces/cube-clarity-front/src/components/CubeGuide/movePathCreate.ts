@@ -7,7 +7,7 @@ import leftArrow from "./images/arrows/left_Arrow.svg";
 import rightArrow from "./images/arrows/right_Arrow.svg";
 import rightCircle from "./images/arrows/right_Circle.svg";
 import leftCircle from "./images/arrows/left_Circle.svg";
-import type { RubikCubeMoveNotation } from "@lib/rubikcube/RubikCube/MoveNotation";
+import type { RubikCubeMoveNotation } from "@cube-clarity/core";
 import { Euler, MathUtils, Vector3 } from "three";
 
 export const createMovePath = (move: RubikCubeMoveNotation) => {

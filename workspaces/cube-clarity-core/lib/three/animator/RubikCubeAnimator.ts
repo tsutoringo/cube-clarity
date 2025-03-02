@@ -4,9 +4,9 @@ import {
   RUBIK_CUBE_PIECES,
   type RubikCubeGroup,
   type RubikCubePiece,
-} from "../../RubikCubeModel";
-import type { RubikCubeMoveNotation } from "../MoveNotation";
-import { MoveNotationTween } from "./MoveNotationTween";
+} from "../RubikCubeModel.ts";
+import type { RubikCubeMoveNotation } from "../../rubikcube/mod.ts";
+import { MoveNotationTween } from "./MoveNotationTween.ts";
 
 export type RubikCubePieceState = Record<
   RubikCubePiece,

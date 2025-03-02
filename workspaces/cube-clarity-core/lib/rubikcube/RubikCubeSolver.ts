@@ -4,15 +4,16 @@
  * 関数solveRubikCubeはそれぞれの段階の関数ををまとめて一つの関数に呼び出し、解法方法を返します。
  */
 
-import {
-  FACE_COLOR,
-  type RubikCube,
-  type RubikCubeFaceColor,
-  type RubikCubeFaceName,
-  type RubikCubeFaceXIndex,
-  type RubikCubeFaceYIndex,
-  type RubikCubeMoveNotation,
+import type {
+  RubikCube,
+  RubikCubeFaceName,
+  RubikCubeFaceXIndex,
+  RubikCubeFaceYIndex,
 } from "./RubikCube.ts";
+
+import { FACE_COLOR, type RubikCubeFaceColor } from "./RubikCubeFaceColor.ts";
+
+import type { RubikCubeMoveNotation } from "./MoveNotation.ts";
 
 type SolvingIndex = {
   face: RubikCubeFaceName;
@@ -1011,7 +1012,7 @@ function solveYellowCross(
 
   // deno-fmt-ignore
   const yellowEdgeSolutions: Record<string, RubikCubeMoveNotation[]> = {
-    "": ["F'","R'","D'","R","D","F","D2","F'","R'","D'","R","D","R'","D'","R","D","F"],
+    "": ["F'", "R'", "D'", "R", "D", "F", "D2", "F'", "R'", "D'", "R", "D", "R'", "D'", "R", "D", "F"],
     "DF DR": ["D2", "F'", "R'", "D'", "R", "D", "R'", "D'", "R", "D", "F"],
     "DF DL": ["D'", "F'", "R'", "D'", "R", "D", "R'", "D'", "R", "D", "F"],
     "DB DR": ["D", "F'", "R'", "D'", "R", "D", "R'", "D'", "R", "D", "F"],
@@ -1088,7 +1089,7 @@ function solveCrossColor(
     "DF": {
       "O,R": [],
       "O,B": ["D2", "R'", "D'", "R", "D'", "R'", "D2", "R", "D"],
-      "R,O": ["R'","D'","R","D'","R'","D2","R","D","R'","D'","R","D'","R'","D2","R","D2"],
+      "R,O": ["R'", "D'", "R", "D'", "R'", "D2", "R", "D", "R'", "D'", "R", "D'", "R'", "D2", "R", "D2"],
       "R,B": ["R'", "D'", "R", "D'", "R'", "D2", "R"],
       "B,R": ["D", "R'", "D'", "R", "D'", "R'", "D2", "R", "D2"],
       "B,O": ["D'", "R'", "D'", "R", "D'", "R'", "D2", "R", "D'"],
@@ -1096,7 +1097,7 @@ function solveCrossColor(
     "DR": {
       "O,R": ["D'"],
       "O,B": ["D", "R'", "D'", "R", "D'", "R'", "D2", "R", "D"],
-      "R,O": ["R'","D'","R","D'","R'","D2","R","D","R'","D'","R","D'","R'","D2","R","D'"],
+      "R,O": ["R'", "D'", "R", "D'", "R'", "D2", "R", "D", "R'", "D'", "R", "D'", "R'", "D2", "R", "D'"],
       "R,B": ["D'", "R'", "D'", "R", "D'", "R'", "D2", "R"],
       "B,R": ["R'", "D'", "R", "D'", "R'", "D2", "R", "D2"],
       "B,O": ["D2", "R'", "D'", "R", "D'", "R'", "D2", "R", "D'"],
@@ -1104,7 +1105,7 @@ function solveCrossColor(
     "DL": {
       "O,R": ["D"],
       "O,B": ["D'", "R'", "D'", "R", "D'", "R'", "D2", "R", "D"],
-      "R,O": ["R'","D'","R","D'","R'","D2","R","D","R'","D'","R","D'","R'","D2","R","D"],
+      "R,O": ["R'", "D'", "R", "D'", "R'", "D2", "R", "D", "R'", "D'", "R", "D'", "R'", "D2", "R", "D"],
       "R,B": ["D", "R'", "D'", "R", "D'", "R'", "D2", "R"],
       "B,R": ["D2", "R'", "D'", "R", "D'", "R'", "D2", "R", "D2"],
       "B,O": ["R'", "D'", "R", "D'", "R'", "D2", "R", "D'"],
@@ -1112,7 +1113,7 @@ function solveCrossColor(
     "DB": {
       "O,R": ["D2"],
       "O,B": ["R'", "D'", "R", "D'", "R'", "D2", "R", "D"],
-      "R,O": ["R'","D'","R","D'","R'","D2","R","D","R'","D'","R","D'","R'","D2","R"],
+      "R,O": ["R'", "D'", "R", "D'", "R'", "D2", "R", "D", "R'", "D'", "R", "D'", "R'", "D2", "R"],
       "R,B": ["D2", "R'", "D'", "R", "D'", "R'", "D2", "R"],
       "B,R": ["D'", "R'", "D'", "R", "D'", "R'", "D2", "R", "D2"],
       "B,O": ["D", "R'", "D'", "R", "D'", "R'", "D2", "R", "D'"],
@@ -1337,7 +1338,7 @@ function solveYellowCorners(
   };
 
   // deno-fmt-ignore
-  const mainAlgorithm: RubikCubeMoveNotation[] = ["R'","D","L","D'","R","D","L'","D'"];
+  const mainAlgorithm: RubikCubeMoveNotation[] = ["R'", "D", "L", "D'", "R", "D", "L'", "D'"];
 
   const finalAdjustments: Record<string, RubikCubeMoveNotation> = {
     "DRF": "D",
@@ -1397,7 +1398,7 @@ function solvedLastLayer(cube: RubikCube): boolean {
 function solveLastLayer(cube: RubikCube): RubikCubeMoveNotation[] {
   const moveResult: RubikCubeMoveNotation[] = [];
   // deno-fmt-ignore
-  const lastAlgorithm: RubikCubeMoveNotation[] = ["R","U","R'","U'","R","U","R'","U'",];
+  const lastAlgorithm: RubikCubeMoveNotation[] = ["R", "U", "R'", "U'", "R", "U", "R'", "U'",];
   const moveNextCorner: RubikCubeMoveNotation = "D'";
 
   const lastAdjustment: Record<string, RubikCubeMoveNotation> = {

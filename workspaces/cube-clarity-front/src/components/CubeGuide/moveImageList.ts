@@ -1,4 +1,4 @@
-import type { RubikCubeMoveNotation } from "@lib/rubikcube/RubikCube/MoveNotation";
+import type { RubikCubeMoveNotation } from "@cube-clarity/core";
 
 interface MoveImageList {
   up: RubikCubeMoveNotation[];

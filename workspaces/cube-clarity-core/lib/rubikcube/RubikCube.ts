@@ -1,4 +1,4 @@
-import type { RubikCubeMoveNotation } from "./MoveNotation";
+import type { RubikCubeMoveNotation } from "./MoveNotation.ts";
 import { decodeBase64, encodeBase64 } from "@std/encoding";
 import { chain, chunked, flatMap, flatten, map } from "@core/iterutil/pipe";
 import { zip } from "@core/iterutil";
@@ -8,13 +8,10 @@ import {
   encodeRubikCubeFaceColor,
   type RubikCubeFaceColor,
   rubikCubeFaceColorToHex,
-} from "./RubikCubeFaceColor";
-import { RubikCubeDecodeError, type RubikCubeResult } from "./Error";
+} from "./RubikCubeFaceColor.ts";
+import { RubikCubeDecodeError, type RubikCubeResult } from "./Error.ts";
 import { Result } from "@result/result";
-import { collectResult, rubikCubeNet } from "./helper";
-
-export * from "./MoveNotation";
-export * from "./RubikCubeFaceColor";
+import { collectResult, rubikCubeNet } from "./helper.ts";
 
 export type RubikCubeFaceName = "U" | "D" | "F" | "B" | "L" | "R";
 
