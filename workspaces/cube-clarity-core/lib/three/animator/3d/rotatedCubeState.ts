@@ -9,15 +9,15 @@ import {
   getRotateNotationDetail,
   type RotateTo,
   type RubikCubeMoveNotation,
-} from "../../MoveNotation";
-import { RUBIK_CUBE_FACE_CUBE_PIECE_MAP } from "./faces";
+} from "../../../rubikcube/mod.ts";
+import { RUBIK_CUBE_FACE_CUBE_PIECE_MAP } from "./faces.ts";
 import {
   cloneCubePieceState,
   type RubikCubePieceState,
-} from "../RubikCubeAnimator";
+} from "../RubikCubeAnimator.ts";
 import { enumerate, flatMap, map } from "@core/iterutil/pipe";
-import { RUBIK_CUBE_PIECES } from "../../../RubikCubeModel";
-import { rotateByWorldAxis } from "./helper";
+import { RUBIK_CUBE_PIECES } from "../../RubikCubeModel.ts";
+import { rotateByWorldAxis } from "./helper.ts";
 
 export const ROTATION_INFORMATIONS = {
   clockwise: {

@@ -7,7 +7,7 @@ import { Loading } from "@components/Loading/Loading";
 
 import styles from "./Home.module.css";
 import { SingleRubikCubeDisplay } from "@components/RubikCube/RubikCube";
-import { RubikCube } from "@lib/rubikcube/RubikCube/RubikCube";
+import { RubikCube } from "@cube-clarity/core";
 
 const StartAnimationPage = ({
   displaying,

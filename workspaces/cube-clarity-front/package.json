@@ -23,7 +23,8 @@
     "react-dom": "^19.0.0",
     "react-router": "^7.1.5",
     "react-transition-group": "^4.4.5",
-    "three": "^0.172.0"
+    "three": "^0.172.0",
+    "@cube-clarity/core": "workspace:*"
   },
   "devDependencies": {
     "@eslint/js": "^9.13.0",

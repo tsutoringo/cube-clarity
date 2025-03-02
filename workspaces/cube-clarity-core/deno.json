@@ -1,0 +1,30 @@
+{
+  "name": "@cube-clarity/core",
+  "exports": {
+    ".": "./lib/mod.ts",
+    "./rubikcube": "./lib/rubikcube/mod.ts"
+  },
+  "tasks": {
+    "front:dev": "deno run --watch=./lib/mod.ts --watch-exclude=\"vite.config.ts.timestamp-*.mjs\" -A --node-modules-dir npm:vite build",
+    "build": "deno run -A --node-modules-dir npm:vite build",
+    "preview": "deno run -A --node-modules-dir npm:vite preview",
+    "serve": "deno run --allow-net --allow-read jsr:@std/http@1/file-server dist/"
+  },
+  "compilerOptions": {
+    "lib": [
+      "ES2020",
+      "DOM",
+      "DOM.Iterable"
+    ]
+  },
+  "imports": {
+    "@core/iterutil": "jsr:@core/iterutil@^0.9.0",
+    "@core/pipe": "jsr:@core/pipe@^0.4.0",
+    "@deno/vite-plugin": "npm:@deno/vite-plugin@^1.0.4",
+    "@result/result": "jsr:@result/result@^1.1.1",
+    "@std/encoding": "jsr:@std/encoding@^1.0.7",
+    "vite": "npm:vite@^6.1.1",
+    "vitest": "npm:vitest@^3.0.7",
+    "vite-plugin-dts": "npm:vite-plugin-dts@^4.5.1"
+  }
+}

@@ -3,10 +3,7 @@ import { HorizontalRule } from "@components/HorizontalRule/HorizontalRule.tsx";
 import { SingleRubikCubeDisplay } from "@components/RubikCube/RubikCube.tsx";
 import { BottomDrawer } from "@layouts/BottomDrawer/BottomDrawer.tsx";
 import { Screen } from "@layouts/Screen/Screen.tsx";
-import {
-  parseMoveNotation,
-  RubikCube,
-} from "@lib/rubikcube/RubikCube/RubikCube.ts";
+import { parseMoveNotation, RubikCube } from "@cube-clarity/core";
 import styles from "./Playground.module.css";
 import { drop, zip } from "@core/iterutil";
 

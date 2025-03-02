@@ -1,5 +1,4 @@
-import type { RubikCube } from "@lib/rubikcube/RubikCube/RubikCube";
-import type { RubikCubeMoveNotation } from "@lib/rubikcube/RubikCube/MoveNotation";
+import type { RubikCube, RubikCubeMoveNotation } from "@cube-clarity/core";
 import { Canvas } from "@react-three/fiber";
 import { useContext, useEffect, useMemo, useRef } from "react";
 import {

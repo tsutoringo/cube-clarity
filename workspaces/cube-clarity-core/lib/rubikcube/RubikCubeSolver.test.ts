@@ -1,7 +1,11 @@
 import { describe, expect, it } from "vitest";
-import { parseMoveNotation, type RubikCubeMoveNotation } from "./MoveNotation";
-import { RubikCube } from "./RubikCube";
-import { solveRubikCube } from "./RubikCubeSolver";
+import {
+  parseMoveNotation,
+  type RubikCubeMoveNotation,
+} from "./MoveNotation.ts";
+import { RubikCube } from "./RubikCube.ts";
+import { solveRubikCube } from "./RubikCubeSolver.ts";
+
 describe.each(
   [
     [

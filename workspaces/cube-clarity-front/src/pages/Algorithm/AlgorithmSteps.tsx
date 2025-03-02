@@ -1,11 +1,10 @@
-import type { RubikCube } from "@lib/rubikcube/RubikCube/RubikCube";
+import { type RubikCube, solveRubikCube } from "@cube-clarity/core";
 import { type ReactNode, useMemo, useRef, useState } from "react";
 import { CSSTransition } from "react-transition-group";
 import styles from "./AlgorithmStep.module.css";
 import { BottomDrawer } from "@layouts/BottomDrawer/BottomDrawer";
 import { SingleRubikCubeDisplay } from "@components/RubikCube/RubikCube";
 import { HorizontalRule } from "@components/HorizontalRule/HorizontalRule";
-import { solveRubikCube } from "@lib/rubikcube/RubikCube/RubikCubeSolver";
 import { Button } from "@components/Button/Button";
 import { CubeGuide } from "@components/CubeGuide/CubeGuide";
 

@@ -3,7 +3,7 @@ import { Home } from "./Home/Home";
 import { Screen } from "@layouts/Screen/Screen";
 import { AlgorithmSteps } from "./Algorithm/AlgorithmSteps";
 import { useLocation, useNavigate } from "react-router";
-import { RubikCube } from "@lib/rubikcube/RubikCube/RubikCube";
+import { RubikCube } from "@cube-clarity/core";
 
 export type ScreenStatus = "none" | "start" | "scan" | "load";
 export type RubikCubeData = null;

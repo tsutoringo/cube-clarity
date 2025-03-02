@@ -1,9 +1,6 @@
 import type { HTMLAttributes } from "react";
 import styles from "./RubikCube.module.css";
-import type {
-  RubikCube,
-  RubikCubeMoveNotation,
-} from "@lib/rubikcube/RubikCube/RubikCube";
+import type { RubikCube, RubikCubeMoveNotation } from "@cube-clarity/core";
 import classNames from "classnames";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
