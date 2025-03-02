@@ -45,7 +45,7 @@ export const AlgorithmSteps = ({
         nodeRef={stepsRef}
         className={styles.algorithmStep}
         viewBox={
-          <BottomDrawer.ViewBox>
+          <BottomDrawer.ViewBox className={styles.viewBox}>
             <SingleRubikCubeDisplay
               animation={{
                 moves: currentStepInformation.algorithm.moves,
