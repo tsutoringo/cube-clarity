@@ -5,7 +5,7 @@
     "./rubikcube": "./lib/rubikcube/mod.ts"
   },
   "tasks": {
-    "front:dev": "deno run --watch=./lib/mod.ts --watch-exclude=\"vite.config.ts.timestamp-*.mjs\" -A --node-modules-dir npm:vite build",
+    "front:dev": "deno run -A --node-modules-dir npm:vite build",
     "build": "deno run -A --node-modules-dir npm:vite build",
     "preview": "deno run -A --node-modules-dir npm:vite preview",
     "serve": "deno run --allow-net --allow-read jsr:@std/http@1/file-server dist/"

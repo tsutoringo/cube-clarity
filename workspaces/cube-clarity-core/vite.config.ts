@@ -7,6 +7,7 @@ export default defineConfig({
     tsconfigPath: "./tsconfig.lib.json",
   })],
   build: {
+    watch: {},
     lib: {
       entry: {
         "mod": "./lib/mod.ts",
