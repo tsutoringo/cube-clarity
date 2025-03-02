@@ -33,6 +33,10 @@
     }
   }
 
+  .view-box {
+    background-color: black;
+  }
+
   .footer {
     display: flex;
 
