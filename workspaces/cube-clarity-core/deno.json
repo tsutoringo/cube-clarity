@@ -11,11 +11,6 @@
     "serve": "deno run --allow-net --allow-read jsr:@std/http@1/file-server dist/"
   },
   "compilerOptions": {
-    "lib": [
-      "ES2020",
-      "DOM",
-      "DOM.Iterable"
-    ]
   },
   "imports": {
     "@core/iterutil": "jsr:@core/iterutil@^0.9.0",
