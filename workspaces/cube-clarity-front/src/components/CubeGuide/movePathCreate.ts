@@ -10,8 +10,6 @@ import leftCircle from "./images/arrows/left_Circle.svg";
 import type { RubikCubeMoveNotation } from "@cube-clarity/core";
 import { Euler, MathUtils, Vector3 } from "three";
 
-import twoRad from "./images/two_rad.svg";
-
 export const createMovePath = (move: RubikCubeMoveNotation) => {
   let imagePath = "";
   const position = new Vector3();
@@ -135,6 +133,6 @@ export const createMovePath = (move: RubikCubeMoveNotation) => {
     rotation,
     size,
     spriteRotation,
-    is180Rotate
+    is180Rotate,
   };
 };

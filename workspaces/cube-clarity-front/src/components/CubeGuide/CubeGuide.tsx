@@ -19,7 +19,7 @@ import { moveInvert } from "./moveInvert";
 import { createMovePath } from "./movePathCreate";
 import { Group } from "three";
 
-import twoRad from "./images/two_rad.svg"
+import twoRad from "./images/two_rad.svg";
 
 type MoveGuideElement = {
   kind: "move";
@@ -154,7 +154,7 @@ export const CubeGuide = ({
                   rotation={rotation}
                 >
                   <Arrow move={guideElement.move} />
-                  {createMovePath(guideElement.move).is180Rotate && <TwoRad/>}
+                  {createMovePath(guideElement.move).is180Rotate && <TwoRad />}
                 </RubikCubeThreeGroup>
               );
           }
@@ -211,11 +211,11 @@ const TwoRad = () => {
     const material = new MeshBasicMaterial({ map: texture, transparent: true });
     const sprite = new Mesh(geometry, material);
 
-    const position = new Vector3()
-    const rotation = new Euler()
+    const position = new Vector3();
+    const rotation = new Euler();
 
     sprite.position.copy(
-      position.set( 2.5, 2.7, 1.6 )
+      position.set(2.5, 2.7, 1.6),
     );
 
     const spriteGroup = new Group();
@@ -223,15 +223,12 @@ const TwoRad = () => {
       rotation.set(
         0,
         MathUtils.degToRad(20),
-        0
-      )
+        0,
+      ),
     );
 
     spriteGroup.add(sprite);
     return spriteGroup;
-
-
-
   }, []);
 
   useEffect(() => {
@@ -243,4 +240,4 @@ const TwoRad = () => {
   }, []);
 
   return null;
-}
+};
