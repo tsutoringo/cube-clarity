@@ -126,11 +126,13 @@ export const createMovePath = (move: RubikCubeMoveNotation) => {
     size.width = 2.5;
     size.height = 2.5;
   }
+  const is180Rotate = move.endsWith("2");
   return {
     path: imagePath,
     position,
     rotation,
     size,
     spriteRotation,
+    is180Rotate,
   };
 };
