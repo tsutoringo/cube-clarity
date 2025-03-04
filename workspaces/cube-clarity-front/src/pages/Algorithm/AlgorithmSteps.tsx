@@ -7,6 +7,22 @@ import { SingleRubikCubeDisplay } from "@components/RubikCube/RubikCube";
 import { HorizontalRule } from "@components/HorizontalRule/HorizontalRule";
 import { Button } from "@components/Button/Button";
 import { CubeGuide } from "@components/CubeGuide/CubeGuide";
+import { CubeHint } from "@components/CubeHint/CubeHint";
+import corner from "./images/corner.png";
+import edge from "./images/edge.png";
+import firstLayer from "./images/first_layer.png";
+import matchCorner from "./images/match_corner.png";
+import matchCrossColor from "./images/match_cross_color.png";
+import matchCrossColorAdjacent from "./images/match_cross_color_adjacent.png";
+import matchCrossColorOpposite from "./images/match_cross_color_opposite.png";
+import secondLayer from "./images/second_layer.png";
+import solveCube from "./images/solve_cube.png";
+import whiteCenter from "./images/white_center.png";
+import whiteCross from "./images/white_cross.png";
+import yellowCross from "./images/yellow_cross.png";
+import yellowCrossDot from "./images/yellow_cross_dot.png";
+import yellowCrossLLetter from "./images/yellow_cross_L_letter.png";
+import yellowCrossMinus from "./images/yellow_cross_minus.png";
 
 type StepIndex = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
@@ -128,13 +144,14 @@ const stepInformations = (
   switch (step) {
     case 0:
       return {
-        title: "ステップ1: 白い十字を作る",
+        title: <>ステップ1: <CubeHint word="白い十字" imageSrc={whiteCross}/>を作る</>,
         description: (
           <>
             <p>
-              白センター?を上にして持ち、白い部分のエッジ?を見つけて下の層へ持っていく。
+              <CubeHint word="白センター" imageSrc={whiteCenter} />を上にして持ち、白い部分の
+              <CubeHint word="エッジ" imageSrc={edge} />を見つけて下の層へ持っていく。
             </p>
-            <p>エッジ?が同じ色のセンターの下になるように下の層を回す。</p>
+            <p><CubeHint word="エッジ" imageSrc={edge}/>が同じ色のセンターの下になるように下の層を回す。</p>
             <p>その面を回転させて、エッジの部分を上に持っていく。</p>
           </>
         ),
@@ -142,11 +159,11 @@ const stepInformations = (
       };
     case 1:
       return {
-        title: "ステップ2: 白い面を完成させる",
+        title: <>ステップ2: <CubeHint word="白い面" imageSrc={firstLayer}/>を完成させる</>,
         description: (
           <>
             <p>
-              白が含まれるコーナーピースを探し、正しい位置に配置する。例えば「白・青・赤」のコーナーピースがあれば、青と赤のセンターの間に配置する。
+              白が含まれる<CubeHint word="コーナーピース" imageSrc={corner}/>を探し、正しい位置に配置する。例えば「白・青・赤」のコーナーピースがあれば、青と赤のセンターの間に配置する。
             </p>
             <p>
               コーナーピースを適切な方法で白い面に持っていく。もしすでに白い面にあるが位置が間違っている場合は、一度下の層に出してから再配置する。
@@ -157,7 +174,7 @@ const stepInformations = (
       };
     case 2:
       return {
-        title: "ステップ3: 第二層を完成させる",
+        title: <>ステップ3: <CubeHint word="第二層" imageSrc={secondLayer}/>を完成させる</>,
         description: (
           <>
             <p>
@@ -173,7 +190,7 @@ const stepInformations = (
       };
     case 3:
       return {
-        title: "ステップ4: 黄色の十字を作る",
+        title: <>ステップ4: <CubeHint word="黄色の十字" imageSrc={yellowCross}/>を作る</>,
         description: (
           <>
             <p>
@@ -183,9 +200,9 @@ const stepInformations = (
               ここで3つのパターンがある。
             </p>
             <ol>
-              <li>「線」  :1回のアルゴリズムで完成する。</li>
-              <li>「L字」 :2回のアルゴリズムで完成する。</li>
-              <li>「点」  :1回アルゴリズムを実行し、黄色の面を1、2回回してからもう一度実行する。</li>
+              <li><CubeHint word="「線」" imageSrc={yellowCrossMinus}/>  :1回のアルゴリズムで完成する。</li>
+              <li><CubeHint word="「L字」" imageSrc={yellowCrossLLetter}/> :2回のアルゴリズムで完成する。</li>
+              <li><CubeHint word="「点」" imageSrc={yellowCrossDot}/>  :1回アルゴリズムを実行し、黄色の面を1、2回回してからもう一度実行する。</li>
             </ol>
           </>
         ),
@@ -193,7 +210,7 @@ const stepInformations = (
       };
     case 4:
       return {
-        title: "ステップ5: クロスの色を揃える",
+        title: <>ステップ5: <CubeHint word="クロスの色" imageSrc={matchCrossColor}/>を揃える</>,
         description: (
           <>
             <p>
@@ -203,9 +220,9 @@ const stepInformations = (
               ここで2つのパターンがある。<br />
             </p>
             <ol>
-              <li>2つのエッジピースの色が隣り合っている場合 : <br />
+              <li>2つの<CubeHint word="エッジピースの色が隣り合っている" imageSrc={matchCrossColorAdjacent}/>場合 : <br />
               そのエッジピースを左側に配置し、アルゴリズムを実行する。</li>
-              <li>2つのエッジピースの色が向かい合っている場合 : <br />
+              <li>2つの<CubeHint word="エッジピースの色が向かい合っている" imageSrc={matchCrossColorOpposite}/>場合 : <br />
               アルゴリズムを実行してから、ステップ1と同じ手順を繰り返す。</li>
             </ol>
           </>
@@ -214,7 +231,7 @@ const stepInformations = (
       };
     case 5:
       return {
-        title: "ステップ6: コーナーを配置する",
+        title: <>ステップ6: <CubeHint word="コーナーを配置する" imageSrc={matchCorner}/></>,
         description: (
           <>
             <p>
@@ -230,7 +247,7 @@ const stepInformations = (
       };
     case 6:
       return {
-        title: "ステップ7: コーナーを揃える",
+        title: <>ステップ7: <CubeHint word="コーナーを揃える" imageSrc={solveCube}/></>,
         description: (
           <>
             <p>最後に黄色の面を揃えて、ルービックキューブを完成させます！</p>
