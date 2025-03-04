@@ -1,17 +1,26 @@
 import { moveImageList } from "./moveImageList";
 
 // 画像のインポート
-import upArrow from "./images/arrows/up_Arrows.svg";
-import downArrow from "./images/arrows/down_Arrow.svg";
-import leftArrow from "./images/arrows/left_Arrow.svg";
-import rightArrow from "./images/arrows/right_Arrow.svg";
-import rightCircle from "./images/arrows/right_Circle.svg";
-import leftCircle from "./images/arrows/left_Circle.svg";
+import upArrow from "./images/arrows/up_Arrows.svg?inline";
+import downArrow from "./images/arrows/down_Arrow.svg?inline";
+import leftArrow from "./images/arrows/left_Arrow.svg?inline";
+import rightArrow from "./images/arrows/right_Arrow.svg?inline";
+import rightCircle from "./images/arrows/right_Circle.svg?inline";
+import leftCircle from "./images/arrows/left_Circle.svg?inline";
 import type { RubikCubeMoveNotation } from "@cube-clarity/core";
-import { Euler, MathUtils, Vector3 } from "three";
+import { Euler, MathUtils, Texture, TextureLoader, Vector3 } from "three";
 
-export const createMovePath = (move: RubikCubeMoveNotation) => {
-  let imagePath = "";
+const GUIDE_ARROW_TEXTURE_REGISTRY = {
+  up:  new TextureLoader().load(upArrow),
+  down:  new TextureLoader().load(downArrow),
+  left: new TextureLoader().load(leftArrow),
+  right: new TextureLoader().load(rightArrow),
+  leftTurn: new TextureLoader().load(leftCircle),
+  rightTurn: new TextureLoader().load(rightCircle),
+} as const;
+
+export const getMoveGuideInformation = (move: RubikCubeMoveNotation) => {
+  let texture: Texture | null = null;
   const position = new Vector3();
   const rotation = new Euler();
   const spriteRotation = new Euler();
@@ -97,38 +106,38 @@ export const createMovePath = (move: RubikCubeMoveNotation) => {
       break;
   }
   if (moveImageList.up.includes(move)) {
-    imagePath = upArrow;
+    texture = GUIDE_ARROW_TEXTURE_REGISTRY.up;
     size.width = 1;
     size.height = 2.5;
   }
   if (moveImageList.down.includes(move)) {
-    imagePath = downArrow;
+    texture = GUIDE_ARROW_TEXTURE_REGISTRY.down;
     size.width = 1;
     size.height = 2.5;
   }
   if (moveImageList.left.includes(move)) {
-    imagePath = leftArrow;
+    texture = GUIDE_ARROW_TEXTURE_REGISTRY.left;
     size.width = 2.5;
     size.height = 1;
   }
   if (moveImageList.right.includes(move)) {
-    imagePath = rightArrow;
+    texture = GUIDE_ARROW_TEXTURE_REGISTRY.right;
     size.width = 2.5;
     size.height = 1;
   }
   if (moveImageList.leftTurn.includes(move)) {
-    imagePath = leftCircle;
+    texture = GUIDE_ARROW_TEXTURE_REGISTRY.leftTurn;
     size.width = 2.5;
     size.height = 2.5;
   }
   if (moveImageList.rightTurn.includes(move)) {
-    imagePath = rightCircle;
+    texture = GUIDE_ARROW_TEXTURE_REGISTRY.rightTurn;
     size.width = 2.5;
     size.height = 2.5;
   }
   const is180Rotate = move.endsWith("2");
   return {
-    path: imagePath,
+    texture,
     position,
     rotation,
     size,
