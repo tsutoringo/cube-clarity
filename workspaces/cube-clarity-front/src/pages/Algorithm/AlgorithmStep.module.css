@@ -40,6 +40,10 @@
   .footer {
     display: flex;
 
+    button {
+      color: white;
+    }
+
     .next-button {
       margin-left: auto;
     }
