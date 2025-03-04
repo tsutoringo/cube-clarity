@@ -13,10 +13,13 @@ import {
   OrthographicCamera,
   PlaneGeometry,
   TextureLoader,
+  Vector3,
 } from "three";
 import { moveInvert } from "./moveInvert";
 import { createMovePath } from "./movePathCreate";
 import { Group } from "three";
+
+import twoRad from "./images/two_rad.svg";
 
 type MoveGuideElement = {
   kind: "move";
@@ -151,6 +154,7 @@ export const CubeGuide = ({
                   rotation={rotation}
                 >
                   <Arrow move={guideElement.move} />
+                  {createMovePath(guideElement.move).is180Rotate && <TwoRad />}
                 </RubikCubeThreeGroup>
               );
           }
@@ -193,6 +197,47 @@ const Arrow = ({
       group.remove(sprite);
     };
   }, [move]);
+
+  return null;
+};
+
+const TwoRad = () => {
+  const group = useContext(RubikCubeGroupContext);
+  const sprite = useMemo(() => {
+    const textureLoader = new TextureLoader();
+
+    const texture = textureLoader.load(twoRad);
+    const geometry = new PlaneGeometry(1.75, 1.2);
+    const material = new MeshBasicMaterial({ map: texture, transparent: true });
+    const sprite = new Mesh(geometry, material);
+
+    const position = new Vector3();
+    const rotation = new Euler();
+
+    sprite.position.copy(
+      position.set(2.5, 2.7, 1.6),
+    );
+
+    const spriteGroup = new Group();
+    spriteGroup.rotation.copy(
+      rotation.set(
+        0,
+        MathUtils.degToRad(20),
+        0,
+      ),
+    );
+
+    spriteGroup.add(sprite);
+    return spriteGroup;
+  }, []);
+
+  useEffect(() => {
+    group.add(sprite);
+
+    return () => {
+      group.remove(sprite);
+    };
+  }, []);
 
   return null;
 };
