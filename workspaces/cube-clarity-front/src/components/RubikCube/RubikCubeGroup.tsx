@@ -1,18 +1,31 @@
 import {
-  generateRubikCubeCubeModel,
   type RubikCube,
   RubikCubeAnimator,
-  type RubikCubeGroup,
+  RubikCubeGroup,
   type RubikCubeMoveNotation,
+  type RubikCubePiece,
 } from "@cube-clarity/core";
 
 import { useThree } from "@react-three/fiber";
 import { createContext, type ReactNode, useEffect, useMemo } from "react";
-import { Euler, Vector3, type Vector3Like } from "three";
+import { Euler, type Mesh, Vector3, type Vector3Like } from "three";
 
-export const RubikCubeGroupContext = createContext<RubikCubeGroup>(
-  "nuaall" as never,
-);
+export const RubikCubeGroupContext = createContext<RubikCubeGroup>(null!);
+export class RubikCubeGroupWithIndex extends RubikCubeGroup {
+  static generateRubikCubeGroupWithIndex(
+    rubikCube: RubikCube,
+    index: number,
+  ): RubikCubeGroupWithIndex {
+    return new RubikCubeGroupWithIndex(
+      RubikCubeGroup.generatePieceMeshes(rubikCube),
+      index,
+    );
+  }
+
+  constructor(cubePieces: Record<RubikCubePiece, Mesh>, public index: number) {
+    super(cubePieces);
+  }
+}
 
 export const RubikCubeThreeGroup = ({
   rubikCube,
@@ -20,6 +33,7 @@ export const RubikCubeThreeGroup = ({
   position = new Vector3(0, 0, 0),
   rotation = new Euler(0, 0, 0),
   children,
+  index,
 }: {
   rubikCube: RubikCube;
   animation?: {
@@ -29,10 +43,13 @@ export const RubikCubeThreeGroup = ({
   position?: Vector3Like;
   rotation?: Euler;
   children?: ReactNode;
+  index?: number;
 }) => {
   const { scene, camera, gl } = useThree();
   const group = useMemo(() => {
-    return generateRubikCubeCubeModel(rubikCube);
+    return index == undefined
+      ? RubikCubeGroup.generateRubikCubeGroup(rubikCube)
+      : RubikCubeGroupWithIndex.generateRubikCubeGroupWithIndex(rubikCube, index);
   }, [rubikCube]);
 
   useEffect(() => {

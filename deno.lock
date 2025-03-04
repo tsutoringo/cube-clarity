@@ -1,6 +1,13 @@
 {
   "version": "4",
   "specifiers": {
+    "jsr:@core/iterutil@0.9": "0.9.0",
+    "jsr:@core/pipe@0.4": "0.4.0",
+    "jsr:@result/result@^1.1.0": "1.1.1",
+    "jsr:@result/result@^1.1.1": "1.1.1",
+    "jsr:@std/assert@1": "1.0.11",
+    "jsr:@std/encoding@^1.0.7": "1.0.7",
+    "jsr:@std/internal@^1.0.5": "1.0.5",
     "npm:@deno/vite-plugin@1": "1.0.4_vite@6.2.0__@types+node@22.13.9_@types+node@22.13.9",
     "npm:@deno/vite-plugin@^1.0.4": "1.0.4_vite@6.2.0__@types+node@22.13.9_@types+node@22.13.9",
     "npm:@eslint/js@^9.13.0": "9.21.0",
@@ -45,6 +52,29 @@
     "npm:vite@^6.1.1": "6.2.0_@types+node@22.13.9",
     "npm:vitest@^3.0.5": "3.0.7_@types+node@22.13.9_vite@6.2.0__@types+node@22.13.9",
     "npm:vitest@^3.0.7": "3.0.7_@types+node@22.13.9_vite@6.2.0__@types+node@22.13.9"
+  },
+  "jsr": {
+    "@core/iterutil@0.9.0": {
+      "integrity": "29a4ba1af8e79c2d63d96df4948bb995afb5256568401711ae97a1ef06cc67a8"
+    },
+    "@core/pipe@0.4.0": {
+      "integrity": "e05fa7c582297de7954601755ef2eb7e77dacef226c04c7c9542a2ecd21eb048"
+    },
+    "@result/result@1.1.1": {
+      "integrity": "afadee7533965fb4ccba265d89061293f76127e7a10e754f949a72813edbe32d"
+    },
+    "@std/assert@1.0.11": {
+      "integrity": "2461ef3c368fe88bc60e186e7744a93112f16fd110022e113a0849e94d1c83c1",
+      "dependencies": [
+        "jsr:@std/internal"
+      ]
+    },
+    "@std/encoding@1.0.7": {
+      "integrity": "f631247c1698fef289f2de9e2a33d571e46133b38d042905e3eac3715030a82d"
+    },
+    "@std/internal@1.0.5": {
+      "integrity": "54a546004f769c1ac9e025abd15a76b6671ddc9687e2313b67376125650dc7ba"
+    }
   },
   "npm": {
     "@ampproject/remapping@2.3.0": {
