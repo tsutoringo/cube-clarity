@@ -18,8 +18,8 @@ export const CubeHint: React.FC<HintProps> = ({ word, imageSrc }) => {
         {word}
       </span>
 
-      <Tooltip id={tooltipId} place="top" style={{zIndex: 2}}>
-        <img src={imageSrc} alt={word} width="100px"/>
+      <Tooltip id={tooltipId} place="top" style={{ zIndex: 2 }}>
+        <img src={imageSrc} alt={word} width="100px" />
       </Tooltip>
     </>
   );
