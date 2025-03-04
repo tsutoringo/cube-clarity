@@ -41,6 +41,7 @@ def detect_face():
   
 @app.route("/getface")
 def get_face():
+    global current_status
     while(1):
         if current_status == 0:
             return Response(None,status = 404)
@@ -48,7 +49,7 @@ def get_face():
             return Response(None,status = 425)
         elif current_status == 2:
             break
-
+    current_status == 0
     cube_state = load_cube_state()
     response = make_response(json.dumps(cube_state, ensure_ascii=False, indent=6))
     response.headers['Content-Type'] = 'application/json'
