@@ -16,7 +16,7 @@ import {
   Vector3,
 } from "three";
 import { moveInvert } from "./moveInvert";
-import { createMovePath } from "./movePathCreate";
+import { getMoveGuideInformation } from "./moveGuideInformation";
 import { Group } from "three";
 
 import twoRad from "./images/two_rad.svg";
@@ -154,7 +154,7 @@ export const CubeGuide = ({
                   rotation={rotation}
                 >
                   <Arrow move={guideElement.move} />
-                  {createMovePath(guideElement.move).is180Rotate && <TwoRad />}
+                  {getMoveGuideInformation(guideElement.move).is180Rotate && <TwoRad />}
                 </RubikCubeThreeGroup>
               );
           }
@@ -171,20 +171,18 @@ const Arrow = ({
 }) => {
   const group = useContext(RubikCubeGroupContext);
   const sprite = useMemo(() => {
-    const textureLoader = new TextureLoader();
-
     // 座標とパスを取得
-    const paths = createMovePath(move);
+    const guideArrowInformation = getMoveGuideInformation(move);
     // パスからthreeオブジェクトを作成してSpriteとしてreturnする
-    const texture = textureLoader.load(paths.path);
-    const geometry = new PlaneGeometry(paths.size.width, paths.size.height);
-    const material = new MeshBasicMaterial({ map: texture, transparent: true });
+
+    const geometry = new PlaneGeometry(guideArrowInformation.size.width, guideArrowInformation.size.height);
+    const material = new MeshBasicMaterial({ map: guideArrowInformation.texture, transparent: true });
     const sprite = new Mesh(geometry, material);
 
-    sprite.rotation.copy(paths.spriteRotation);
-    sprite.position.copy(paths.position);
+    sprite.rotation.copy(guideArrowInformation.spriteRotation);
+    sprite.position.copy(guideArrowInformation.position);
     const spriteGroup = new Group();
-    spriteGroup.rotation.copy(paths.rotation);
+    spriteGroup.rotation.copy(guideArrowInformation.rotation);
     spriteGroup.add(sprite);
 
     return spriteGroup;
