@@ -48,6 +48,10 @@ export const AlgorithmSteps = ({
     setTimeout(() => setCurrentStep(step));
   };
 
+  const handleRubikCubeGroup = (index: number) => {
+    setCurrentProgress(index / 2);
+  };
+
   return (
     <CSSTransition
       in={displaying}
@@ -97,6 +101,7 @@ export const AlgorithmSteps = ({
                 ? "このステップは飛ばしてもいいみたいです！"
                 : (
                   <CubeGuide
+                    onRubikCubeClick={handleRubikCubeGroup}
                     baseCube={currentStepInformation.algorithm.startRubikCube}
                     moves={currentStepInformation.algorithm.moves}
                   />

@@ -4,7 +4,7 @@ import {
   RUBIK_CUBE_PIECES,
   type RubikCubeGroup,
   type RubikCubePiece,
-} from "../RubikCubeModel.ts";
+} from "../RubikCubeGroup.ts";
 import type { RubikCubeMoveNotation } from "../../rubikcube/mod.ts";
 import { MoveNotationTween } from "./MoveNotationTween.ts";
 

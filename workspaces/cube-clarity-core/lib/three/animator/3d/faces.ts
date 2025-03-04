@@ -2,7 +2,7 @@ import type {
   RubikCubeCenterPiece,
   RubikCubeCornerPiece,
   RubikCubeEdgePiece,
-} from "../../RubikCubeModel.ts";
+} from "../../RubikCubeGroup.ts";
 import type { RubikCubeFaceName } from "../../../rubikcube/mod.ts";
 
 // deno-fmt-ignore

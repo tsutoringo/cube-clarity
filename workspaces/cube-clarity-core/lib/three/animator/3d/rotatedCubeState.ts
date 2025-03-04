@@ -16,7 +16,7 @@ import {
   type RubikCubePieceState,
 } from "../RubikCubeAnimator.ts";
 import { enumerate, flatMap, map } from "@core/iterutil/pipe";
-import { RUBIK_CUBE_PIECES } from "../../RubikCubeModel.ts";
+import { RUBIK_CUBE_PIECES } from "../../RubikCubeGroup.ts";
 import { rotateByWorldAxis } from "./helper.ts";
 
 export const ROTATION_INFORMATIONS = {

@@ -389,6 +389,52 @@ export const RUBIK_CUBE_PIECE_NAMES = Object.keys(
 ) as RubikCubePiece[];
 
 export class RubikCubeGroup extends Group {
+  static generatePieceMeshes(
+    rubikCube: RubikCube,
+  ): Record<RubikCubePiece, Mesh> {
+    const cubePieces = {} as Record<RubikCubePiece, Mesh>;
+
+    for (const [name, cubeInfo] of Object.entries(RUBIK_CUBE_PIECES)) {
+      const materials = [
+        new MeshBasicMaterial({ color: 0x999999 }),
+        new MeshBasicMaterial({ color: 0x999999 }),
+        new MeshBasicMaterial({ color: 0x999999 }),
+        new MeshBasicMaterial({ color: 0x999999 }),
+        new MeshBasicMaterial({ color: 0x999999 }),
+        new MeshBasicMaterial({ color: 0x999999 }),
+      ];
+
+      for (const { flat, cubeFace } of cubeInfo.mapping) {
+        materials[cubeFace].color.setHex(
+          rubikCubeFaceColorToHex(
+            rubikCube.cubeState[flat[0]][flat[1]][flat[2]],
+          ),
+        );
+      }
+
+      const cube = new Mesh(
+        new BoxGeometry(1, 1, 1),
+        materials,
+      );
+
+      cube.position.set(
+        cubeInfo.position[0],
+        cubeInfo.position[1],
+        cubeInfo.position[2],
+      );
+
+      cubePieces[name as RubikCubePiece] = cube;
+    }
+
+    return cubePieces;
+  }
+
+  static generateRubikCubeGroup(rubikCube: RubikCube): RubikCubeGroup {
+    return new RubikCubeGroup(
+      RubikCubeGroup.generatePieceMeshes(rubikCube),
+    );
+  }
+
   constructor(
     public readonly cubePieces: Record<RubikCubePiece, Mesh>,
   ) {
@@ -399,41 +445,3 @@ export class RubikCubeGroup extends Group {
     }
   }
 }
-
-export const generateRubikCubeCubeModel = (rubikCube: RubikCube) => {
-  const cubePieces = {} as Record<RubikCubePiece, Mesh>;
-
-  for (const [name, cubeInfo] of Object.entries(RUBIK_CUBE_PIECES)) {
-    const materials = [
-      new MeshBasicMaterial({ color: 0x999999 }),
-      new MeshBasicMaterial({ color: 0x999999 }),
-      new MeshBasicMaterial({ color: 0x999999 }),
-      new MeshBasicMaterial({ color: 0x999999 }),
-      new MeshBasicMaterial({ color: 0x999999 }),
-      new MeshBasicMaterial({ color: 0x999999 }),
-    ];
-
-    for (const { flat, cubeFace } of cubeInfo.mapping) {
-      materials[cubeFace].color.setHex(
-        rubikCubeFaceColorToHex(
-          rubikCube.cubeState[flat[0]][flat[1]][flat[2]],
-        ),
-      );
-    }
-
-    const cube = new Mesh(
-      new BoxGeometry(1, 1, 1),
-      materials,
-    );
-
-    cube.position.set(
-      cubeInfo.position[0],
-      cubeInfo.position[1],
-      cubeInfo.position[2],
-    );
-
-    cubePieces[name as RubikCubePiece] = cube;
-  }
-
-  return new RubikCubeGroup(cubePieces);
-};

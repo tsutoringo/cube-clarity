@@ -1,8 +1,13 @@
-import type { RubikCube, RubikCubeMoveNotation } from "@cube-clarity/core";
+import type {
+  RubikCube,
+  RubikCubeGroup,
+  RubikCubeMoveNotation,
+} from "@cube-clarity/core";
 import { Canvas } from "@react-three/fiber";
-import { useContext, useEffect, useMemo, useRef } from "react";
+import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import {
   RubikCubeGroupContext,
+  RubikCubeGroupWithIndex,
   RubikCubeThreeGroup,
 } from "@components/RubikCube/RubikCubeGroup";
 import {
@@ -20,6 +25,7 @@ import { getMoveGuideInformation } from "./moveGuideInformation";
 import { Group } from "three";
 
 import twoRad from "./images/two_rad.svg";
+import { RaycasterForRubikCubeGroup } from "@components/RubikCube/RubikCubeGroupRaycaster";
 
 type MoveGuideElement = {
   kind: "move";
@@ -37,16 +43,25 @@ type GuideElement = MoveGuideElement | CubeGuideElement;
 const GAP = 6;
 const PADDING = 6;
 
+const DEFAULT_CUBE_ROTATION = new Euler(
+  MathUtils.degToRad(10),
+  -MathUtils.degToRad(20),
+  0,
+);
+
 export const CubeGuide = ({
   baseCube,
   moves,
+  onRubikCubeClick,
 }: {
   baseCube: RubikCube;
   moves: RubikCubeMoveNotation[];
+  onRubikCubeClick?: (index: number) => void;
 }) => {
-  if (moves.length === 0) return;
-
   const canvasElement = useRef<HTMLCanvasElement>(null);
+  const [currentCursor, setCurrentCursor] = useState<"pointer" | "default">(
+    "pointer",
+  );
 
   const camera = useMemo(() => {
     return new OrthographicCamera();
@@ -105,11 +120,19 @@ export const CubeGuide = ({
 
   const canvasHeight = (Math.ceil(guides.length / 6) * GAP + PADDING) * 12.8;
 
-  const rotation = new Euler(
-    MathUtils.degToRad(10),
-    -MathUtils.degToRad(20),
-    0,
-  );
+  const onRubikCubeGroupClick = (rubikCubeGroup: RubikCubeGroup | null) => {
+    if (rubikCubeGroup instanceof RubikCubeGroupWithIndex) {
+      onRubikCubeClick?.(rubikCubeGroup.index);
+    }
+  };
+
+  const onMousemove = (rubikCubeGroup: RubikCubeGroup | null) => {
+    if (rubikCubeGroup == null) {
+      setCurrentCursor("default");
+    } else {
+      setCurrentCursor("pointer");
+    }
+  };
 
   return (
     <div
@@ -121,7 +144,14 @@ export const CubeGuide = ({
       <Canvas
         camera={camera}
         ref={canvasElement}
+        style={{
+          cursor: currentCursor,
+        }}
       >
+        <RaycasterForRubikCubeGroup
+          onClick={onRubikCubeGroupClick}
+          onMousemove={onMousemove}
+        />
         {guides.map((guideElement, index) => {
           const x = index % 6 * GAP;
           const y = -(Math.floor(index / 6) * GAP + PADDING);
@@ -131,6 +161,7 @@ export const CubeGuide = ({
               return (
                 <RubikCubeThreeGroup
                   key={index}
+                  index={index}
                   // キューブの表示
                   rubikCube={guideElement.cube}
                   position={{
@@ -138,7 +169,7 @@ export const CubeGuide = ({
                     y,
                     z: 0,
                   }}
-                  rotation={rotation}
+                  rotation={DEFAULT_CUBE_ROTATION}
                 />
               );
             case "move":
@@ -146,6 +177,7 @@ export const CubeGuide = ({
                 <RubikCubeThreeGroup
                   // ムーブキューブの表示
                   key={index + baseCubeIdentify}
+                  index={index}
                   rubikCube={guideElement.afterCube}
                   animation={{
                     moves: moveInvert(guideElement.move)?.moves,
@@ -156,7 +188,7 @@ export const CubeGuide = ({
                     y,
                     z: 0,
                   }}
-                  rotation={rotation}
+                  rotation={DEFAULT_CUBE_ROTATION}
                 >
                   <Arrow move={guideElement.move} />
                   {getMoveGuideInformation(guideElement.move).is180Rotate && (
