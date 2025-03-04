@@ -8,11 +8,11 @@ import rightArrow from "./images/arrows/right_Arrow.svg?inline";
 import rightCircle from "./images/arrows/right_Circle.svg?inline";
 import leftCircle from "./images/arrows/left_Circle.svg?inline";
 import type { RubikCubeMoveNotation } from "@cube-clarity/core";
-import { Euler, MathUtils, Texture, TextureLoader, Vector3 } from "three";
+import { Euler, MathUtils, type Texture, TextureLoader, Vector3 } from "three";
 
 const GUIDE_ARROW_TEXTURE_REGISTRY = {
-  up:  new TextureLoader().load(upArrow),
-  down:  new TextureLoader().load(downArrow),
+  up: new TextureLoader().load(upArrow),
+  down: new TextureLoader().load(downArrow),
   left: new TextureLoader().load(leftArrow),
   right: new TextureLoader().load(rightArrow),
   leftTurn: new TextureLoader().load(leftCircle),

@@ -101,7 +101,7 @@ export const CubeGuide = ({
   // キーに使用することで強制的にレンダリングさせる。
   const baseCubeIdentify = useMemo(() => {
     return crypto.randomUUID();
-  }, [ baseCube ]);
+  }, [baseCube]);
 
   const canvasHeight = (Math.ceil(guides.length / 6) * GAP + PADDING) * 12.8;
 
@@ -145,7 +145,7 @@ export const CubeGuide = ({
               return (
                 <RubikCubeThreeGroup
                   // ムーブキューブの表示
-                  key={index+baseCubeIdentify}
+                  key={index + baseCubeIdentify}
                   rubikCube={guideElement.afterCube}
                   animation={{
                     moves: moveInvert(guideElement.move)?.moves,
@@ -159,7 +159,9 @@ export const CubeGuide = ({
                   rotation={rotation}
                 >
                   <Arrow move={guideElement.move} />
-                  {getMoveGuideInformation(guideElement.move).is180Rotate && <TwoRad />}
+                  {getMoveGuideInformation(guideElement.move).is180Rotate && (
+                    <TwoRad />
+                  )}
                 </RubikCubeThreeGroup>
               );
           }
@@ -181,8 +183,14 @@ const Arrow = ({
     const guideArrowInformation = getMoveGuideInformation(move);
     // パスからthreeオブジェクトを作成してSpriteとしてreturnする
 
-    const geometry = new PlaneGeometry(guideArrowInformation.size.width, guideArrowInformation.size.height);
-    const material = new MeshBasicMaterial({ map: guideArrowInformation.texture, transparent: true });
+    const geometry = new PlaneGeometry(
+      guideArrowInformation.size.width,
+      guideArrowInformation.size.height,
+    );
+    const material = new MeshBasicMaterial({
+      map: guideArrowInformation.texture,
+      transparent: true,
+    });
     const sprite = new Mesh(geometry, material);
 
     sprite.rotation.copy(guideArrowInformation.spriteRotation);
