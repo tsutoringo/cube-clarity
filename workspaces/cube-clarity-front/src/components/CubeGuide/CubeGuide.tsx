@@ -98,6 +98,11 @@ export const CubeGuide = ({
     camera.position.y = y;
   }, [guides.length]);
 
+  // キーに使用することで強制的にレンダリングさせる。
+  const baseCubeIdentify = useMemo(() => {
+    return crypto.randomUUID();
+  }, [ baseCube ]);
+
   const canvasHeight = (Math.ceil(guides.length / 6) * GAP + PADDING) * 12.8;
 
   const rotation = new Euler(
@@ -140,7 +145,7 @@ export const CubeGuide = ({
               return (
                 <RubikCubeThreeGroup
                   // ムーブキューブの表示
-                  key={index}
+                  key={index+baseCubeIdentify}
                   rubikCube={guideElement.afterCube}
                   animation={{
                     moves: moveInvert(guideElement.move)?.moves,
@@ -170,6 +175,7 @@ const Arrow = ({
   move: RubikCubeMoveNotation;
 }) => {
   const group = useContext(RubikCubeGroupContext);
+
   const sprite = useMemo(() => {
     // 座標とパスを取得
     const guideArrowInformation = getMoveGuideInformation(move);
