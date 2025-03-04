@@ -48,7 +48,7 @@ def get_face():
             return Response(None,status = 425)
         elif current_status == 2:
             break
-
+    current_status == 0
     cube_state = load_cube_state()
     response = make_response(json.dumps(cube_state, ensure_ascii=False, indent=6))
     response.headers['Content-Type'] = 'application/json'
