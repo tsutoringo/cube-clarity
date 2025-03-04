@@ -41,6 +41,7 @@ def detect_face():
   
 @app.route("/getface")
 def get_face():
+    global current_status
     while(1):
         if current_status == 0:
             return Response(None,status = 404)
