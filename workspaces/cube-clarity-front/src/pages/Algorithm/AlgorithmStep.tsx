@@ -67,7 +67,6 @@ export const AlgorithmStep = ({
                 <Button
                   onClick={onClickNext}
                   type="button"
-                  className={styles.nextButton}
                 >
                   次のステップへ
                 </Button>
