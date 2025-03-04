@@ -46,11 +46,11 @@ def get_face():
             return Response(None,status = 425)
         elif current_status == 2:
             break
-     
+
     cube_state = load_cube_state()
     response = make_response(json.dumps(cube_state, ensure_ascii=False, indent=6))
     response.headers['Content-Type'] = 'application/json'
     return response
 
 if __name__ == "__main__":
-    app.run(port=8000, debug=True)
+    app.run(port=c, debug=True)
