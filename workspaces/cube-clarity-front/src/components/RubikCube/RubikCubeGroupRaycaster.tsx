@@ -1,10 +1,10 @@
 import { useThree } from "@react-three/fiber";
 import { useEffect } from "react";
-import { getMouseoverRubikCubeGroup, RubikCubeGroup } from "@cube-clarity/core";
+import { getMouseoverRubikCubeGroup, type RubikCubeGroup } from "@cube-clarity/core";
 
 export const RaycasterForRubikCubeGroup = ({
   onMousemove,
-  onClick
+  onClick,
 }: {
   onMousemove?: (rubikCubeGroup: RubikCubeGroup | null) => void;
   onClick?: (rubikCubeGroup: RubikCubeGroup | null) => void;

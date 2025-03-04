@@ -1,4 +1,8 @@
-import { RubikCube, RubikCubeGroup, RubikCubeMoveNotation } from "@cube-clarity/core";
+import type {
+  RubikCube,
+  RubikCubeGroup,
+  RubikCubeMoveNotation,
+} from "@cube-clarity/core";
 import { Canvas } from "@react-three/fiber";
 import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import {
@@ -48,14 +52,16 @@ const DEFAULT_CUBE_ROTATION = new Euler(
 export const CubeGuide = ({
   baseCube,
   moves,
-  onRubikCubeClick
+  onRubikCubeClick,
 }: {
   baseCube: RubikCube;
   moves: RubikCubeMoveNotation[];
   onRubikCubeClick?: (index: number) => void;
 }) => {
   const canvasElement = useRef<HTMLCanvasElement>(null);
-  const [currentCursor, setCurrentCursor] = useState<"pointer" | "default">("pointer");
+  const [currentCursor, setCurrentCursor] = useState<"pointer" | "default">(
+    "pointer",
+  );
 
   const camera = useMemo(() => {
     return new OrthographicCamera();
@@ -139,7 +145,7 @@ export const CubeGuide = ({
         camera={camera}
         ref={canvasElement}
         style={{
-          cursor: currentCursor
+          cursor: currentCursor,
         }}
       >
         <RaycasterForRubikCubeGroup

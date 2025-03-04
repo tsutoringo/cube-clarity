@@ -49,7 +49,10 @@ export const RubikCubeThreeGroup = ({
   const group = useMemo(() => {
     return index == undefined
       ? RubikCubeGroup.generateRubikCubeGroup(rubikCube)
-      : RubikCubeGroupWithIndex.generateRubikCubeGroupWithIndex(rubikCube, index);
+      : RubikCubeGroupWithIndex.generateRubikCubeGroupWithIndex(
+        rubikCube,
+        index,
+      );
   }, [rubikCube]);
 
   useEffect(() => {
