@@ -13,7 +13,7 @@ import {
   type RubikCubePieceState,
 } from "./RubikCubeAnimator.ts";
 import { flatMap, zip } from "@core/iterutil/pipe";
-import type { RubikCubePiece } from "../RubikCubeModel.ts";
+import type { RubikCubePiece } from "../RubikCubeGroup.ts";
 import { rotateByWorldAxis } from "./3d/helper.ts";
 
 export class MoveNotationTween {
