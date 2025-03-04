@@ -3,8 +3,10 @@ import json
 import threading
 import subprocess
 from flask import Flask, make_response ,Response
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 current_status = 0
 
@@ -53,4 +55,4 @@ def get_face():
     return response
 
 if __name__ == "__main__":
-    app.run(port=c, debug=True)
+    app.run(port=8000, debug=True)

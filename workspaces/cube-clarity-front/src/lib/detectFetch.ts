@@ -1,11 +1,12 @@
-import { Result } from '@result/result';
-import { CubeState } from '@cube-clarity/core';
+import { Result } from "@result/result";
+import type { CubeState } from "@cube-clarity/core";
 
 class ApiError extends Error {}
 
 export type DetectfaceResult = Result<CubeState, ApiError>;
 
-const sleep = (time: number) => new Promise((resolve) => setTimeout(resolve, time));
+const sleep = (time: number) =>
+  new Promise((resolve) => setTimeout(resolve, time));
 
 export const detectCube = async (): Promise<DetectfaceResult> => {
   const response = await fetch("//localhost:8000/detectface");
