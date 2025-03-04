@@ -3,8 +3,10 @@ import json
 import threading
 import subprocess
 from flask import Flask, make_response ,Response
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 current_status = 0
 
@@ -46,7 +48,7 @@ def get_face():
             return Response(None,status = 425)
         elif current_status == 2:
             break
-     
+
     cube_state = load_cube_state()
     response = make_response(json.dumps(cube_state, ensure_ascii=False, indent=6))
     response.headers['Content-Type'] = 'application/json'

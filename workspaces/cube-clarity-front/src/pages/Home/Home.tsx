@@ -41,10 +41,10 @@ const StartAnimationPage = ({
 
 const ScanPage = ({
   displaying,
-  onScanComplete,
+  onScanStart,
 }: {
   displaying: boolean;
-  onScanComplete: (rubikCubeData: unknown) => void;
+  onScanStart: () => void;
 }) => {
   const homepageRef = useRef<HTMLDivElement>(null);
   const viewingRubikCube = useMemo(() => RubikCube.default(), []);
@@ -78,7 +78,7 @@ const ScanPage = ({
           ルービックキューブを読み取って、<br />
           最速で解く方法を見つけよう
         </p>
-        <div className={styles.circle} onClick={() => onScanComplete({})}></div>
+        <div className={styles.circle} onClick={() => onScanStart()}></div>
       </div>
     </CSSTransition>
   );

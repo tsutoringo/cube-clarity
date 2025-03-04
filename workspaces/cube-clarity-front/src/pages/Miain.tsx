@@ -4,6 +4,7 @@ import { Screen } from "@layouts/Screen/Screen";
 import { AlgorithmSteps } from "./Algorithm/AlgorithmSteps";
 import { useLocation, useNavigate } from "react-router";
 import { RubikCube } from "@cube-clarity/core";
+import { detectCube } from "@lib/detectFetch";
 
 export type ScreenStatus = "none" | "start" | "scan" | "load";
 export type RubikCubeData = null;
@@ -22,20 +23,26 @@ export const Main = () => {
     setScreenStatus("start");
   }, []);
 
-  const setRubikCube = () => {
-    navigator({
-      hash: "AAAAAAERERERIiIiIiMzMzMzREREREVVVVVV",
-    });
-  };
-
-  const handleScanCRubikCubeComplete = (_rubikCube: RubikCubeData) => {
+  const handleStartScanCRubikCube = () => {
     setScreenStatus("load");
-    // 解法アルゴリズムを実行
 
-    setTimeout(() => {
-      setRubikCube();
+    // 解法アルゴリズムを実行
+    detectCube().then((reesult) => {
+      reesult.match(
+        (cubeState) => {
+          const cubeEncoded = new RubikCube(cubeState).encodeBase64();
+
+          navigator({
+            hash: cubeEncoded,
+          });
+        },
+        (error) => {
+          console.error(error);
+        },
+      );
+    }).finally(() => {
       setScreenStatus("scan");
-    }, 5000);
+    });
   };
 
   return (
@@ -53,7 +60,7 @@ export const Main = () => {
               />
               <Home.ScanPage
                 displaying={screenStatus === "scan"}
-                onScanComplete={(data) => handleScanCRubikCubeComplete(data)}
+                onScanStart={() => handleStartScanCRubikCube()}
               />
               <Home.LoadingPage
                 displaying={screenStatus === "load"}
