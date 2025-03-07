@@ -8,6 +8,7 @@
     "jsr:@std/assert@1": "1.0.11",
     "jsr:@std/encoding@^1.0.7": "1.0.7",
     "jsr:@std/internal@^1.0.5": "1.0.5",
+    "jsr:@tsutoringo/lint-css-modules@*": "1.0.0",
     "npm:@deno/vite-plugin@1": "1.0.4_vite@6.2.0__@types+node@22.13.9_@types+node@22.13.9",
     "npm:@deno/vite-plugin@^1.0.4": "1.0.4_vite@6.2.0__@types+node@22.13.9_@types+node@22.13.9",
     "npm:@eslint/js@^9.13.0": "9.21.0",
@@ -74,6 +75,13 @@
     },
     "@std/internal@1.0.5": {
       "integrity": "54a546004f769c1ac9e025abd15a76b6671ddc9687e2313b67376125650dc7ba"
+    },
+    "@tsutoringo/lint-css-modules@1.0.0": {
+      "integrity": "2077ac3c59fb0b98422f27f1c67bda9cfbb467aa907804af63e374900634da17",
+      "dependencies": [
+        "jsr:@core/iterutil",
+        "jsr:@core/pipe"
+      ]
     }
   },
   "npm": {

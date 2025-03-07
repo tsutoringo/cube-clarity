@@ -1,4 +1,5 @@
 import type { ComponentProps, ReactNode } from "react";
+// @ts-types="./BottomDrawerViewBox.module.css.d.ts"
 import styles from "./BottomDrawerViewBox.module.css";
 import classNames from "classnames";
 

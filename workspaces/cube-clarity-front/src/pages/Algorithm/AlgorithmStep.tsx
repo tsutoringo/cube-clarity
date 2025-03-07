@@ -1,13 +1,14 @@
 import { CSSTransition } from "react-transition-group";
 import { type ReactNode, useRef } from "react";
 
-import { HorizontalRule } from "@components/HorizontalRule/HorizontalRule";
-import { SingleRubikCubeDisplay } from "@components/RubikCube/RubikCube";
-import { BottomDrawer } from "@layouts/BottomDrawer/BottomDrawer";
+import { HorizontalRule } from "@components/HorizontalRule/HorizontalRule.tsx";
+import { SingleRubikCubeDisplay } from "@components/RubikCube/RubikCube.tsx";
+import { BottomDrawer } from "@layouts/BottomDrawer/BottomDrawer.tsx";
 import type { RubikCube } from "@cube-clarity/core";
 
+// @ts-types="./AlgorithmStep.module.css.d.ts"
 import styles from "./AlgorithmStep.module.css";
-import { Button } from "@components/Button/Button";
+import { Button } from "@components/Button/Button.tsx";
 
 export const AlgorithmStep = ({
   displaying,

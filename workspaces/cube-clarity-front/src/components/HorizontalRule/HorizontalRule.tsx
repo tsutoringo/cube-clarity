@@ -1,6 +1,8 @@
 import type { ReactNode } from "react";
+// @ts-types="./HorizontalRule.module.css.d.ts"
 import styles from "./HorizontalRule.module.css";
-import { HorizontalRuleContent } from "./Content/HorizontalRuleContent";
+
+import { HorizontalRuleContent } from "./Content/HorizontalRuleContent.tsx";
 
 const _HorizontalRule = ({
   children,

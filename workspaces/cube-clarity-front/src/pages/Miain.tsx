@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
-import { Home } from "./Home/Home";
-import { Screen } from "@layouts/Screen/Screen";
-import { AlgorithmSteps } from "./Algorithm/AlgorithmSteps";
+import { Home } from "./Home/Home.tsx";
+import { Screen } from "@layouts/Screen/Screen.tsx";
+import { AlgorithmSteps } from "./Algorithm/AlgorithmSteps.tsx";
 import { useLocation, useNavigate } from "react-router";
 import { RubikCube } from "@cube-clarity/core";
-import { detectCube } from "@lib/detectFetch";
+import { detectCube } from "@lib/detectFetch.ts";
 
 export type ScreenStatus = "none" | "start" | "scan" | "load";
 export type RubikCubeData = null;

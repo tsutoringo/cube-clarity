@@ -1,4 +1,4 @@
-import { moveImageList } from "./moveImageList";
+import { moveImageList } from "./moveImageList.ts";
 
 // 画像のインポート
 import upArrow from "./images/arrows/up_Arrows.svg?inline";

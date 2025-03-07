@@ -21,14 +21,22 @@
       ]
     }
   },
+  "compilerOptions": {
+    "rootDirs": ["src", "generated/hcm/src"]
+  },
   "imports": {
     "@result/result": "jsr:@result/result@^1.1.0",
-    "@std/assert": "jsr:@std/assert@1"
+    "@std/assert": "jsr:@std/assert@1",
+    "@components/": "./src/components/",
+    "@layouts/": "./src/layouts/",
+    "@lib/": "./src/lib/",
+    "@assets/": "./src/assets/"
   },
   "lint": {
     "plugins": [
       "./lint/classNamesName.ts",
-      "./lint/aliasImport.ts"
+      "./lint/aliasImport.ts",
+      "jsr:@tsutoringo/lint-css-modules"
     ]
   }
 }

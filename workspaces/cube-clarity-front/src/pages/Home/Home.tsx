@@ -3,10 +3,11 @@ import { CSSTransition } from "react-transition-group";
 
 import cube from "@assets/CUBE.svg";
 import clarity from "@assets/CLARITY.svg";
-import { Loading } from "@components/Loading/Loading";
+import { Loading } from "@components/Loading/Loading.tsx";
 
+// @ts-types="./Home.module.css.d.ts"
 import styles from "./Home.module.css";
-import { SingleRubikCubeDisplay } from "@components/RubikCube/RubikCube";
+import { SingleRubikCubeDisplay } from "@components/RubikCube/RubikCube.tsx";
 import { RubikCube } from "@cube-clarity/core";
 
 const StartAnimationPage = ({

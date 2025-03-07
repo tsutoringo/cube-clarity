@@ -4,6 +4,7 @@ import { SingleRubikCubeDisplay } from "@components/RubikCube/RubikCube.tsx";
 import { BottomDrawer } from "@layouts/BottomDrawer/BottomDrawer.tsx";
 import { Screen } from "@layouts/Screen/Screen.tsx";
 import { parseMoveNotation, RubikCube } from "@cube-clarity/core";
+// @ts-types="./Playground.module.css.d.ts"
 import styles from "./Playground.module.css";
 import { drop, zip } from "@core/iterutil";
 

@@ -1,10 +1,11 @@
 import type { HTMLAttributes } from "react";
+// @ts-types="./RubikCube.module.css.d.ts"
 import styles from "./RubikCube.module.css";
 import type { RubikCube, RubikCubeMoveNotation } from "@cube-clarity/core";
 import classNames from "classnames";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
-import { RubikCubeThreeGroup } from "./RubikCubeGroup";
+import { RubikCubeThreeGroup } from "./RubikCubeGroup.tsx";
 
 interface RubikCubeDisplayProps extends HTMLAttributes<HTMLDivElement> {
   onceRender?: boolean;

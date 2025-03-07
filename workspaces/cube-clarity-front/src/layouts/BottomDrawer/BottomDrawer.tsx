@@ -1,8 +1,9 @@
-import { BottomDrawerLayout } from "./BottomDrawerLayout";
-import { BottomDrawerViewBox } from "./BottomDrawerViewBox";
+import { BottomDrawerLayout } from "./BottomDrawerLayout.tsx";
+import { BottomDrawerViewBox } from "./BottomDrawerViewBox.tsx";
+// @ts-types="./BottomDrawer.module.css.d.ts"
 import styles from "./BottomDrawer.module.css";
 import type { ComponentProps, ReactNode } from "react";
-import { BottomDrawerTitle } from "./Drawer/BottomDrawerTitle";
+import { BottomDrawerTitle } from "./Drawer/BottomDrawerTitle.tsx";
 import classNames from "classnames";
 
 interface BottomDrawerProps extends ComponentProps<"div"> {

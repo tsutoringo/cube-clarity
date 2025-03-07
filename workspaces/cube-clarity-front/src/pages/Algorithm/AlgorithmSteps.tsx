@@ -1,13 +1,14 @@
 import { type RubikCube, solveRubikCube } from "@cube-clarity/core";
 import { type ReactNode, useMemo, useRef, useState } from "react";
 import { CSSTransition } from "react-transition-group";
+// @ts-types="./AlgorithmStep.module.css.d.ts"
 import styles from "./AlgorithmStep.module.css";
-import { BottomDrawer } from "@layouts/BottomDrawer/BottomDrawer";
-import { SingleRubikCubeDisplay } from "@components/RubikCube/RubikCube";
-import { HorizontalRule } from "@components/HorizontalRule/HorizontalRule";
-import { Button } from "@components/Button/Button";
-import { CubeGuide } from "@components/CubeGuide/CubeGuide";
-import { CubeHint } from "@components/CubeHint/CubeHint";
+import { BottomDrawer } from "@layouts/BottomDrawer/BottomDrawer.tsx";
+import { SingleRubikCubeDisplay } from "@components/RubikCube/RubikCube.tsx";
+import { HorizontalRule } from "@components/HorizontalRule/HorizontalRule.tsx";
+import { Button } from "@components/Button/Button.tsx";
+import { CubeGuide } from "@components/CubeGuide/CubeGuide.tsx";
+import { CubeHint } from "@components/CubeHint/CubeHint.tsx";
 import corner from "./images/corner.webp";
 import edge from "./images/edge.webp";
 import firstLayer from "./images/first_layer.webp";

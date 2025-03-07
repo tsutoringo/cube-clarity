@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+// @ts-types="./Screen.module.css.d.ts"
 import styles from "./Screen.module.css";
 
 export const Screen = ({

@@ -1,3 +1,4 @@
+// @ts-types="./Loading.module.css.d.ts"
 import styles from "./Loading.module.css";
 
 export const Loading = () => {

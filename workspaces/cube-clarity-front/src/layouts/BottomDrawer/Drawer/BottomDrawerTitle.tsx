@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+// @ts-types="./BottomDrawerTitle.module.css.d.ts"
 import styles from "./BottomDrawerTitle.module.css";
 
 export const BottomDrawerTitle = ({

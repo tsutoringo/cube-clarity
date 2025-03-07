@@ -1,4 +1,5 @@
 import { Tooltip } from "react-tooltip";
+// @ts-types="./CubeHint.module.css.d.ts"
 import styles from "./CubeHint.module.css";
 
 interface HintProps {

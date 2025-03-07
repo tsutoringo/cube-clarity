@@ -1,7 +1,8 @@
 import type { ReactNode, RefObject } from "react";
-import type { BottomDrawer as _BottomDrawer } from "./BottomDrawer";
+import type { BottomDrawer as _BottomDrawer } from "./BottomDrawer.tsx";
 import classNames, { type Argument } from "classnames";
 
+// @ts-types="./BottomDrawerLayout.module.css.d.ts"
 import styles from "./BottomDrawerLayout.module.css";
 
 export const BottomDrawerLayout = ({
