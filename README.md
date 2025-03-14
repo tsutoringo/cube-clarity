@@ -1,5 +1,21 @@
 # Cube Clarity
 
+## Requirements
+- (Deno https://deno.com/): v2.2.3
+  - Install `irm https://deno.land/install.ps1 | iex`
+- Python
+- OpenCV
+
+## Setup
+スキャン側起動
+```shell
+cd workspaces/cube-clarity-scan-rubik-cube
+pip install -r requirements.txt
+```
+
+フロント側
+[Release](https://github.com/tsutoringo/cube-clarity/releases/tag/0.0.1)からcube-clarity.exeをダウンロードして起動して表示されたURLにアクセスして下さい。
+
 ## Stacks
 
 - フロントエンド
